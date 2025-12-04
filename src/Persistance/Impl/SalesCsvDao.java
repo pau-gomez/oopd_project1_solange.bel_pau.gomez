@@ -1,13 +1,27 @@
 package Persistance.Impl;
 
+
 import Buisness.Entities.Sale;
 import Persistance.SalesDao;
+import com.opencsv.bean.CsvToBeanBuilder;
 
+import java.io.FileReader;
 import java.util.List;
 
 public class SalesCsvDao implements SalesDao {
+    private final String filepath;
+
+    public SalesCsvDao(String filepath) {
+        this.filepath = filepath;
+    }
+
     @Override
+    // @SuppressWarnings("unchecked")
     public List<Sale> loadAllSales() {
-        return List.of();
+        try (FileReader reader = new FileReader(this.filepath)) {
+            return (List<Sale>) new CsvToBeanBuilder(reader).withType(Sale.class).build().parse();
+        } catch (Exception e) {
+            throw new RuntimeException("Could not load sales.", e);
+        }
     }
 }
