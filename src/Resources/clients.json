@@ -1,0 +1,126 @@
+[
+  {
+    "client_id": 1,
+    "full_name": "Carlos Martínez",
+    "phone_numbers": [
+      {
+        "country_prefix": "+34",
+        "number": "618 347 336"
+      },
+      {
+        "country_prefix": "+34",
+        "number": "670 389 206"
+      }
+    ]
+  },
+  {
+    "client_id": 2,
+    "full_name": "Lucía Gómez",
+    "phone_numbers": [
+      {
+        "country_prefix": "+34",
+        "number": "648 586 400"
+      }
+    ]
+  },
+  {
+    "client_id": 3,
+    "full_name": "Javier Torres",
+    "phone_numbers": [
+      {
+        "country_prefix": "+34",
+        "number": "643 485 642"
+      },
+      {
+        "country_prefix": "+34",
+        "number": "667 739 803"
+      }
+    ]
+  },
+  {
+    "client_id": 4,
+    "full_name": "Ana Ruiz",
+    "phone_numbers": [
+      {
+        "country_prefix": "+34",
+        "number": "640 334 554"
+      },
+      {
+        "country_prefix": "+34",
+        "number": "605 361 739"
+      }
+    ]
+  },
+  {
+    "client_id": 5,
+    "full_name": "David Fernández",
+    "phone_numbers": [
+      {
+        "country_prefix": "+34",
+        "number": "608 944 570"
+      },
+      {
+        "country_prefix": "+34",
+        "number": "699 584 796"
+      }
+    ]
+  },
+  {
+    "client_id": 6,
+    "full_name": "María López",
+    "phone_numbers": [
+      {
+        "country_prefix": "+34",
+        "number": "677 145 638"
+      }
+    ]
+  },
+  {
+    "client_id": 7,
+    "full_name": "Raúl Sánchez",
+    "phone_numbers": [
+      {
+        "country_prefix": "+34",
+        "number": "677 910 271"
+      }
+    ]
+  },
+  {
+    "client_id": 8,
+    "full_name": "Isabel Navarro",
+    "phone_numbers": [
+      {
+        "country_prefix": "+34",
+        "number": "678 844 821"
+      }
+    ]
+  },
+  {
+    "client_id": 9,
+    "full_name": "Pedro Jiménez",
+    "phone_numbers": [
+      {
+        "country_prefix": "+34",
+        "number": "633 254 428"
+      },
+      {
+        "country_prefix": "+34",
+        "number": "632 625 477"
+      }
+    ]
+  },
+  {
+    "client_id": 10,
+    "full_name": "Elena Castro",
+    "phone_numbers": [
+      {
+        "country_prefix": "+34",
+        "number": "637 430 911"
+      },
+      {
+        "country_prefix": "+34",
+        "number": "669 955 377"
+      }
+    ]
+  }
+]
