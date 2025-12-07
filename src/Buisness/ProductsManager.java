@@ -1,4 +1,4 @@
 package Buisness;
 
-public class ProductsManager {
+public class  ProductsManager {
 }
