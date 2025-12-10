@@ -1,9 +1,9 @@
 package Presentation;
 
-public class AuthentificationMenu {
+public class AuthenticationMenu {
     private ClientController clientController;
 
-    public AuthentificationMenu(ClientController clientController) {
+    public AuthenticationMenu(ClientController clientController) {
         this.clientController = clientController;
     }
 
