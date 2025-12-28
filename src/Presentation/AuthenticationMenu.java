@@ -1,10 +1,10 @@
 package Presentation;
 
 public class AuthenticationMenu {
-    private ClientController clientController;
+    private MainMenuController menuController;
 
-    public AuthenticationMenu(ClientController clientController) {
-        this.clientController = clientController;
+    public AuthenticationMenu(MainMenuController menuController) {
+        this.menuController = menuController;
     }
 
     public void printAuthenticationMenu() {
@@ -13,6 +13,6 @@ public class AuthenticationMenu {
         System.out.println("    2) Sign up");
         System.out.println("    0) Exit");
 
-        clientController.handleUserInput();
+        menuController.handleUserInput();
     }
 }
