@@ -36,4 +36,16 @@ public abstract class Product {
     public List<Provider> getProductSuppliers() {
         return productSuppliers;
     }
+
+    public String getId() {
+        String id = null;
+
+        return id;
+    }
+
+    public String getName() {
+        String name = null;
+
+        return name;
+    }
 }
