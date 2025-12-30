@@ -14,6 +14,5 @@ public class UIMainMenu {
         System.out.println("    4) Shopping cart");
         System.out.println("    0) Logout");
 
-        mainController.handleUserInput();
     }
 }

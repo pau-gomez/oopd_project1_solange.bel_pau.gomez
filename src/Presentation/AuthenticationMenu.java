@@ -76,7 +76,7 @@ public class AuthenticationMenu {
     }
 
     // exit
-    public void printExitMessage() {
+    public void printExit() {
         System.out.println("We hope to see you again!");
     }
 }
