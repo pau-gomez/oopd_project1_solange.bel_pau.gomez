@@ -19,7 +19,7 @@ public class AuthenticationMenu {
     }
 
     // login
-    public void printLoginTitle() {
+    public void printLogin() {
         System.out.println();
         System.out.println("-- Login --");
     }
@@ -33,7 +33,7 @@ public class AuthenticationMenu {
     }
 
     // register
-    public void printSignupTitle() {
+    public void printRegister() {
         System.out.println();
         System.out.println("-- Register --");
     }
