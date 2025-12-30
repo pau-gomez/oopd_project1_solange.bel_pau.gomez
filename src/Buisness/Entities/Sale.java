@@ -28,4 +28,10 @@ public class Sale {
     public long getPurchaseDate() {
         return this.purchaseDate;
     }
+
+    public String getPricePaid() {
+        String a = null;
+
+        return a;
+    }
 }
