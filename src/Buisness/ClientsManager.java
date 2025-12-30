@@ -37,7 +37,7 @@ public class ClientsManager {
         Client newClient = new Client(newClientId, fullName, phoneNumbers);
 
         clients.add(newClient);
-        clientsDao.saveClients(clients);
+        clientsDao.updateFile(clients);
 
         currentClient = newClient;
         return newClient;

@@ -33,4 +33,8 @@ public class ProductForSale extends Product{
     public String getCompanyName() {
         return this.companyName;
     }
+
+    public void setUnitsInStock(int newStock) {
+        this.unitsInStock = newStock;
+    }
 }
