@@ -1,9 +1,9 @@
 package Presentation;
 
 public class UIMainMenu {
-    private MainMenuController mainController;
+    private MenuController mainController;
 
-    public UIMainMenu(MainMenuController mainController) {
+    public UIMainMenu(MenuController mainController) {
         this.mainController = mainController;
     }
 

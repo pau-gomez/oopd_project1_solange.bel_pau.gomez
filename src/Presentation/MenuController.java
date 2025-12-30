@@ -1,6 +1,6 @@
 package Presentation;
 
-public class MainMenuController {
+public class MenuController {
     public void handleUserInput() {
     }
 }
