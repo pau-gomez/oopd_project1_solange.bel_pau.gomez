@@ -1,82 +1,56 @@
 package Presentation;
 
+import java.util.Scanner;
+
 public class AuthenticationMenu {
 
-    private MenuController menuController;
+    private final Scanner scanner = new Scanner(System.in);
 
-    public AuthenticationMenu(MenuController menuController) {
-        this.menuController = menuController;
-    }
-
-    // authentication menu
-    public void printAuthenticationMenu() {
+    public int printAuthenticationMenu() {
+        printTitle();
         System.out.println();
-        System.out.println("- Authentication Menu -");
         System.out.println("    1) Login");
         System.out.println("    2) Sign up");
+        System.out.println();
         System.out.println("    0) Exit");
-        System.out.print("Choose an option: ");
+        System.out.print("\nChoose an option: ");
+        return scanner.nextInt();
     }
 
-    // login
-    public void printLogin() {
-        System.out.println();
-        System.out.println("-- Login --");
+    public void printTitle() {
+        System.out.print(" _   _           _         _____ \n" +
+                         "| \\ | |         | |       |  ___|\n" +
+                         "|  \\| |_   _  __| | ___   | |__  _   _  ___\n" +
+                         "| . ` | | | |/ _` |/ _ \\  |  __|| | | |/ _ \\\n" +
+                         "| |\\  | |_| | (_| |  __/  | |___| |_| |  __/\n" +
+                         "|_| \\_|\\__,_|\\__,_|\\___|  |____/\\___ / \\___|\n" +
+                         "                                 __/ |\n" +
+                         "                                 |___/");
     }
 
-    public void askClientId() {
-        System.out.print("Client ID: ");
+    public int askClientId() {
+        System.out.print("Enter your client ID: ");
+        return scanner.nextInt();
     }
 
-    public void printLoginError() {
-        System.out.println("Error: Client ID not found.");
-    }
-
-    // register
-    public void printRegister() {
-        System.out.println();
-        System.out.println("-- Register --");
-    }
-
-    public void askFullName() {
+    public String askFullName() {
+        scanner.nextLine();
         System.out.print("Full name: ");
+        return scanner.nextLine();
     }
 
-    public void askPhonePrefix() {
-        System.out.print("Country prefix (E.g. +34): ");
+    public String askCountryPrefix() {
+        System.out.print("Country prefix (e.g. +34): ");
+        return scanner.nextLine();
     }
 
-    public void askPhoneNumber() {
+    public String askPhoneNumber() {
         System.out.print("Phone number: ");
+        return scanner.nextLine();
     }
 
-    public void askAddAnotherPhone() {
-        System.out.print("Add another phone number? (Y/N): ");
-    }
-
-    public void printSignupSuccess() {
-        System.out.println("User registered successfully!");
-    }
-
-   // errors
-    public void printInvalidOption() {
-        System.out.println("Error: invalid option.");
-    }
-
-    public void printInvalidClientId() {
-        System.out.println("Error: invalid client ID.");
-    }
-
-    public void printInvalidPhone() {
-        System.out.println("Error: invalid phone number.");
-    }
-
-    public void printEmptyNameError() {
-        System.out.println("Error: full name cannot be empty.");
-    }
-
-    // exit
-    public void printExit() {
-        System.out.println("We hope to see you again!");
+    public boolean askAnotherPhone() {
+        System.out.print("Add another phone number? (yes/no): ");
+        return scanner.nextLine().equalsIgnoreCase("yes");
     }
 }
