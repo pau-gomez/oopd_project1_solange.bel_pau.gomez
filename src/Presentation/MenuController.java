@@ -82,6 +82,8 @@ public class MenuController {
             phones.add(new PhoneNumber(prefix, number));
         } while (authenticationMenu.askAnotherPhone());
 
+        //System.out.print("we out the loop");
+
         if(!clientsManager.registerClient(name, phones)) return false;
 
         return true;

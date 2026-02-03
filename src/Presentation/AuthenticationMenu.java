@@ -50,8 +50,18 @@ public class AuthenticationMenu {
     }
 
     public boolean askAnotherPhone() {
-        System.out.print("Add another phone number? (yes/no): ");
-        return scanner.nextLine().equalsIgnoreCase("yes");
+        boolean loop = true;
+
+        while(loop) {
+            System.out.print("Add another phone number? (yes/no): ");
+            String answer = scanner.nextLine();
+            if (answer.equals("yes")) loop = false;
+            else if (answer.equals("no")) return false;
+            else {
+                System.out.println("Wrong option!");
+            }
+        }
+        return true;
     }
 
     public void printGoodByeMessage() {
