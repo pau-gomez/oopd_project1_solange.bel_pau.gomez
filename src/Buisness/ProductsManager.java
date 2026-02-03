@@ -11,4 +11,9 @@ public class  ProductsManager {
 
         return Collections.singletonList(products);
     }
+
+    public boolean checkProductsFile() {
+
+        return true;
+    }
 }

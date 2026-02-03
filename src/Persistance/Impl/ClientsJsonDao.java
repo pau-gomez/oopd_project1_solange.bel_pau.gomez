@@ -23,4 +23,9 @@ public class ClientsJsonDao implements ClientsDao {
         }
     }
 
+    @Override
+    public void updateFile(List<Client> clients) {
+
+    }
+
 }

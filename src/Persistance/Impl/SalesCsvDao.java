@@ -24,4 +24,9 @@ public class SalesCsvDao implements SalesDao {
             throw new RuntimeException("Could not load sales.", e);
         }
     }
+
+    @Override
+    public void updateFile(List<Sale> sales) {
+
+    }
 }

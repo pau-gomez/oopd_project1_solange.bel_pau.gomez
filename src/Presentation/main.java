@@ -4,6 +4,6 @@ public class main {
 
     public static void main(String[] args) {
         MenuController controller = new MenuController();
-        controller.start();
+        if(!controller.start()) System.out.println("\nERROR: Some files don't exist or contain errors in their structure.");
     }
 }

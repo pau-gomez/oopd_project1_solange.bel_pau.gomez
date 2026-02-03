@@ -9,7 +9,7 @@ import java.util.List;
 public class SalesManager {
     private SalesDao salesDao;
 
-    public SalesManager(SalesDao salesDao) {
+    public SalesManager() {
         this.salesDao = salesDao;
     }
 
@@ -32,4 +32,15 @@ public class SalesManager {
         }
         return clientSales;
     }
+
+    public boolean checkSalesFile() {
+
+        return true;
+    }
+
+    public List<Sale> filterSalesByClient(int id) {
+        List<Sale> sales = new ArrayList<>();
+        return sales;
+    }
+
 }

@@ -10,7 +10,7 @@ public class ClientsManager {
     private Client currentClient;
     private ClientsDao clientsDao;
 
-    public ClientsManager(ClientsDao clientsDao) {
+    public ClientsManager() {
         this.clientsDao = clientsDao;
         this.currentClient = null;
     }
@@ -68,5 +68,10 @@ public class ClientsManager {
             i++;
         }
         return maxId + 1;
+    }
+
+    public boolean checkClientFile() {
+
+        return true;
     }
 }

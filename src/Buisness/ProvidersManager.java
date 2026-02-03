@@ -11,7 +11,7 @@ import java.util.List;
 public class ProvidersManager {
     private ProvidersDao providersDao;
 
-    public ProvidersManager(ProvidersDao providersDao) {
+    public ProvidersManager() {
         this.providersDao = providersDao;
     }
 
@@ -96,5 +96,10 @@ public class ProvidersManager {
             }
         }
         return sells;
+    }
+
+    public boolean checkProvidersFile() {
+
+        return true;
     }
 }

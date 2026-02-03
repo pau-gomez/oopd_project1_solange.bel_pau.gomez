@@ -22,4 +22,14 @@ public class ProvidersJsonDao implements ProvidersDao {
             throw new RuntimeException("Could not load clients.", e);
         }
     }
+
+    @Override
+    public Provider getOneProvider(int id) {
+        return null;
+    }
+
+    @Override
+    public void updateFile(List<Provider> providers) {
+
+    }
 }

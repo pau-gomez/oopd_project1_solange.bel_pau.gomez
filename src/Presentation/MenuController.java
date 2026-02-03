@@ -28,7 +28,10 @@ public class MenuController {
         shoppingCartManager = new ShoppingCartManager();
     }
 
-    public void start() {
+    public boolean start() {
+
+        if(!checkFiles()) return false;
+
         boolean running = true;
 
         while (running) {
@@ -55,6 +58,7 @@ public class MenuController {
             }
 
         }
+        return true;
     }
 
     private boolean handleLogin() {
@@ -62,7 +66,7 @@ public class MenuController {
         return clientsManager.login(id);
     }
 
-    private boolean handleRegister() {
+    private Client handleRegister() {
         String name = authenticationMenu.askFullName();
         List<PhoneNumber> phones = new ArrayList<>();
 
@@ -184,5 +188,18 @@ public class MenuController {
         shoppingCartManager.clear();
         clientsManager.logout();
         mainMenu.logout();
+    }
+
+    private boolean checkFiles() {
+
+        if(!clientsManager.checkClientFile()) return false;
+
+        if(!productsManager.checkProductsFile()) return false;
+
+        if(!providersManager.checkProvidersFile()) return false;
+
+        if(!salesManager.checkSalesFile()) return false;
+
+        return true;
     }
 }
