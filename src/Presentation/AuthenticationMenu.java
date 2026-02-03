@@ -53,4 +53,12 @@ public class AuthenticationMenu {
         System.out.print("Add another phone number? (yes/no): ");
         return scanner.nextLine().equalsIgnoreCase("yes");
     }
+
+    public void printGoodByeMessage() {
+        // print bye
+    }
+
+    public void printInvalidOption() {
+        // print message
+    }
 }

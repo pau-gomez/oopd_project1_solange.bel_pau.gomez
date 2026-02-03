@@ -30,7 +30,7 @@ public class ClientsManager {
         return found;
     }
 
-    public Client registerClient(String fullName, List<PhoneNumber> phoneNumbers) {
+    public boolean registerClient(String fullName, List<PhoneNumber> phoneNumbers) {
         List<Client> clients = clientsDao.loadAllClients();
 
         int newClientId = generateNewClientId(clients);
@@ -40,7 +40,10 @@ public class ClientsManager {
         clientsDao.updateFile(clients);
 
         currentClient = newClient;
-        return newClient;
+
+        if (newClient.getPhoneNumbers() == null) return false;
+
+        return true;
     }
 
     public void logout() {

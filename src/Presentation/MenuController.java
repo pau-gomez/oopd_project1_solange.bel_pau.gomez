@@ -42,18 +42,24 @@ public class MenuController {
                     if (handleLogin()) {
                         userMenu();
                     }
+                    else {
+                        //error
+                    }
                     break;
                 case 2:
                     if (handleRegister()) {
                         userMenu();
                     }
+                    else {
+                        //error
+                    }
                     break;
                 case 0:
-                    System.out.println("We hope to see you again!");
+                    authenticationMenu.printGoodByeMessage();
                     running = false;
                     break;
                 default:
-                    System.out.println("Invalid option.");
+                    authenticationMenu.printInvalidOption();
                     break;
             }
 
@@ -66,7 +72,7 @@ public class MenuController {
         return clientsManager.login(id);
     }
 
-    private Client handleRegister() {
+    private boolean handleRegister() {
         String name = authenticationMenu.askFullName();
         List<PhoneNumber> phones = new ArrayList<>();
 
@@ -76,7 +82,9 @@ public class MenuController {
             phones.add(new PhoneNumber(prefix, number));
         } while (authenticationMenu.askAnotherPhone());
 
-        return clientsManager.registerClient(name, phones);
+        if(!clientsManager.registerClient(name, phones)) return false;
+
+        return true;
     }
 
     private void userMenu() {
