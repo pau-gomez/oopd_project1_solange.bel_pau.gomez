@@ -41,4 +41,14 @@ public class ProductsJsonDao implements ProductsDao {
             return false;
         }
     }
+
+    @Override
+    public List<Product> findProductsByName() {
+        return List.of();
+    }
+
+    @Override
+    public List<Provider> findProductsBySupplier() {
+        return List.of();
+    }
 }
