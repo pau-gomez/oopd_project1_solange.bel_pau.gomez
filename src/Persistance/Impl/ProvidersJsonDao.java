@@ -19,7 +19,7 @@ public class ProvidersJsonDao implements ProvidersDao {
             Gson gson = new Gson();
             return gson.fromJson(reader, (new TypeToken<List<Provider>>() {}).getType());
         } catch (Exception e) {
-            throw new RuntimeException("Could not load clients.", e);
+            throw new RuntimeException("Could not load providers.", e);
         }
     }
 
