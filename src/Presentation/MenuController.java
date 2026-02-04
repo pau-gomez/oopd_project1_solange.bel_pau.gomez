@@ -112,10 +112,11 @@ public class MenuController {
                     break;
                 case 0:
                     handleLogout();
+                    authenticationMenu.printGoodByeMessage();
                     logged = false;
                     break;
                 default:
-                    System.out.println("Invalid option.");
+                    authenticationMenu.printInvalidOption();
                     break;
             }
 

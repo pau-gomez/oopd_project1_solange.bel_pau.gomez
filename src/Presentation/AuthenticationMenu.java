@@ -65,10 +65,10 @@ public class AuthenticationMenu {
     }
 
     public void printGoodByeMessage() {
-        // print bye
+        System.out.print("\n We hope to see you again!");
     }
 
     public void printInvalidOption() {
-        // print message
+        System.out.print("\nERROR: Invalid option.");
     }
 }
