@@ -133,7 +133,6 @@ public class MenuController {
             phones.add(formatted);
         }
 
-
         List<Sale> clientSales = salesManager.filterSalesByClient(c.getId());
         List<String> purchases = new ArrayList<>();
 
@@ -141,7 +140,6 @@ public class MenuController {
             String formatted = s.getProductId() + " - €" + s.getPricePaid();
             purchases.add(formatted);
         }
-
 
         mainMenu.printUserProfile(c.getId(), c.getFullName(), phones, purchases);
     }
