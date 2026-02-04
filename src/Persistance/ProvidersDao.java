@@ -10,4 +10,6 @@ public interface ProvidersDao {
     Provider getOneProvider(int id);
 
     void updateFile(List<Provider> providers);
+
+    boolean validateProvidersFile();
 }

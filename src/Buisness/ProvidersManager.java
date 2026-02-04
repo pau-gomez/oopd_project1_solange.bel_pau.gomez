@@ -99,7 +99,6 @@ public class ProvidersManager {
     }
 
     public boolean checkProvidersFile() {
-
-        return true;
+        return providersDao.validateProvidersFile();
     }
 }

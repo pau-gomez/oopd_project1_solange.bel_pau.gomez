@@ -5,6 +5,7 @@ import Persistance.ProvidersDao;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
+import java.io.File;
 import java.io.FileReader;
 import java.util.List;
 
@@ -31,5 +32,22 @@ public class ProvidersJsonDao implements ProvidersDao {
     @Override
     public void updateFile(List<Provider> providers) {
 
+    }
+
+    @Override
+    public boolean validateProvidersFile() {
+        File file = new File(this.filepath);
+        // check if file exists or can be read
+        if (!file.exists() || !file.canRead()) {
+            return false;
+        }
+        // check if its parseable
+        try (FileReader reader = new FileReader(this.filepath)) {
+            Gson gson = new Gson();
+            gson.fromJson(reader, new TypeToken<List<Provider>>() {}.getType());
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 }
