@@ -20,8 +20,11 @@ public class ClientsManager {
         List<Client> clients = clientsDao.loadAllClients();
         boolean found = false;
         int i = 0;
+        System.out.println("Clients loaded: " + clients.size());
+
 
         while (i < clients.size() && !found) {
+            System.out.print(clients.get(i).getFullName());
             if (clients.get(i).getClientId() == clientId) {
                 currentClient = clients.get(i);
                 found = true;
