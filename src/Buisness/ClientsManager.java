@@ -74,8 +74,4 @@ public class ClientsManager {
         return maxId + 1;
     }
 
-    public boolean checkClientFile() {
-
-        return true;
-    }
 }

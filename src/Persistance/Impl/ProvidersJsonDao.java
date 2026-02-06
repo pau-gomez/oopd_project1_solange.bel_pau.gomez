@@ -7,6 +7,8 @@ import com.google.gson.reflect.TypeToken;
 
 import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.List;
 
 public class ProvidersJsonDao implements ProvidersDao {
@@ -31,7 +33,14 @@ public class ProvidersJsonDao implements ProvidersDao {
 
     @Override
     public void updateFile(List<Provider> providers) {
+        File file = new File(this.filepath);
 
+        try (FileWriter writer = new FileWriter(file)) {
+            Gson gson = new Gson();
+            gson.toJson(providers, writer);
+        } catch (IOException e) {
+            throw new RuntimeException("Could not update provider file.", e);
+        }
     }
 
     @Override

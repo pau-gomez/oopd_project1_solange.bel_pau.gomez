@@ -201,13 +201,9 @@ public class MenuController {
 
     private boolean checkFiles() {
 
-        if(!clientsManager.checkClientFile()) return false;
-
-        //if(!productsManager.checkProductsFile()) return false;
+        if(!productsManager.checkProductsFile()) return false;
 
         if(!providersManager.checkProvidersFile()) return false;
-
-        if(!salesManager.checkSalesFile()) return false;
 
         return true;
     }
