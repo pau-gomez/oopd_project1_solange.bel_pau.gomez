@@ -45,10 +45,10 @@ public class SalesCsvDao implements SalesDao {
             writer.append("client_id,product_id,price_paid,purchase_date\n");
             for (Sale sale : sales) {
                 String saleLine = String.join(",",
-                        String.valueOf(sale.client_id()),
-                        String.valueOf(sale.product_id()),
-                        String.valueOf(sale.price_paid()),
-                        sale.purchase_date()) + "\n";
+                        String.valueOf(sale.getClientId()),
+                        String.valueOf(sale.getProductId()),
+                        String.valueOf(sale.getPricePaid()),
+                        String.valueOf(sale.getPurchaseDate())) + "\n";
                 writer.append(saleLine);
             }
         } catch (IOException e) {

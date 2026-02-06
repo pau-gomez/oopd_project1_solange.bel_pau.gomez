@@ -1,10 +1,10 @@
 package Buisness.Entities;
 
 public class Sale {
-    private int client_id;
-    private String product_id;
-    private double price_paid;
-    private long purchase_date;
+    public int client_id;
+    public String product_id;
+    public double price_paid;
+    public long purchase_date;
 
     public Sale(int client_id, String product_id, double price_paid, long purchase_date) {
         this.client_id = client_id;
