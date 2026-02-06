@@ -18,40 +18,32 @@ public class ProvidersManager {
 
     public void updateProviderStock(ProductForSale productBought) {
         List<Provider> providers = providersDao.loadAllProviders();
-
         boolean updated = false;
-        int i = 0;
 
-        while (i < providers.size() && !updated) {
-            Provider provider = providers.get(i);
+        for (Provider provider : providers) {
+            List<ProductForSale> products = provider.getProductsForSale();
 
-            if (provider.getProviderId() == productBought.getProviderId()) {
-                List<ProductForSale> products = provider.getProductsForSale();
+            if (products == null) continue;
 
-                int j = 0;
-                while (j < products.size() && !updated) {
-                    ProductForSale pfs = products.get(j);
+            for (ProductForSale pfs : products) {
+                if (pfs.getProductId().equals(productBought.getProductId())) {
 
-                    if (pfs.getProductId().equals(productBought.getProductId())) {
-                        int newStock = pfs.getUnitsInStock() - 1;
+                    int newStock = pfs.getUnitsInStock() - 1;
+                    pfs.setUnitsInStock(Math.max(newStock, 0));
 
-                        if (newStock < 0) {
-                            newStock = 0;
-                        }
-
-                        pfs.setUnitsInStock(newStock);
-                        updated = true;
-                    }
-                    j++;
+                    updated = true;
+                    break;
                 }
             }
-            i++;
+
+            if (updated) break;
         }
 
         if (updated) {
             providersDao.updateFile(providers);
         }
     }
+
 
     public List<Provider> getAllProviders() {
         return providersDao.loadAllProviders();

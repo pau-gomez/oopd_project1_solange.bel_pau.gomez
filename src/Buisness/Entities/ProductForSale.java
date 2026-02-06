@@ -2,39 +2,31 @@ package Buisness.Entities;
 
 import java.util.List;
 
-public class ProductForSale extends Product{
-    private double salePrice;
-    private int unitsInStock;
-    private int providerId;
-    private String companyName;
+public class ProductForSale {
+    private String product_id;
+    private double selling_price;
+    private int units_in_stock;
 
 
-    public ProductForSale(String productId, String productName, String brand, String model, List<Provider> productSuppliers, double salePrice, int unitsInStock, int providerId, String companyName) {
-        super(productId, productName, brand, model, productSuppliers);
-
-        this.salePrice = salePrice;
-        this.unitsInStock = unitsInStock;
-        this.providerId = providerId;
-        this.companyName = companyName;
+    public ProductForSale(String product_id, double selling_price, int units_in_stock) {
+        this.product_id = product_id;
+        this.selling_price = selling_price;
+        this.units_in_stock = units_in_stock;
     }
 
     public double getSalePrice() {
-        return this.salePrice;
+        return this.selling_price;
     }
 
     public int getUnitsInStock() {
-        return this.unitsInStock;
+        return this.units_in_stock;
     }
 
-    public int getProviderId() {
-        return this.providerId;
-    }
-
-    public String getCompanyName() {
-        return this.companyName;
+    public String getProductId() {
+        return this.product_id;
     }
 
     public void setUnitsInStock(int newStock) {
-        this.unitsInStock = newStock;
+        this.units_in_stock = newStock;
     }
 }

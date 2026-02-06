@@ -3,26 +3,26 @@ package Buisness.Entities;
 import java.util.List;
 
 public abstract class Product {
-    private String productId;
-    private String productName;
+    private String product_id;
+    private String product_name;
     private String brand;
     private String model;
     private List<Provider> productSuppliers;
 
-    public Product(String productId, String productName, String brand, String model, List<Provider> productSuppliers) {
-        this.productId = productId;
-        this.productName = productName;
+    public Product(String product_id, String product_name, String brand, String model, List<Provider> productSuppliers) {
+        this.product_id = product_id;
+        this.product_name = product_name;
         this.brand = brand;
         this.model = model;
         this.productSuppliers = productSuppliers;
     }
 
     public String getProductId() {
-        return productId;
+        return product_id;
     }
 
     public String getProductName() {
-        return productName;
+        return product_name;
     }
 
     public String getBrand() {

@@ -21,7 +21,9 @@ public class ClientsManager {
         boolean found = false;
         int i = 0;
 
+
         while (i < clients.size() && !found) {
+            System.out.print(clients.get(i).getFullName());
             if (clients.get(i).getClientId() == clientId) {
                 currentClient = clients.get(i);
                 found = true;
