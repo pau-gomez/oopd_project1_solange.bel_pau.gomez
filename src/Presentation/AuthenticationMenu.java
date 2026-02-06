@@ -1,5 +1,6 @@
 package Presentation;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class AuthenticationMenu {
@@ -7,6 +8,10 @@ public class AuthenticationMenu {
     private final Scanner scanner = new Scanner(System.in);
 
     public int printAuthenticationMenu() {
+        Scanner scanner = new Scanner(System.in);
+        int number = 0;
+        boolean validInput = false;
+
         printTitle();
         System.out.println();
         System.out.println("    1) Login");
@@ -14,7 +19,20 @@ public class AuthenticationMenu {
         System.out.println();
         System.out.println("    0) Exit");
         System.out.print("\nChoose an option: ");
-        return scanner.nextInt();
+
+
+
+        while (!validInput) {
+            try {
+                number = scanner.nextInt();
+                validInput = true;
+            } catch (InputMismatchException e) {
+                System.out.println("Error: That is not a valid integer. Try again.");
+                scanner.next();
+            }
+        }
+
+        return number;
     }
 
     public void printTitle() {
@@ -29,8 +47,23 @@ public class AuthenticationMenu {
     }
 
     public int askClientId() {
+        Scanner scanner = new Scanner(System.in);
+        int number = 0;
+        boolean validInput = false;
+
         System.out.print("Enter your client ID: ");
-        return scanner.nextInt();
+
+        while (!validInput) {
+
+            try {
+                number = scanner.nextInt();
+                validInput = true;
+            } catch (InputMismatchException e) {
+                System.out.print("Error: That is not a valid integer. \nTry again: ");
+                scanner.next();
+            }
+        }
+        return number;
     }
 
     public String askFullName() {

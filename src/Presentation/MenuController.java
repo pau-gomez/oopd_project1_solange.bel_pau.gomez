@@ -40,7 +40,7 @@ public class MenuController {
             switch (option) {
                 case 1:
                     if (handleLogin()) {
-                        System.out.print("you logged in");
+                        //System.out.print("you logged in");
                         userMenu();
                     }
                     else {
