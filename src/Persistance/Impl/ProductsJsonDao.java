@@ -11,9 +11,9 @@ import java.io.FileReader;
 import java.util.List;
 
 public class ProductsJsonDao implements ProductsDao {
-    private final String filepath;
+    private final String filepath = "src/Resources/products.json";
 
-    public ProductsJsonDao(String filepath) { this.filepath = filepath; }
+    //public ProductsJsonDao(String filepath) { this.filepath = filepath; }
 
     @Override
     public List<Product> loadAllProducts() {

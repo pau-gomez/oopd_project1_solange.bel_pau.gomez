@@ -1,6 +1,7 @@
 package Buisness;
 
 import Buisness.Entities.Sale;
+import Persistance.Impl.SalesCsvDao;
 import Persistance.SalesDao;
 
 import java.util.ArrayList;
@@ -10,7 +11,7 @@ public class SalesManager {
     private SalesDao salesDao;
 
     public SalesManager() {
-        this.salesDao = salesDao;
+        this.salesDao = new SalesCsvDao();
     }
 
     public void addSale(Sale sale) {

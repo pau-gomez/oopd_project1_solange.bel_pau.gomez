@@ -203,7 +203,7 @@ public class MenuController {
 
         if(!clientsManager.checkClientFile()) return false;
 
-        if(!productsManager.checkProductsFile()) return false;
+        //if(!productsManager.checkProductsFile()) return false;
 
         if(!providersManager.checkProvidersFile()) return false;
 

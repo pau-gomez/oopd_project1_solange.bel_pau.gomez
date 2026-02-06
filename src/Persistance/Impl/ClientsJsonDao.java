@@ -9,9 +9,9 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 public class ClientsJsonDao implements ClientsDao {
-    private final String filepath;
+    private static final String filepath = "src/Resources/clients.json";
 
-    public ClientsJsonDao(String filepath) { this.filepath = filepath; }
+    //public ClientsJsonDao(String filepath) { this.filepath = filepath; }
 
     @Override
     public List<Client> loadAllClients() {

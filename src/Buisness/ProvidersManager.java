@@ -3,6 +3,7 @@ package Buisness;
 import Buisness.Entities.Product;
 import Buisness.Entities.ProductForSale;
 import Buisness.Entities.Provider;
+import Persistance.Impl.ProvidersJsonDao;
 import Persistance.ProvidersDao;
 
 import java.util.ArrayList;
@@ -12,7 +13,7 @@ public class ProvidersManager {
     private ProvidersDao providersDao;
 
     public ProvidersManager() {
-        this.providersDao = providersDao;
+        this.providersDao = new ProvidersJsonDao();
     }
 
     public void updateProviderStock(ProductForSale productBought) {

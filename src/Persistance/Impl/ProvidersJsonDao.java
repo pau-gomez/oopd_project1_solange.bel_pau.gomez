@@ -10,9 +10,9 @@ import java.io.FileReader;
 import java.util.List;
 
 public class ProvidersJsonDao implements ProvidersDao {
-    private final String filepath;
+    private static final String filepath = "src/Resources/providers.json";
 
-    public ProvidersJsonDao(String filepath) { this.filepath = filepath; }
+    //public ProvidersJsonDao(String filepath) { this.filepath = filepath; }
 
     @Override
     public List<Provider> loadAllProviders() {

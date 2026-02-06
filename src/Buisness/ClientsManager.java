@@ -3,6 +3,7 @@ package Buisness;
 import Buisness.Entities.Client;
 import Buisness.Entities.PhoneNumber;
 import Persistance.ClientsDao;
+import Persistance.Impl.ClientsJsonDao;
 
 import java.util.List;
 
@@ -11,7 +12,7 @@ public class ClientsManager {
     private ClientsDao clientsDao;
 
     public ClientsManager() {
-        this.clientsDao = clientsDao;
+        this.clientsDao = new ClientsJsonDao();
         this.currentClient = null;
     }
 

@@ -9,11 +9,9 @@ import java.io.FileReader;
 import java.util.List;
 
 public class SalesCsvDao implements SalesDao {
-    private final String filepath;
+    private static final String filepath = "src/Resources/sales.csv";
 
-    public SalesCsvDao(String filepath) {
-        this.filepath = filepath;
-    }
+    //public SalesCsvDao(String filepath) { this.filepath = filepath;}
 
     @Override
     // @SuppressWarnings("unchecked")

@@ -1,6 +1,7 @@
 package Buisness;
 
 import Buisness.Entities.Product;
+import Persistance.Impl.ProductsJsonDao;
 import Persistance.ProductsDao;
 import Persistance.ProvidersDao;
 
@@ -12,7 +13,7 @@ public class  ProductsManager {
     private ProductsDao productsDao;
 
     public ProductsManager() {
-        this.productsDao = productsDao;
+        this.productsDao = new ProductsJsonDao();
     }
 
     public List<Product> findProductsByName(String text) {
