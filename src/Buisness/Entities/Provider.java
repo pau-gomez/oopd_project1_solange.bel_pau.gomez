@@ -3,30 +3,30 @@ package Buisness.Entities;
 import java.util.List;
 
 public class Provider {
-    private int providerId;
-    private String companyName;
+    private int provider_id;
+    private String company_name;
     private String cif;
-    private String contactPersonName;
-    private PhoneNumber phoneNumber;
+    private String contact_name;
+    private String phone;
     private String email;
-    private List<ProductForSale> productsForSale;
+    private List<ProductForSale> products_for_sale;
 
-    public Provider(int providerId, String companyName, String cif, String contactPersonName, PhoneNumber phoneNumber, String email, List<ProductForSale> productsForSale) {
-        this.providerId = providerId;
-        this.companyName = companyName;
+    public Provider(int provider_id, String company_name, String cif, String contact_name, String phone, String email, List<ProductForSale> products_for_sale) {
+        this.provider_id = provider_id;
+        this.company_name = company_name;
         this.cif = cif;
-        this.contactPersonName = contactPersonName;
-        this.phoneNumber = phoneNumber;
+        this.contact_name = contact_name;
+        this.phone = phone;
         this.email = email;
-        this.productsForSale = productsForSale;
+        this.products_for_sale = products_for_sale;
     }
 
     public int getProviderId() {
-        return this.providerId;
+        return this.provider_id;
     }
 
     public String getCompanyName() {
-        return this.companyName;
+        return this.company_name;
     }
 
     public String getCif() {
@@ -34,11 +34,11 @@ public class Provider {
     }
 
     public String getContactPersonName() {
-        return this.contactPersonName;
+        return this.contact_name;
     }
 
-    public PhoneNumber getPhoneNumber() {
-        return this.phoneNumber;
+    public String getPhoneNumber() {
+        return this.phone;
     }
 
     public String getEmail() {
@@ -46,6 +46,6 @@ public class Provider {
     }
 
     public List<ProductForSale> getProductsForSale() {
-        return this.productsForSale;
+        return this.products_for_sale;
     }
 }

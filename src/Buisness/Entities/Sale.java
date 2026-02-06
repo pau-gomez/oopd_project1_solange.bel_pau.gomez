@@ -1,32 +1,32 @@
 package Buisness.Entities;
 
 public class Sale {
-    private int clientId;
-    private String productId;
-    private double paidPrice;
-    private long purchaseDate;
+    private int client_id;
+    private String product_id;
+    private double price_paid;
+    private long purchase_date;
 
-    public Sale(int clientId, String productId, double paidPrice, long purchaseDate) {
-        this.clientId = clientId;
-        this.productId = productId;
-        this.paidPrice = paidPrice;
-        this.purchaseDate = purchaseDate;
+    public Sale(int client_id, String product_id, double price_paid, long purchase_date) {
+        this.client_id = client_id;
+        this.product_id = product_id;
+        this.price_paid = price_paid;
+        this.purchase_date = purchase_date;
     }
 
     public int getClientId() {
-        return this.clientId;
+        return this.client_id;
     }
 
     public String getProductId() {
-        return this.productId;
+        return this.product_id;
     }
 
     public double getPaidPrice() {
-        return this.paidPrice;
+        return this.price_paid;
     }
 
     public long getPurchaseDate() {
-        return this.purchaseDate;
+        return this.purchase_date;
     }
 
     public String getPricePaid() {

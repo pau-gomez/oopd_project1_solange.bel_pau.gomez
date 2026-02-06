@@ -20,7 +20,6 @@ public class ClientsManager {
         List<Client> clients = clientsDao.loadAllClients();
         boolean found = false;
         int i = 0;
-        System.out.println("Clients loaded: " + clients.size());
 
 
         while (i < clients.size() && !found) {
