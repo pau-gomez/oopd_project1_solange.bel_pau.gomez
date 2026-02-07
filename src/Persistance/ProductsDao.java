@@ -10,7 +10,7 @@ public interface ProductsDao {
 
     boolean validateProductsFile();
 
-    List<Product> findProductsByName();
+    List<Product> findProductsByName(String name);
 
     List<Provider> findProductsBySupplier();
 }

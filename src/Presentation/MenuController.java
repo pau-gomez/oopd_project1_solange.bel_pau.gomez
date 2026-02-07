@@ -146,9 +146,9 @@ public class MenuController {
     }
 
     private void findProductsByName() {
-        String text = mainMenu.askSearchText();
+        String name = mainMenu.askSearchText();
 
-        List<Product> products = productsManager.findProductsByName(text);
+        List<Product> products = productsManager.findProductsByName(name);
         List<String> display = new ArrayList<>();
 
         for (Product p : products) {
