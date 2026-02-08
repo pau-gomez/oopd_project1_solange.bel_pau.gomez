@@ -233,11 +233,29 @@ public class MenuController {
     }
 
     private void showShoppingCart() {
+        int option;
+        boolean exit = false;
+
         shoppingCartManager.printCart();
 
-        if (mainMenu.confirm("Do you want to proceed with the purchase?")) {
-            shoppingCartManager.checkout();
-        }
+        option = mainMenu.shoppingCartOptions();
+
+        do {
+            switch (option) {
+                case 1:
+                    shoppingCartManager.deleteProduct();
+                    break;
+                case 2:
+                    shoppingCartManager.clear();
+                    break;
+                case 3:
+                    shoppingCartManager.checkout();
+                    break;
+                case 4:
+                    exit = true;
+                    break;
+            }
+        } while(!exit);
     }
 
     private void handleLogout() {

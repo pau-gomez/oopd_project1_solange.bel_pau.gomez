@@ -67,7 +67,6 @@ public class AuthenticationMenu {
     }
 
     public String askFullName() {
-        scanner.nextLine();
         System.out.print("Full name: ");
         return scanner.nextLine();
     }

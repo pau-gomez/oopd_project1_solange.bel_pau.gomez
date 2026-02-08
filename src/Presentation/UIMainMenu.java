@@ -87,9 +87,16 @@ public class UIMainMenu {
     }
 
     public boolean confirm(String message) {
-        scanner.nextLine();
+        //scanner.nextLine();
         System.out.print(message + " (yes/no): ");
         return scanner.nextLine().equalsIgnoreCase("yes");
+    }
+
+    public int shoppingCartOptions() {
+
+        System.out.println("Avaliable options: \n\t(1) Remove products (2) Delete cart (3) Buy products (4) Exit");
+        System.out.print("Option: ");
+        return scanner.nextInt();
     }
 
     public void logout() {
