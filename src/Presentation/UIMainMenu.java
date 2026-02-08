@@ -92,6 +92,24 @@ public class UIMainMenu {
         return scanner.nextLine().equalsIgnoreCase("yes");
     }
 
+    public int printLine(String message) {
+        System.out.println(message);
+        return 0;
+    }
+
+    public void printShoppingCart(List<String> lines) {
+        System.out.println("----SHOPPING CART----");
+
+        if (lines.isEmpty()) {
+            System.out.println("Shopping Cart is empty.");
+            return;
+        }
+
+        for (String line : lines) {
+            System.out.println(line);
+        }
+    }
+
     public int shoppingCartOptions() {
 
         System.out.println("Avaliable options: \n\t(1) Remove products (2) Delete cart (3) Buy products (4) Exit");

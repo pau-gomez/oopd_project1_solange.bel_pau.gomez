@@ -7,3 +7,4 @@ public class main {
         if(!controller.start()) System.out.println("\nERROR: Some files don't exist or contain errors in their structure.");
     }
 }
+1

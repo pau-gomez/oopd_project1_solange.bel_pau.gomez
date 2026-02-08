@@ -24,19 +24,25 @@ public class ShoppingCartManager {
 
     //public void addProductsFromProvider(Provider provider) {}
 
-    public void printCart() {
-        int i = 0;
+    public List<String> getCartInformation() {
+        List<String> lines = new ArrayList<>();
 
-        System.out.println("----SHOPPING CART----");
+        int i = 1;
+        for (ProductForSale product : shoppingCart.products) {
 
-        for (ProductForSale product: shoppingCart.products) {
+            String line =
+                    "(" + i + ") "
+                            + product.getProductId()
+                            + " - " + product.getSalePrice() + "€"
+                            + " - stock: " + product.getUnitsInStock();
+
+            lines.add(line);
             i++;
-            System.out.print("(" + i + ") ");
-            printProductInformation(product);
-            System.out.print("\n");
         }
 
+        return lines;
     }
+
 
     public void checkout() {
         double total = 0.0, salePrice = 0.0;
