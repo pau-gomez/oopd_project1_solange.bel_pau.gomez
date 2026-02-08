@@ -2,7 +2,7 @@ package Buisness.Entities;
 
 import java.util.List;
 
-public abstract class Product {
+public class Product {
     private String product_id;
     private String product_name;
     private String brand;
