@@ -87,7 +87,7 @@ public class UIMainMenu {
     }
 
     public boolean confirm(String message) {
-        //scanner.nextLine();
+        scanner.nextLine();
         System.out.print(message + " (yes/no): ");
         return scanner.nextLine().equalsIgnoreCase("yes");
     }

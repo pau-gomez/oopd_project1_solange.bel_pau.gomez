@@ -208,7 +208,7 @@ public class MenuController {
 
         if (mainMenu.confirm("Do you want to add this product to the shopping cart?")) {
             int chosenProvider = (mainMenu.askForProvider() - 1);
-            // add to cart
+            shoppingCartManager.addProduct(selectableProductsForSale.get(chosenProvider));
         }
     }
 
@@ -229,27 +229,32 @@ public class MenuController {
         if (choice == 0) return;
 
         Provider provider = providers.get(choice - 1);
-        shoppingCartManager.addProductsFromProvider(provider);
+
+
+        //shoppingCartManager.addProductsFromProvider(provider);
     }
 
     private void showShoppingCart() {
         int option;
         boolean exit = false;
 
-        shoppingCartManager.printCart();
-
-        option = mainMenu.shoppingCartOptions();
-
         do {
+            shoppingCartManager.printCart();
+
+            option = mainMenu.shoppingCartOptions();
+
+
             switch (option) {
                 case 1:
                     shoppingCartManager.deleteProduct();
                     break;
                 case 2:
                     shoppingCartManager.clear();
+                    exit = true;
                     break;
                 case 3:
                     shoppingCartManager.checkout();
+                    exit = true;
                     break;
                 case 4:
                     exit = true;
