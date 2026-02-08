@@ -46,14 +46,20 @@ public class ProductsJsonDao implements ProductsDao {
     @Override
     public List<Product> findProductsByName(String name) {
         List<Product> allProducts = loadAllProducts();
-
         List<Product> filteredProducts = new ArrayList<>();
 
+        if (name == null || name.isBlank()) {
+            return allProducts;
+        }
+
         for (Product product : allProducts) {
-            if (product.getName().equalsIgnoreCase(name)) {
+            if (product.getProductName()
+                    .toLowerCase()
+                    .contains(name.toLowerCase())) {
                 filteredProducts.add(product);
             }
         }
+
         return filteredProducts;
     }
 
