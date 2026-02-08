@@ -156,13 +156,23 @@ public class MenuController {
             display.add(formatted);
         }
 
-
         mainMenu.printNumberedList(display);
-        int choice = mainMenu.askOption();
-        if (choice == 0) return;
 
-        Product selected = products.get(choice - 1);
-        shoppingCartManager.addProduct(selected);
+        int option = mainMenu.askOption();
+        if (option == 0) return;
+
+        Product selected = products.get(option - 1);
+        showProductInformation(selected);
+    }
+
+    private void showProductInformation(Product product) {
+        mainMenu.printProductInformation(
+                product.getProductId(),
+                product.getProductName(),
+                product.getBrand(),
+                product.getModel());
+
+        mainMenu.printProductSuppliers();
     }
 
     private void findProductsByProvider() {

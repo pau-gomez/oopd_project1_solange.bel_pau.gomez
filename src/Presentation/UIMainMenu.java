@@ -43,6 +43,24 @@ public class UIMainMenu {
         waitEnter();
     }
 
+    public void printProductInformation(
+            String product_id,
+            String product_name,
+            String brand,
+            String model
+    ) {
+        System.out.println("\nProduct ID: " + product_id + ",");
+        System.out.println("Name: " + product_name + ",");
+        System.out.println("Brand: " + brand + ",");
+        System.out.println("Model: " + model + ",");
+        System.out.println("Providers:");
+
+    }
+
+    public void printProductSuppliers(){
+
+    }
+
     public String askSearchText() {
         scanner.nextLine();
         System.out.print("Search criteria: ");
