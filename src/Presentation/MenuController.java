@@ -172,7 +172,44 @@ public class MenuController {
                 product.getBrand(),
                 product.getModel());
 
-        mainMenu.printProductSuppliers();
+        List<Provider> productSuppliers = providersManager.getProviderByProduct(product);
+
+        List<String> display = new ArrayList<>();
+        List<Provider> selectableProviders = new ArrayList<>();
+        List<ProductForSale> selectableProductsForSale = new ArrayList<>();
+
+        for (Provider provider : productSuppliers) {
+
+            for (ProductForSale pfs : provider.getProductsForSale()) {
+
+                if (pfs.getProductId().equals(product.getProductId())
+                        && pfs.getUnitsInStock() > 0) {
+
+                    String line =
+                            provider.getCompanyName() +
+                                    "\n   - Sale price: " + pfs.getSalePrice() + "€," +
+                                    "\n   - Available stock: " + pfs.getUnitsInStock();
+
+                    display.add(line);
+                    selectableProviders.add(provider);
+                    selectableProductsForSale.add(pfs);
+
+                    break;
+                }
+            }
+        }
+
+        /*if (display.isEmpty()) {
+            mainMenu.printLine("No providers have stock for this product.");
+            return;
+        }*/
+
+        mainMenu.printProductProviderList(display);
+
+        if (mainMenu.confirm("Do you want to add this product to the shopping cart?")) {
+            int chosenProvider = (mainMenu.askForProvider() - 1);
+            // add to cart
+        }
     }
 
     private void findProductsByProvider() {
@@ -186,7 +223,6 @@ public class MenuController {
             // Add it to the display list
             display.add(name);
         }
-
 
         mainMenu.printNumberedList(display);
         int choice = mainMenu.askOption();

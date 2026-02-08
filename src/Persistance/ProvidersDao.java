@@ -12,4 +12,5 @@ public interface ProvidersDao {
     void updateFile(List<Provider> providers);
 
     boolean validateProvidersFile();
+
 }
