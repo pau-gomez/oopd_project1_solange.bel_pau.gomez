@@ -2,7 +2,7 @@ package Buisness.Entities;
 
 import java.util.List;
 
-public abstract class Product {
+public class Product {
     private String product_id;
     private String product_name;
     private String brand;
@@ -37,15 +37,4 @@ public abstract class Product {
         return productSuppliers;
     }
 
-    public String getId() {
-        String id = null;
-
-        return id;
-    }
-
-    public String getName() {
-        String name = null;
-
-        return name;
-    }
 }

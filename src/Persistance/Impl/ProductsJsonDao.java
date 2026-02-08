@@ -8,6 +8,7 @@ import com.google.gson.reflect.TypeToken;
 
 import java.io.File;
 import java.io.FileReader;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ProductsJsonDao implements ProductsDao {
@@ -43,8 +44,23 @@ public class ProductsJsonDao implements ProductsDao {
     }
 
     @Override
-    public List<Product> findProductsByName() {
-        return List.of();
+    public List<Product> findProductsByName(String name) {
+        List<Product> allProducts = loadAllProducts();
+        List<Product> filteredProducts = new ArrayList<>();
+
+        if (name == null || name.isBlank()) {
+            return allProducts;
+        }
+
+        for (Product product : allProducts) {
+            if (product.getProductName()
+                    .toLowerCase()
+                    .contains(name.toLowerCase())) {
+                filteredProducts.add(product);
+            }
+        }
+
+        return filteredProducts;
     }
 
     @Override

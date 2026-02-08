@@ -43,10 +43,29 @@ public class UIMainMenu {
         waitEnter();
     }
 
+    public void printProductInformation(
+            String product_id,
+            String product_name,
+            String brand,
+            String model
+    ) {
+        System.out.println("\nProduct ID: " + product_id + ",");
+        System.out.println("Name: " + product_name + ",");
+        System.out.println("Brand: " + brand + ",");
+        System.out.println("Model: " + model + ",");
+        System.out.println("Providers:");
+
+    }
+
     public String askSearchText() {
         scanner.nextLine();
         System.out.print("Search criteria: ");
         return scanner.nextLine();
+    }
+
+    public int askForProvider() {
+        System.out.print("Choose a provider: ");
+        return scanner.nextInt();
     }
 
     public void printNumberedList(List<String> items) {
@@ -54,6 +73,12 @@ public class UIMainMenu {
             System.out.println((i + 1) + ") " + items.get(i));
         }
         System.out.println("\n0) Back");
+    }
+
+    public void printProductProviderList(List<String> items) {
+        for (int i = 0; i < items.size(); i++) {
+            System.out.println((i + 1) + ") " + items.get(i));
+        }
     }
 
     public int askOption() {

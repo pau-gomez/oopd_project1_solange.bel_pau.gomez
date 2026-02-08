@@ -16,10 +16,8 @@ public class  ProductsManager {
         this.productsDao = new ProductsJsonDao();
     }
 
-    public List<Product> findProductsByName(String text) {
-        Product products = null;
-
-        return Collections.singletonList(products);
+    public List<Product> findProductsByName(String name) {
+        return productsDao.findProductsByName(name);
     }
 
     public boolean checkProductsFile() {
