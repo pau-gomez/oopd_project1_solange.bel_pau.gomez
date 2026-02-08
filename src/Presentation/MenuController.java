@@ -230,8 +230,11 @@ public class MenuController {
 
         Provider provider = providers.get(choice - 1);
 
+        mainMenu.printProductFromProvider(provider);
 
-        //shoppingCartManager.addProductsFromProvider(provider);
+        int option = mainMenu.askOption();
+
+        shoppingCartManager.addProduct(provider.getProductsForSale().get(option-1));
     }
 
     private void showShoppingCart() {

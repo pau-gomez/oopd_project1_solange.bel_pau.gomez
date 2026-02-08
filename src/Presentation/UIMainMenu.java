@@ -1,5 +1,7 @@
 package Presentation;
 
+import Buisness.Entities.Provider;
+
 import java.util.List;
 import java.util.Scanner;
 
@@ -107,5 +109,8 @@ public class UIMainMenu {
         System.out.print("\nPress ENTER to continue...");
         scanner.nextLine();
         scanner.nextLine();
+    }
+
+    public void printProductFromProvider(Provider provider) {
     }
 }
