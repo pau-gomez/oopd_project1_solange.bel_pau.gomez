@@ -242,7 +242,8 @@ public class MenuController {
         boolean exit = false;
 
         do {
-            shoppingCartManager.printCart();
+            List<String> cartLines = shoppingCartManager.getCartInformation();
+            mainMenu.printShoppingCart(cartLines);
 
             option = mainMenu.shoppingCartOptions();
 
