@@ -1,5 +1,6 @@
 package Presentation;
 
+import Buisness.Entities.ProductForSale;
 import Buisness.Entities.Provider;
 
 import java.util.List;
@@ -112,5 +113,20 @@ public class UIMainMenu {
     }
 
     public void printProductFromProvider(Provider provider) {
+        int i = 0;
+
+        for (ProductForSale productReal : provider.getProductsForSale()) {
+            i++;
+            System.out.print("(" + i + ") ");
+            printProductInformation(productReal);
+            System.out.print("\n");
+        }
+    }
+
+    public void printProductInformation(ProductForSale product) {
+        System.out.println("\nProduct ID: " + product.getProductId() + ",");
+        System.out.println("Price: " + product.getSalePrice() + ",");
+        System.out.println("Stock: " + product.getUnitsInStock());
+
     }
 }
