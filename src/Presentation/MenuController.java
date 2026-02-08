@@ -152,7 +152,7 @@ public class MenuController {
         List<String> display = new ArrayList<>();
 
         for (Product p : products) {
-            String formatted = p.getId() + " - " + p.getName();
+            String formatted = p.getProductId() + " - " + p.getProductName();
             display.add(formatted);
         }
 
