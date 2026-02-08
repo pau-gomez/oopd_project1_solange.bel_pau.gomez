@@ -107,9 +107,7 @@ public class ShoppingCartManager {
         return product.getSalePrice() * (1 + shoppingCart.getVat());
     }
 
-    public void printProductInformation(
-            ProductForSale product
-    ) {
+    public void printProductInformation(ProductForSale product) {
         System.out.println("\nProduct ID: " + product.getProductId() + ",");
         //System.out.println("Name: " + product_name + ",");
         System.out.println("Price: " + product.getSalePrice() + ",");

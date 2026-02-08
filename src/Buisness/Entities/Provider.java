@@ -7,11 +7,11 @@ public class Provider {
     private String company_name;
     private String cif;
     private String contact_name;
-    private String phone;
+    private PhoneNumber phone;
     private String email;
     private List<ProductForSale> products_for_sale;
 
-    public Provider(int provider_id, String company_name, String cif, String contact_name, String phone, String email, List<ProductForSale> products_for_sale) {
+    public Provider(int provider_id, String company_name, String cif, String contact_name, PhoneNumber phone, String email, List<ProductForSale> products_for_sale) {
         this.provider_id = provider_id;
         this.company_name = company_name;
         this.cif = cif;
@@ -37,7 +37,7 @@ public class Provider {
         return this.contact_name;
     }
 
-    public String getPhoneNumber() {
+    public PhoneNumber getPhoneNumber() {
         return this.phone;
     }
 

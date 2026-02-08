@@ -1,5 +1,8 @@
 package Presentation;
 
+import Buisness.Entities.ProductForSale;
+import Buisness.Entities.Provider;
+
 import java.util.List;
 import java.util.Scanner;
 
@@ -107,5 +110,18 @@ public class UIMainMenu {
         System.out.print("\nPress ENTER to continue...");
         scanner.nextLine();
         scanner.nextLine();
+    }
+
+    public void printProductFromProvider(Provider provider) {
+        for (ProductForSale product : provider.getProductsForSale()) {
+            printProductForSaleInformation(product);
+        }
+    }
+
+    private void printProductForSaleInformation(ProductForSale product) {
+        System.out.println("\nProduct ID: " + product.getProductId() + ",");
+        //System.out.println("Name: " + product_name + ",");
+        System.out.println("Price: " + product.getSalePrice() + ",");
+        System.out.println("Stock: " + product.getUnitsInStock());
     }
 }
