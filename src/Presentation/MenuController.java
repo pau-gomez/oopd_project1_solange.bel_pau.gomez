@@ -94,9 +94,7 @@ public class MenuController {
         boolean logged = true;
 
         while (logged) {
-            int option = mainMenu.printMainMenu(
-                    clientsManager.getCurrentClient().getFullName()
-            );
+            int option = mainMenu.printMainMenu(clientsManager.getCurrentClient().getFullName());
 
             switch (option) {
                 case 1:
@@ -138,7 +136,7 @@ public class MenuController {
         List<String> purchases = new ArrayList<>();
 
         for (Sale s : clientSales) {
-            String formatted = s.getProductId() + " - €" + s.getPricePaid();
+            String formatted = s.getProductId() + " - €" + s.getPaidPrice();
             purchases.add(formatted);
         }
 
@@ -166,11 +164,7 @@ public class MenuController {
     }
 
     private void showProductInformation(Product product) {
-        mainMenu.printProductInformation(
-                product.getProductId(),
-                product.getProductName(),
-                product.getBrand(),
-                product.getModel());
+        mainMenu.printProductInformation(product.getProductId(), product.getProductName(), product.getBrand(), product.getModel());
 
         List<Provider> productSuppliers = providersManager.getProviderByProduct(product);
 
@@ -185,9 +179,7 @@ public class MenuController {
                 if (pfs.getProductId().equals(product.getProductId())
                         && pfs.getUnitsInStock() > 0) {
 
-                    String line =
-                            provider.getCompanyName() +
-                                    "\n   - Sale price: " + pfs.getSalePrice() + "€," +
+                    String line = provider.getCompanyName() + "\n   - Sale price: " + pfs.getSalePrice() + "€," +
                                     "\n   - Available stock: " + pfs.getUnitsInStock();
 
                     display.add(line);
@@ -250,14 +242,14 @@ public class MenuController {
 
             switch (option) {
                 case 1:
-                    shoppingCartManager.deleteProduct();
+                    deleteProductFromCart();
                     break;
                 case 2:
                     shoppingCartManager.clear();
                     exit = true;
                     break;
                 case 3:
-                    shoppingCartManager.checkout();
+                    checkout();
                     exit = true;
                     break;
                 case 4:
@@ -265,6 +257,36 @@ public class MenuController {
                     break;
             }
         } while(!exit);
+    }
+
+    private void deleteProductFromCart() {
+        if(!shoppingCartManager.deleteProduct(mainMenu.deleteProductInterface())) {
+            mainMenu.printLine("No such product");
+        }
+        else{
+            mainMenu.printLine("\tProduct deleted\n");
+        }
+    }
+
+    private void checkout() {
+        int i = 0;
+
+        mainMenu.printLine("----- PURCHASE INFORMATION -----");
+
+        for(ProductForSale product : shoppingCartManager.getProducts()){
+            i++;
+            mainMenu.printLine("(" + i + ") Product: " + product.getProductId() +
+                    " | Supplier: " + shoppingCartManager.getProvider(product) +
+                    " | Price: " + String.format("%.2f", product.getSalePrice()) + "€");
+
+            providersManager.updateProviderStock(product);
+
+            Sale sale = new Sale(clientsManager.getCurrentClient().getClientId(), product.getProductId(),
+                    product.getSalePrice()*1.21, 9999);
+
+            salesManager.addSale(sale);
+        }
+        mainMenu.printLine("-------------------\nTOTAL: " + String.format("%.2f", shoppingCartManager.checkout()) + "€");
     }
 
     private void handleLogout() {

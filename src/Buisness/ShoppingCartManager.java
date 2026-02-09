@@ -22,19 +22,15 @@ public class ShoppingCartManager {
         shoppingCart.products.add(selected);
     }
 
-    //public void addProductsFromProvider(Provider provider) {}
-
     public List<String> getCartInformation() {
         List<String> lines = new ArrayList<>();
 
         int i = 1;
         for (ProductForSale product : shoppingCart.products) {
 
-            String line =
-                    "(" + i + ") "
-                            + product.getProductId()
-                            + " - " + product.getSalePrice() + "€"
-                            + " - stock: " + product.getUnitsInStock();
+            String line = "(" + i + ") " + product.getProductId() + " - "
+                    + product.getSalePrice() + "€"
+                    + " - stock: " + product.getUnitsInStock();
 
             lines.add(line);
             i++;
@@ -44,37 +40,22 @@ public class ShoppingCartManager {
     }
 
 
-    public void checkout() {
-        double total = 0.0, salePrice = 0.0;
-
-        System.out.println("----- PURCHASE INFORMATION -----");
+    public double checkout() {
+        double total = 0.0;
 
         for (ProductForSale product : shoppingCart.products) {
-            salePrice = calculateSellingPrice(product);
-            total += salePrice;
-
-            System.out.println(
-                    "Product: " + product.getProductId() +
-                            " | Supplier: " + getProvider(product) +
-                            " | Price: " + String.format("%.2f", salePrice) + "€"
-            );
+            total += calculateSellingPrice(product);
         }
-
-        System.out.println("-------------------");
-        System.out.println("TOTAL: " + String.format("%.2f", total) + "€");
-
         clear();
+        return total;
     }
 
     public void clear() {
         products.clear();
     }
 
-    public void deleteProduct() {
+    public boolean deleteProduct(int index) {
         boolean found = false;
-
-        System.out.print("Product to delete (number): ");
-        int index = scanner.nextInt();
 
         int i = 0;
 
@@ -86,12 +67,7 @@ public class ShoppingCartManager {
             }
         }
 
-        if(!found) {
-            System.out.println("No such product");
-        }
-        else{
-            System.out.print("Product deleted");
-        }
+        return found;
     }
 
     public String getProvider(ProductForSale product) {
@@ -113,13 +89,7 @@ public class ShoppingCartManager {
         return product.getSalePrice() * (1 + shoppingCart.getVat());
     }
 
-    public void printProductInformation(
-            ProductForSale product
-    ) {
-        System.out.println("\nProduct ID: " + product.getProductId() + ",");
-        //System.out.println("Name: " + product_name + ",");
-        System.out.println("Price: " + product.getSalePrice() + ",");
-        System.out.println("Stock: " + product.getUnitsInStock());
-
+    public List<ProductForSale> getProducts() {
+        return shoppingCart.getProducts();
     }
 }

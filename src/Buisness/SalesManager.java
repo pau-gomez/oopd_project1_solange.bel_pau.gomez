@@ -34,6 +34,10 @@ public class SalesManager {
         return clientSales;
     }
 
+    public List<Sale> getAllSales() {
+        return salesDao.loadAllSales();
+    }
+
     public boolean checkSalesFile() {
 
         return true;

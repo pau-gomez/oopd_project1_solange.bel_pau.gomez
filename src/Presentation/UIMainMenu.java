@@ -24,12 +24,7 @@ public class UIMainMenu {
         return scanner.nextInt();
     }
 
-    public void printUserProfile(
-            int clientId,
-            String fullName,
-            List<String> phoneNumbers,
-            List<String> purchaseHistory
-    ) {
+    public void printUserProfile(int clientId, String fullName, List<String> phoneNumbers, List<String> purchaseHistory) {
         System.out.println("\n--| User Profile |--\n");
         System.out.println("Client ID: " + clientId);
         System.out.println("Full name: " + fullName);
@@ -46,12 +41,7 @@ public class UIMainMenu {
         waitEnter();
     }
 
-    public void printProductInformation(
-            String product_id,
-            String product_name,
-            String brand,
-            String model
-    ) {
+    public void printProductInformation(String product_id, String product_name, String brand, String model) {
         System.out.println("\nProduct ID: " + product_id + ",");
         System.out.println("Name: " + product_name + ",");
         System.out.println("Brand: " + brand + ",");
@@ -67,15 +57,15 @@ public class UIMainMenu {
     }
 
     public int askForProvider() {
-        System.out.print("Choose a provider: ");
+        System.out.print("\nChoose a provider: ");
         return scanner.nextInt();
     }
 
     public void printNumberedList(List<String> items) {
         for (int i = 0; i < items.size(); i++) {
-            System.out.println((i + 1) + ") " + items.get(i));
+            System.out.println("\t" + (i + 1) + ") " + items.get(i));
         }
-        System.out.println("\n0) Back");
+        System.out.println("\n\t0) Back");
     }
 
     public void printProductProviderList(List<String> items) {
@@ -115,7 +105,7 @@ public class UIMainMenu {
 
     public int shoppingCartOptions() {
 
-        System.out.println("Avaliable options: \n\t(1) Remove products (2) Delete cart (3) Buy products (4) Exit");
+        System.out.println("\nAvaliable options: \n\t(1) Remove products (2) Delete cart (3) Buy products (4) Exit");
         System.out.print("Option: ");
         return scanner.nextInt();
     }
@@ -146,5 +136,12 @@ public class UIMainMenu {
         System.out.println("Price: " + product.getSalePrice() + ",");
         System.out.println("Stock: " + product.getUnitsInStock());
 
+    }
+
+    public int deleteProductInterface() {
+        System.out.print("Product to delete (number): ");
+        int index = scanner.nextInt();
+
+        return index;
     }
 }

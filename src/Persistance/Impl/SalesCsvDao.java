@@ -47,7 +47,7 @@ public class SalesCsvDao implements SalesDao {
                 String saleLine = String.join(",",
                         String.valueOf(sale.getClientId()),
                         String.valueOf(sale.getProductId()),
-                        String.valueOf(sale.getPricePaid()),
+                        String.valueOf(sale.getPaidPrice()),
                         String.valueOf(sale.getPurchaseDate())) + "\n";
                 writer.append(saleLine);
             }

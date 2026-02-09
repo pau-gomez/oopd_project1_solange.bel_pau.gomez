@@ -6,6 +6,9 @@ public class Sale {
     public double price_paid;
     public long purchase_date;
 
+    public Sale() {
+    }
+
     public Sale(int client_id, String product_id, double price_paid, long purchase_date) {
         this.client_id = client_id;
         this.product_id = product_id;
@@ -29,9 +32,5 @@ public class Sale {
         return this.purchase_date;
     }
 
-    public String getPricePaid() {
-        String a = null;
 
-        return a;
-    }
 }
