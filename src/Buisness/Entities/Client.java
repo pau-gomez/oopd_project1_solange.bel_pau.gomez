@@ -14,7 +14,7 @@ public class Client {
         this.phone_numbers = phone_numbers;
     }
 
-    public int getClientId(){ return this.client_id; }
+    public int getClientId(){return this.client_id;}
 
     public String getFullName(){ return this.full_name; }
 

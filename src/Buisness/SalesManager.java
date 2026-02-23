@@ -44,7 +44,16 @@ public class SalesManager {
     }
 
     public List<Sale> filterSalesByClient(int id) {
+        List<Sale> allSales;
         List<Sale> sales = new ArrayList<>();
+        allSales = salesDao.loadAllSales();
+
+        for(Sale s: allSales) {
+            if (s.client_id == id) {
+                sales.add(s);
+            }
+        }
+
         return sales;
     }
 

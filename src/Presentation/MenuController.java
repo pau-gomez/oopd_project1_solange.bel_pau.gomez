@@ -83,8 +83,6 @@ public class MenuController {
             phones.add(new PhoneNumber(prefix, number));
         } while (authenticationMenu.askAnotherPhone());
 
-        //System.out.print("we out the loop");
-
         if(!clientsManager.registerClient(name, phones)) return false;
 
         return true;
@@ -132,7 +130,8 @@ public class MenuController {
             phones.add(formatted);
         }
 
-        List<Sale> clientSales = salesManager.filterSalesByClient(c.getId());
+
+        List<Sale> clientSales = salesManager.filterSalesByClient(c.getClientId());
         List<String> purchases = new ArrayList<>();
 
         for (Sale s : clientSales) {
@@ -140,7 +139,7 @@ public class MenuController {
             purchases.add(formatted);
         }
 
-        mainMenu.printUserProfile(c.getId(), c.getFullName(), phones, purchases);
+        mainMenu.printUserProfile(c.getClientId(), c.getFullName(), phones, purchases);
     }
 
     private void findProductsByName() {
