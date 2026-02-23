@@ -12,10 +12,10 @@ import java.util.function.Supplier;
 public class ShoppingCartManager {
     private List<ProductForSale> products =  new ArrayList<>();
     private List<Provider> providers;
-    ProvidersManager providersManager = new ProvidersManager();
+    private ProvidersManager providersManager = new ProvidersManager();
     //ProductsManager productsManager;
-    ShoppingCart shoppingCart = new ShoppingCart(products, 0.21);
-    private final Scanner scanner = new Scanner(System.in);
+    private ShoppingCart shoppingCart = new ShoppingCart(products, 0.21);
+    //private final Scanner scanner = new Scanner(System.in);
 
 
     public void addProduct(ProductForSale selected) {
