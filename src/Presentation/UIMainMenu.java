@@ -144,4 +144,8 @@ public class UIMainMenu {
 
         return index;
     }
+
+    public void UserNotFound() {
+        System.out.println("\n\tThis ID doesn't belong to any user!\n");
+    }
 }

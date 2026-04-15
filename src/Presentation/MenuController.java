@@ -44,7 +44,7 @@ public class MenuController {
                         userMenu();
                     }
                     else {
-                        //error
+                        mainMenu.UserNotFound();
                     }
                     break;
                 case 2:
