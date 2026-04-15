@@ -1,6 +1,5 @@
 package Persistance.Impl;
 
-
 import Buisness.Entities.Sale;
 import Persistance.SalesDao;
 import com.opencsv.bean.CsvToBeanBuilder;
@@ -11,13 +10,18 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
 
+/**
+ * CSV implementation of SalesDao using OpenCSV for persistence.
+ */
 public class SalesCsvDao implements SalesDao {
     private static final String filepath = "src/Resources/sales.csv";
 
-    //public SalesCsvDao(String filepath) { this.filepath = filepath;}
-
+    /**
+     * Loads all sales from the CSV file.
+     *
+     * @return list of sales
+     */
     @Override
-    // @SuppressWarnings("unchecked")
     public List<Sale> loadAllSales() {
 
         File file = new File(this.filepath);
@@ -37,6 +41,11 @@ public class SalesCsvDao implements SalesDao {
         }
     }
 
+    /**
+     * Writes sales data to the CSV file.
+     *
+     * @param sales list of sales to save
+     */
     @Override
     public void updateFile(List<Sale> sales) {
         File file = new File(this.filepath);

@@ -9,13 +9,24 @@ import Persistance.ProvidersDao;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Handles provider-related business operations.
+ */
 public class ProvidersManager {
     private ProvidersDao providersDao;
 
+    /**
+     * Initializes the manager with a JSON-based providers DAO.
+     */
     public ProvidersManager() {
         this.providersDao = new ProvidersJsonDao();
     }
 
+    /**
+     * Updates stock for a purchased product across providers.
+     *
+     * @param productBought the product that was purchased
+     */
     public void updateProviderStock(ProductForSale productBought) {
         List<Provider> providers = providersDao.loadAllProviders();
         boolean updated = false;
@@ -44,15 +55,31 @@ public class ProvidersManager {
         }
     }
 
-
+    /**
+     * Grants access to the user of all providers.
+     *
+     * @return list of all providers
+     */
     public List<Provider> getAllProviders() {
         return providersDao.loadAllProviders();
     }
 
+    /**
+     * Gets a provider by ID.
+     *
+     * @param id provider ID
+     * @return provider or null if not found
+     */
     public Provider getProvider(int id) {
         return providersDao.getOneProvider(id);
     }
 
+    /**
+     * Finds providers that sell a given product.
+     *
+     * @param product the product to search for
+     * @return list of providers selling the product
+     */
     public List<Provider> getProviderByProduct(Product product) {
         List<Provider> providers = providersDao.loadAllProviders();
         List<Provider> result = new ArrayList<>();
@@ -73,7 +100,13 @@ public class ProvidersManager {
         return result;
     }
 
-    // helper
+    /**
+     * Checks if a provider sells a specific product.
+     *
+     * @param provider the provider
+     * @param productId product ID
+     * @return true if provider sells the product
+     */
     private boolean providerSellsProduct(Provider provider, String productId) {
         boolean sells = false;
 
@@ -91,6 +124,11 @@ public class ProvidersManager {
         return sells;
     }
 
+    /**
+     * Validates the providers file.
+     *
+     * @return true if valid, false otherwise
+     */
     public boolean checkProvidersFile() {
         return providersDao.validateProvidersFile();
     }

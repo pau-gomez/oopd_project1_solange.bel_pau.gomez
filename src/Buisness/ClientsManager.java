@@ -7,20 +7,31 @@ import Persistance.Impl.ClientsJsonDao;
 
 import java.util.List;
 
+/**
+ * Handles client authentication and registration logic.
+ */
 public class ClientsManager {
     private Client currentClient;
     private ClientsDao clientsDao;
 
+    /**
+     * Initializes the manager with a JSON-based DAO.
+     */
     public ClientsManager() {
         this.clientsDao = new ClientsJsonDao();
         this.currentClient = null;
     }
 
+    /**
+     * Logs in a client by ID.
+     *
+     * @param clientId the client ID
+     * @return true if login is successful, false otherwise
+     */
     public boolean login(int clientId) {
         List<Client> clients = clientsDao.loadAllClients();
         boolean found = false;
         int i = 0;
-
 
         while (i < clients.size() && !found) {
             if (clients.get(i).getClientId() == clientId) {
@@ -33,6 +44,13 @@ public class ClientsManager {
         return found;
     }
 
+    /**
+     * Registers a new client and sets them as the current client.
+     *
+     * @param fullName client's full name
+     * @param phoneNumbers list of phone numbers
+     * @return true if registration is successful
+     */
     public boolean registerClient(String fullName, List<PhoneNumber> phoneNumbers) {
         List<Client> clients = clientsDao.loadAllClients();
 
@@ -49,20 +67,28 @@ public class ClientsManager {
         return true;
     }
 
+    /**
+     * Logs out the current client.
+     */
     public void logout() {
         currentClient = null;
     }
 
-    // getters
+    /**
+     * Gets current client object.
+     *
+     * @return the currently logged-in client
+     */
     public Client getCurrentClient() {
         return currentClient;
     }
 
-    public boolean isClientLoggedIn() {
-        return currentClient != null;
-    }
-
-    // helpers
+    /**
+     * Generates a new unique client ID.
+     *
+     * @param clients list of existing clients
+     * @return new unique client ID
+     */
     private int generateNewClientId(List<Client> clients) {
         int maxId = 0;
         int i = 0;
@@ -75,5 +101,4 @@ public class ClientsManager {
         }
         return maxId + 1;
     }
-
 }

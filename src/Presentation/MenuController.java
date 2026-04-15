@@ -6,6 +6,9 @@ import Buisness.Entities.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Controls the application flow and user interactions between UI and business logic.
+ */
 public class MenuController {
 
     private final AuthenticationMenu authenticationMenu;
@@ -17,6 +20,9 @@ public class MenuController {
     private final SalesManager salesManager;
     private final ShoppingCartManager shoppingCartManager;
 
+    /**
+     * Initializes all menus and business managers.
+     */
     public MenuController() {
         authenticationMenu = new AuthenticationMenu();
         mainMenu = new Presentation.UIMainMenu();
@@ -28,6 +34,11 @@ public class MenuController {
         shoppingCartManager = new ShoppingCartManager();
     }
 
+    /**
+     * Starts the application loop.
+     *
+     * @return true if system starts correctly, false otherwise
+     */
     public boolean start() {
 
         if(!checkFiles()) return false;
@@ -40,7 +51,6 @@ public class MenuController {
             switch (option) {
                 case 1:
                     if (handleLogin()) {
-                        //System.out.print("you logged in");
                         userMenu();
                     }
                     else {
@@ -68,11 +78,21 @@ public class MenuController {
         return true;
     }
 
+    /**
+     * Handles login process.
+     *
+     * @return true if login successful
+     */
     private boolean handleLogin() {
         int id = authenticationMenu.askClientId();
         return clientsManager.login(id);
     }
 
+    /**
+     * Handles client registration process.
+     *
+     * @return true if registration successful
+     */
     private boolean handleRegister() {
         String name = authenticationMenu.askFullName();
         List<PhoneNumber> phones = new ArrayList<>();
@@ -88,6 +108,9 @@ public class MenuController {
         return true;
     }
 
+    /**
+     * Displays the main user menu loop.
+     */
     private void userMenu() {
         boolean logged = true;
 
@@ -109,7 +132,6 @@ public class MenuController {
                     break;
                 case 0:
                     handleLogout();
-                    //authenticationMenu.printGoodByeMessage();
                     logged = false;
                     break;
                 default:
@@ -120,6 +142,9 @@ public class MenuController {
         }
     }
 
+    /**
+     * Displays current client profile information.
+     */
     private void showProfile() {
         Client c = clientsManager.getCurrentClient();
 
@@ -129,7 +154,6 @@ public class MenuController {
             String formatted = "(" + p.getInternationalPrefix() + ") " + p.getPhoneNumber();
             phones.add(formatted);
         }
-
 
         List<Sale> clientSales = salesManager.filterSalesByClient(c.getClientId());
         List<String> purchases = new ArrayList<>();
@@ -142,6 +166,9 @@ public class MenuController {
         mainMenu.printUserProfile(c.getClientId(), c.getFullName(), phones, purchases);
     }
 
+    /**
+     * Searches products by name and allows selection.
+     */
     private void findProductsByName() {
         String name = mainMenu.askSearchText();
 
@@ -162,6 +189,11 @@ public class MenuController {
         showProductInformation(selected);
     }
 
+    /**
+     * Displays product details and available providers.
+     *
+     * @param product selected product
+     */
     private void showProductInformation(Product product) {
         mainMenu.printProductInformation(product.getProductId(), product.getProductName(), product.getBrand(), product.getModel());
 
@@ -179,7 +211,7 @@ public class MenuController {
                         && pfs.getUnitsInStock() > 0) {
 
                     String line = provider.getCompanyName() + "\n   - Sale price: " + pfs.getSalePrice() + "€," +
-                                    "\n   - Available stock: " + pfs.getUnitsInStock();
+                            "\n   - Available stock: " + pfs.getUnitsInStock();
 
                     display.add(line);
                     selectableProviders.add(provider);
@@ -190,11 +222,6 @@ public class MenuController {
             }
         }
 
-        /*if (display.isEmpty()) {
-            mainMenu.printLine("No providers have stock for this product.");
-            return;
-        }*/
-
         mainMenu.printProductProviderList(display);
 
         if (mainMenu.confirm("Do you want to add this product to the shopping cart?")) {
@@ -203,15 +230,15 @@ public class MenuController {
         }
     }
 
+    /**
+     * Displays products filtered by provider.
+     */
     private void findProductsByProvider() {
         List<Provider> providers = providersManager.getAllProviders();
         List<String> display = new ArrayList<>();
 
         for (Provider provider : providers) {
-            // Get the company name from each Provider object
             String name = provider.getCompanyName();
-
-            // Add it to the display list
             display.add(name);
         }
 
@@ -228,6 +255,9 @@ public class MenuController {
         shoppingCartManager.addProduct(provider.getProductsForSale().get(option-1));
     }
 
+    /**
+     * Handles shopping cart menu operations.
+     */
     private void showShoppingCart() {
         int option;
         boolean exit = false;
@@ -237,7 +267,6 @@ public class MenuController {
             mainMenu.printShoppingCart(cartLines);
 
             option = mainMenu.shoppingCartOptions();
-
 
             switch (option) {
                 case 1:
@@ -258,6 +287,9 @@ public class MenuController {
         } while(!exit);
     }
 
+    /**
+     * Removes a product from the shopping cart.
+     */
     private void deleteProductFromCart() {
         if(!shoppingCartManager.deleteProduct(mainMenu.deleteProductInterface())) {
             mainMenu.printLine("No such product");
@@ -267,6 +299,9 @@ public class MenuController {
         }
     }
 
+    /**
+     * Finalizes purchase and records the sale.
+     */
     private void checkout() {
         int i = 0;
 
@@ -288,12 +323,20 @@ public class MenuController {
         mainMenu.printLine("-------------------\nTOTAL: " + String.format("%.2f", shoppingCartManager.checkout()) + "€");
     }
 
+    /**
+     * Logs out the current user and clears session data.
+     */
     private void handleLogout() {
         shoppingCartManager.clear();
         clientsManager.logout();
         mainMenu.logout();
     }
 
+    /**
+     * Validates required data files.
+     *
+     * @return true if all files are valid
+     */
     private boolean checkFiles() {
 
         if(!productsManager.checkProductsFile()) return false;

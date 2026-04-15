@@ -7,42 +7,36 @@ import Persistance.SalesDao;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Handles sales-related business operations.
+ */
 public class SalesManager {
     private SalesDao salesDao;
 
+    /**
+     * Initializes the manager with a CSV-based sales DAO.
+     */
     public SalesManager() {
         this.salesDao = new SalesCsvDao();
     }
 
+    /**
+     * Adds a new sale to the system.
+     *
+     * @param sale the sale to add
+     */
     public void addSale(Sale sale) {
         List<Sale> sales = salesDao.loadAllSales();
         sales.add(sale);
         salesDao.updateFile(sales);
     }
 
-    public List<Sale> filterSales(int clientId) {
-        List<Sale> sales = salesDao.loadAllSales();
-        List<Sale> clientSales = new ArrayList<>();
-
-        int i = 0;
-        while (i < sales.size()) {
-            if (sales.get(i).getClientId() == clientId) {
-                clientSales.add(sales.get(i));
-            }
-            i++;
-        }
-        return clientSales;
-    }
-
-    public List<Sale> getAllSales() {
-        return salesDao.loadAllSales();
-    }
-
-    public boolean checkSalesFile() {
-
-        return true;
-    }
-
+    /**
+     * Filters sales by client ID.
+     *
+     * @param id client ID
+     * @return list of sales belonging to the client
+     */
     public List<Sale> filterSalesByClient(int id) {
         List<Sale> allSales;
         List<Sale> sales = new ArrayList<>();

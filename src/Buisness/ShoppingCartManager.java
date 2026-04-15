@@ -1,27 +1,33 @@
 package Buisness;
 
 import Buisness.Entities.*;
-import Buisness.ProvidersManager;
-
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
-import java.util.function.Supplier;
 
+/**
+ * Manages shopping cart operations such as adding products, checkout, and provider lookup.
+ */
 public class ShoppingCartManager {
     private List<ProductForSale> products =  new ArrayList<>();
     private List<Provider> providers;
     private ProvidersManager providersManager = new ProvidersManager();
-    //ProductsManager productsManager;
     private ShoppingCart shoppingCart = new ShoppingCart(products, 0.21);
-    //private final Scanner scanner = new Scanner(System.in);
 
-
+    /**
+     * Adds a product to the shopping cart.
+     *
+     * @param selected the product to add
+     */
     public void addProduct(ProductForSale selected) {
         shoppingCart.products.add(selected);
     }
 
+    /**
+     * Returns formatted information about products in the cart.
+     *
+     * @return list of product information strings
+     */
     public List<String> getCartInformation() {
         List<String> lines = new ArrayList<>();
 
@@ -39,7 +45,11 @@ public class ShoppingCartManager {
         return lines;
     }
 
-
+    /**
+     * Calculates total price and clears the cart.
+     *
+     * @return total price including VAT
+     */
     public double checkout() {
         double total = 0.0;
 
@@ -50,10 +60,19 @@ public class ShoppingCartManager {
         return total;
     }
 
+    /**
+     * Clears the shopping cart.
+     */
     public void clear() {
         products.clear();
     }
 
+    /**
+     * Deletes a product from the cart by index.
+     *
+     * @param index position of the product in the cart (1-based)
+     * @return true if product was removed, false otherwise
+     */
     public boolean deleteProduct(int index) {
         boolean found = false;
 
@@ -70,6 +89,12 @@ public class ShoppingCartManager {
         return found;
     }
 
+    /**
+     * Finds the provider of a given product.
+     *
+     * @param product the product to search for
+     * @return provider company name, or null if not found
+     */
     public String getProvider(ProductForSale product) {
         providers = providersManager.getAllProviders();
 
@@ -85,10 +110,21 @@ public class ShoppingCartManager {
         return null;
     }
 
+    /**
+     * Calculates selling price including VAT.
+     *
+     * @param product the product
+     * @return final selling price
+     */
     public double calculateSellingPrice(ProductForSale product) {
         return product.getSalePrice() * (1 + shoppingCart.getVat());
     }
 
+    /**
+     * Grants access to the shopping cart products.
+     *
+     * @return list of products in the cart
+     */
     public List<ProductForSale> getProducts() {
         return shoppingCart.getProducts();
     }

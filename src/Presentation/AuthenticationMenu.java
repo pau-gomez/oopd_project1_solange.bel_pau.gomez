@@ -3,14 +3,19 @@ package Presentation;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
+/**
+ * Handles authentication-related user interface interactions.
+ */
 public class AuthenticationMenu {
 
     private final Scanner scanner = new Scanner(System.in);
 
+    /**
+     * Displays the authentication menu and returns the selected option.
+     *
+     * @return selected menu option
+     */
     public int printAuthenticationMenu() {
-        Scanner scanner = new Scanner(System.in);
-        int number = 0;
-        boolean validInput = false;
 
         printTitle();
         System.out.println();
@@ -20,67 +25,68 @@ public class AuthenticationMenu {
         System.out.println("    0) Exit");
         System.out.print("\nChoose an option: ");
 
-
-
-        while (!validInput) {
-            try {
-                number = scanner.nextInt();
-                validInput = true;
-            } catch (InputMismatchException e) {
-                System.out.println("Error: That is not a valid integer. Try again.");
-                scanner.next();
-            }
-        }
-
-        return number;
+        return validatedInput();
     }
 
+    /**
+     * Prints the application title banner.
+     */
     public void printTitle() {
         System.out.print(" _   _           _         _____ \n" +
-                         "| \\ | |         | |       |  ___|\n" +
-                         "|  \\| |_   _  __| | ___   | |__  _   _  ___\n" +
-                         "| . ` | | | |/ _` |/ _ \\  |  __|| | | |/ _ \\\n" +
-                         "| |\\  | |_| | (_| |  __/  | |___| |_| |  __/\n" +
-                         "|_| \\_|\\__,_|\\__,_|\\___|  |____/\\___ / \\___|\n" +
-                         "                                 __/ |\n" +
-                         "                                 |___/");
+                "| \\ | |         | |       |  ___|\n" +
+                "|  \\| |_   _  __| | ___   | |__  _   _  ___\n" +
+                "| . ` | | | |/ _` |/ _ \\  |  __|| | | |/ _ \\\n" +
+                "| |\\  | |_| | (_| |  __/  | |___| |_| |  __/\n" +
+                "|_| \\_|\\__,_|\\__,_|\\___|  |____/\\___ / \\___|\n" +
+                "                                 __/ |\n" +
+                "                                 |___/");
     }
 
+    /**
+     * Prompts user for client ID.
+     *
+     * @return entered client ID
+     */
     public int askClientId() {
-        Scanner scanner = new Scanner(System.in);
-        int number = 0;
-        boolean validInput = false;
-
         System.out.print("Enter your client ID: ");
-
-        while (!validInput) {
-
-            try {
-                number = scanner.nextInt();
-                validInput = true;
-            } catch (InputMismatchException e) {
-                System.out.print("Error: That is not a valid integer. \nTry again: ");
-                scanner.next();
-            }
-        }
-        return number;
+        return validatedInput();
     }
 
+    /**
+     * Prompts user for full name.
+     *
+     * @return string of user's full name
+     */
     public String askFullName() {
         System.out.print("Full name: ");
         return scanner.nextLine();
     }
 
+    /**
+     * Prompts user for its phone's country prefix.
+     *
+     * @return country prefix
+     */
     public String askCountryPrefix() {
         System.out.print("Country prefix (e.g. +34): ");
         return scanner.nextLine();
     }
 
+    /**
+     * Prompts user for a phone number.
+     *
+     * @return phone number
+     */
     public String askPhoneNumber() {
         System.out.print("Phone number: ");
         return scanner.nextLine();
     }
 
+    /**
+     * Asks if the user wants to add another phone number.
+     *
+     * @return true if user wants to continue, false otherwise
+     */
     public boolean askAnotherPhone() {
         boolean loop = true;
 
@@ -96,11 +102,39 @@ public class AuthenticationMenu {
         return true;
     }
 
+    /**
+     * Prints goodbye message.
+     */
     public void printGoodByeMessage() {
         System.out.print("\n We hope to see you again!");
     }
 
+    /**
+     * Prints invalid option message.
+     */
     public void printInvalidOption() {
         System.out.print("\nERROR: Invalid option.");
+    }
+
+    /**
+     * Reads and validates integer input from user.
+     *
+     * @return valid integer input
+     */
+    private int validatedInput() {
+        int input = 0;
+        boolean valid_input = false;
+
+        while (!valid_input) {
+            try{
+                input = scanner.nextInt();
+                valid_input = true;
+            }
+            catch (InputMismatchException e) {
+                System.out.print("\nERROR: Invalid input, try again: ");
+            }
+        }
+
+        return input;
     }
 }

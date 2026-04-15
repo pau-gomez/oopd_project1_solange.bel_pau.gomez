@@ -11,11 +11,17 @@ import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * JSON implementation of ProductsDao using Gson for persistence.
+ */
 public class ProductsJsonDao implements ProductsDao {
     private final String filepath = "src/Resources/products.json";
 
-    //public ProductsJsonDao(String filepath) { this.filepath = filepath; }
-
+    /**
+     * Loads all products from the JSON file.
+     *
+     * @return list of products
+     */
     @Override
     public List<Product> loadAllProducts() {
         try (FileReader reader = new FileReader(this.filepath)) {
@@ -26,14 +32,19 @@ public class ProductsJsonDao implements ProductsDao {
         }
     }
 
+    /**
+     * Validates the products file existence and format.
+     *
+     * @return true if file is readable and parseable, false otherwise
+     */
     @Override
     public boolean validateProductsFile() {
         File file = new File(this.filepath);
-        // check if file exists or can be read
+
         if (!file.exists() || !file.canRead()) {
             return false;
         }
-        // check if its parseable
+
         try (FileReader reader = new FileReader(this.filepath)) {
             Gson gson = new Gson();
             gson.fromJson(reader, new TypeToken<List<Provider>>() {}.getType());
@@ -43,6 +54,12 @@ public class ProductsJsonDao implements ProductsDao {
         }
     }
 
+    /**
+     * Finds products by name (partial match).
+     *
+     * @param name product name filter
+     * @return filtered list of products
+     */
     @Override
     public List<Product> findProductsByName(String name) {
         List<Product> allProducts = loadAllProducts();
@@ -63,6 +80,11 @@ public class ProductsJsonDao implements ProductsDao {
         return filteredProducts;
     }
 
+    /**
+     * Not implemented.
+     *
+     * @return empty list
+     */
     @Override
     public List<Provider> findProductsBySupplier() {
         return List.of();

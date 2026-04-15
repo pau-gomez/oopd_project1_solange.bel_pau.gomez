@@ -7,11 +7,20 @@ import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ * Handles all main menu UI interactions for the application.
+ */
 public class UIMainMenu {
 
     private final Scanner scanner = new Scanner(System.in);
     private static boolean valid_input = false;
 
+    /**
+     * Displays the main menu for the logged-in user.
+     *
+     * @param userName name of the current user
+     * @return selected menu option
+     */
     public int printMainMenu(String userName) {
         System.out.println();
         System.out.println("Welcome " + userName + "!");
@@ -27,6 +36,14 @@ public class UIMainMenu {
         return validatedInput();
     }
 
+    /**
+     * Displays the user profile information.
+     *
+     * @param clientId user ID
+     * @param fullName user full name
+     * @param phoneNumbers list of formatted phone numbers
+     * @param purchaseHistory list of past purchases
+     */
     public void printUserProfile(int clientId, String fullName, List<String> phoneNumbers, List<String> purchaseHistory) {
         System.out.println("\n--| User Profile |--\n");
         System.out.println("Client ID: " + clientId);
@@ -41,44 +58,48 @@ public class UIMainMenu {
         waitEnter();
     }
 
+    /**
+     * Displays basic product information.
+     *
+     * @param product_id product identifier
+     * @param product_name name of the product
+     * @param brand product brand
+     * @param model product model
+     */
     public void printProductInformation(String product_id, String product_name, String brand, String model) {
         System.out.println("\nProduct ID: " + product_id + ",");
         System.out.println("Name: " + product_name + ",");
         System.out.println("Brand: " + brand + ",");
         System.out.println("Model: " + model + ",");
         System.out.println("Providers:");
-
     }
 
+    /**
+     * Asks for search text input.
+     *
+     * @return search query
+     */
     public String askSearchText() {
         scanner.nextLine();
         System.out.print("Search criteria: ");
         return scanner.nextLine();
     }
 
+    /**
+     * Asks user to select a provider.
+     *
+     * @return selected provider index
+     */
     public int askForProvider() {
         System.out.print("\nChoose a provider: ");
-
         return validatedInput();
     }
 
-    private int validatedInput() {
-        int input = 0;
-        valid_input = false;
-
-        while (!valid_input) {
-            try{
-                input = scanner.nextInt();
-                valid_input = true;
-            }
-            catch (InputMismatchException e) {
-                System.out.print("\nInvalid input, try again: ");
-            }
-        }
-
-        return input;
-    }
-
+    /**
+     * Prints a numbered list of items.
+     *
+     * @param items list of strings to display
+     */
     public void printNumberedList(List<String> items) {
         for (int i = 0; i < items.size(); i++) {
             System.out.println("\t" + (i + 1) + ") " + items.get(i));
@@ -86,27 +107,53 @@ public class UIMainMenu {
         System.out.println("\n\t0) Back");
     }
 
+    /**
+     * Prints provider-product list.
+     *
+     * @param items list of provider-product strings
+     */
     public void printProductProviderList(List<String> items) {
         for (int i = 0; i < items.size(); i++) {
             System.out.println((i + 1) + ") " + items.get(i));
         }
     }
 
+    /**
+     * Asks for a general option input.
+     *
+     * @return selected option
+     */
     public int askOption() {
         System.out.print("\nChoose an option: ");
         return validatedInput();
     }
 
+    /**
+     * Confirms a yes/no action.
+     *
+     * @param message confirmation message
+     * @return true if user confirms
+     */
     public boolean confirm(String message) {
         scanner.nextLine();
         System.out.print(message + " (yes/no): ");
         return scanner.nextLine().equalsIgnoreCase("yes");
     }
 
+    /**
+     * Prints a single line message.
+     *
+     * @param message text to print
+     */
     public void printLine(String message) {
         System.out.println(message);
     }
 
+    /**
+     * Displays shopping cart contents.
+     *
+     * @param lines cart item lines
+     */
     public void printShoppingCart(List<String> lines) {
         System.out.println("----SHOPPING CART----");
 
@@ -120,23 +167,38 @@ public class UIMainMenu {
         }
     }
 
+    /**
+     * Displays shopping cart menu options.
+     *
+     * @return selected option
+     */
     public int shoppingCartOptions() {
-
         System.out.println("\nAvaliable options: \n\t(1) Remove products (2) Delete cart (3) Buy products (4) Exit");
         System.out.print("Option: ");
         return validatedInput();
     }
 
+    /**
+     * Prints logout message.
+     */
     public void logout() {
         System.out.println("\nWe hope to see you again!");
     }
 
+    /**
+     * Waits for user to press ENTER.
+     */
     private void waitEnter() {
         System.out.print("\nPress ENTER to continue...");
         scanner.nextLine();
         scanner.nextLine();
     }
 
+    /**
+     * Prints products from a provider.
+     *
+     * @param provider provider object
+     */
     public void printProductFromProvider(Provider provider) {
         int i = 0;
 
@@ -148,20 +210,53 @@ public class UIMainMenu {
         }
     }
 
+    /**
+     * Displays product details for a product for sale.
+     *
+     * @param product product for sale
+     */
     public void printProductInformation(ProductForSale product) {
         System.out.println("\nProduct ID: " + product.getProductId() + ",");
         System.out.println("Price: " + product.getSalePrice() + ",");
         System.out.println("Stock: " + product.getUnitsInStock());
-
     }
 
+    /**
+     * Asks for product deletion index.
+     *
+     * @return selected index
+     */
     public int deleteProductInterface() {
         System.out.print("Product to delete (number): ");
-
         return validatedInput();
     }
 
+    /**
+     * Displays user-not-found message.
+     */
     public void UserNotFound() {
         System.out.println("\n\tThis ID doesn't belong to any user!\n");
+    }
+
+    /**
+     * Reads and validates integer input.
+     *
+     * @return valid integer input
+     */
+    private int validatedInput() {
+        int input = 0;
+        valid_input = false;
+
+        while (!valid_input) {
+            try{
+                input = scanner.nextInt();
+                valid_input = true;
+            }
+            catch (InputMismatchException e) {
+                System.out.print("\nERROR: Invalid input, try again: ");
+            }
+        }
+
+        return input;
     }
 }
