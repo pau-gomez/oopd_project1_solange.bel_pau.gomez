@@ -3,12 +3,14 @@ package Presentation;
 import Buisness.Entities.ProductForSale;
 import Buisness.Entities.Provider;
 
+import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
 public class UIMainMenu {
 
     private final Scanner scanner = new Scanner(System.in);
+    private static boolean valid_input = false;
 
     public int printMainMenu(String userName) {
         System.out.println();
@@ -21,7 +23,8 @@ public class UIMainMenu {
         System.out.println();
         System.out.println("    0) Logout");
         System.out.print("\nChoose an option: ");
-        return scanner.nextInt();
+
+        return validatedInput();
     }
 
     public void printUserProfile(int clientId, String fullName, List<String> phoneNumbers, List<String> purchaseHistory) {
@@ -32,11 +35,8 @@ public class UIMainMenu {
         phoneNumbers.forEach(p -> System.out.println("  " + p));
 
         System.out.println("\nShopping history:");
-        if (purchaseHistory.isEmpty()) {
-            System.out.println("  No purchases yet.");
-        } else {
-            purchaseHistory.forEach(s -> System.out.println("  " + s));
-        }
+        if (purchaseHistory.isEmpty()) System.out.println("  No purchases yet.");
+        else purchaseHistory.forEach(s -> System.out.println("  " + s));
 
         waitEnter();
     }
@@ -58,7 +58,25 @@ public class UIMainMenu {
 
     public int askForProvider() {
         System.out.print("\nChoose a provider: ");
-        return scanner.nextInt();
+
+        return validatedInput();
+    }
+
+    private int validatedInput() {
+        int input = 0;
+        valid_input = false;
+
+        while (!valid_input) {
+            try{
+                input = scanner.nextInt();
+                valid_input = true;
+            }
+            catch (InputMismatchException e) {
+                System.out.print("\nInvalid input, try again: ");
+            }
+        }
+
+        return input;
     }
 
     public void printNumberedList(List<String> items) {
@@ -76,7 +94,7 @@ public class UIMainMenu {
 
     public int askOption() {
         System.out.print("\nChoose an option: ");
-        return scanner.nextInt();
+        return validatedInput();
     }
 
     public boolean confirm(String message) {
@@ -107,7 +125,7 @@ public class UIMainMenu {
 
         System.out.println("\nAvaliable options: \n\t(1) Remove products (2) Delete cart (3) Buy products (4) Exit");
         System.out.print("Option: ");
-        return scanner.nextInt();
+        return validatedInput();
     }
 
     public void logout() {
@@ -140,9 +158,8 @@ public class UIMainMenu {
 
     public int deleteProductInterface() {
         System.out.print("Product to delete (number): ");
-        int index = scanner.nextInt();
 
-        return index;
+        return validatedInput();
     }
 
     public void UserNotFound() {
