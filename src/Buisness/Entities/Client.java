@@ -20,9 +20,4 @@ public class Client {
 
     public List<PhoneNumber> getPhoneNumbers(){ return this.phone_numbers; }
 
-    public int getId() {
-        int a = 0;
-
-        return a;
-    }
 }

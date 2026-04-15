@@ -103,9 +103,8 @@ public class UIMainMenu {
         return scanner.nextLine().equalsIgnoreCase("yes");
     }
 
-    public int printLine(String message) {
+    public void printLine(String message) {
         System.out.println(message);
-        return 0;
     }
 
     public void printShoppingCart(List<String> lines) {
