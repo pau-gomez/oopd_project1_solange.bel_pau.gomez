@@ -31,11 +31,4 @@ public interface ProductsDao {
      * @return matching products
      */
     List<Product> findProductsByName(String name);
-
-    /**
-     * Finds products grouped or filtered by supplier.
-     *
-     * @return list of providers related to products
-     */
-    List<Provider> findProductsBySupplier();
 }

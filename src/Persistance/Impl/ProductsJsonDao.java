@@ -79,14 +79,4 @@ public class ProductsJsonDao implements ProductsDao {
 
         return filteredProducts;
     }
-
-    /**
-     * Not implemented.
-     *
-     * @return empty list
-     */
-    @Override
-    public List<Provider> findProductsBySupplier() {
-        return List.of();
-    }
 }
