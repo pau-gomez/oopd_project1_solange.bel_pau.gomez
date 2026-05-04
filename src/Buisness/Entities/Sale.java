@@ -9,6 +9,8 @@ public class Sale {
     public double price_paid;
     public long purchase_date;
 
+    public Sale() {}
+
     /**
      * Constructs a Sale object.
      *

@@ -74,19 +74,14 @@ public class ShoppingCartManager {
      * @return true if product was removed, false otherwise
      */
     public boolean deleteProduct(int index) {
-        boolean found = false;
+        int realIndex = index - 1;
 
-        int i = 0;
-
-        for (ProductForSale product: products) {
-            i++;
-            if(i == index) {
-                products.remove(product);
-                found = true;
-            }
+        if (realIndex >= 0 && realIndex < products.size()) {
+            products.remove(realIndex);
+            return true;
         }
 
-        return found;
+        return false;
     }
 
     /**
