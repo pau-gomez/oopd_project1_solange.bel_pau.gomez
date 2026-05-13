@@ -182,7 +182,7 @@ public class MenuController {
 
         mainMenu.printNumberedList(display);
 
-        int option = mainMenu.askOption();
+        int option = mainMenu.askOption(display.size());
         if (option == 0) return;
 
         Product selected = products.get(option - 1);
@@ -225,7 +225,7 @@ public class MenuController {
         mainMenu.printProductProviderList(display);
 
         if (mainMenu.confirm("Do you want to add this product to the shopping cart?")) {
-            int chosenProvider = (mainMenu.askForProvider() - 1);
+            int chosenProvider = (mainMenu.askForProvider(display.size()) - 1);
             shoppingCartManager.addProduct(selectableProductsForSale.get(chosenProvider));
         }
     }
@@ -243,14 +243,14 @@ public class MenuController {
         }
 
         mainMenu.printNumberedList(display);
-        int choice = mainMenu.askOption();
+        int choice = mainMenu.askOption(display.size());
         if (choice == 0) return;
 
         Provider provider = providers.get(choice - 1);
 
         mainMenu.printProductFromProvider(provider);
 
-        int option = mainMenu.askOption();
+        int option = mainMenu.askOption(providers.size());
 
         shoppingCartManager.addProduct(provider.getProductsForSale().get(option-1));
     }
@@ -283,6 +283,8 @@ public class MenuController {
                 case 4:
                     exit = true;
                     break;
+                default:
+                    mainMenu.printLine("\n\tError: Invalid value.\n");
             }
         } while(!exit);
     }

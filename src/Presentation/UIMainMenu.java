@@ -90,9 +90,17 @@ public class UIMainMenu {
      *
      * @return selected provider index
      */
-    public int askForProvider() {
-        System.out.print("\nChoose a provider: ");
-        return validatedInput();
+    public int askForProvider(int num_providers) {
+        boolean valid = false;
+        int selected_option = 0;
+        do{
+            System.out.print("\nChoose an provider: ");
+            selected_option = validatedInput();
+            if(selected_option > num_providers) System.out.println("\n\tError: Invalid value.");
+            else valid = true;
+        } while(!valid);
+
+        return selected_option;
     }
 
     /**
@@ -121,11 +129,21 @@ public class UIMainMenu {
     /**
      * Asks for a general option input.
      *
+     * @param options integer number of options avaliable
      * @return selected option
      */
-    public int askOption() {
-        System.out.print("\nChoose an option: ");
-        return validatedInput();
+    public int askOption(int options) {
+        boolean valid = false;
+        int selected_option = 0;
+
+        do{
+            System.out.print("\nChoose an option: ");
+            selected_option = validatedInput();
+            if(selected_option > options) System.out.println("\n\tError: Invalid value.");
+            else valid = true;
+        } while(!valid);
+
+        return selected_option;
     }
 
     /**
