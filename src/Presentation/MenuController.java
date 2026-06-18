@@ -117,7 +117,7 @@ public class MenuController {
                 String cif = authenticationMenu.askCif();
                 String contactName = authenticationMenu.askContactName();
                 String billingAddress = authenticationMenu.askBillingAddress();
-                String mailingAddress = authenticationMenu.askMailingAddress();
+                String mailingAddress = authenticationMenu.askAddress();
                 return clientsManager.registerCorporateClient(name, phones, cif,
                         contactName, billingAddress, mailingAddress);
             default:
