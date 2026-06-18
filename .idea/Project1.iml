@@ -10,5 +10,6 @@
     <orderEntry type="library" name="google.code.gson" level="project" />
     <orderEntry type="library" name="lib" level="project" />
     <orderEntry type="library" name="opencsv" level="project" />
+    <orderEntry type="library" name="ApiHelper" level="project" />
   </component>
 </module>

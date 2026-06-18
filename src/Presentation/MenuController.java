@@ -2,6 +2,7 @@ package Presentation;
 
 import Buisness.*;
 import Buisness.Entities.*;
+import Persistance.Impl.ClientsJsonDao;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +28,7 @@ public class MenuController {
         authenticationMenu = new AuthenticationMenu();
         mainMenu = new Presentation.UIMainMenu();
 
-        clientsManager = new ClientsManager();
+        clientsManager = new ClientsManager(new ClientsJsonDao()); // TODO: need to change the dao parameter
         productsManager = new ProductsManager();
         providersManager = new ProvidersManager();
         salesManager = new SalesManager();
@@ -89,11 +90,13 @@ public class MenuController {
     }
 
     /**
-     * Handles client registration process.
+     * Handles client registration process. Asks for client type before asking for fields.
      *
      * @return true if registration successful
      */
     private boolean handleRegister() {
+        int clientType = authenticationMenu.askClientType();
+
         String name = authenticationMenu.askFullName();
         List<PhoneNumber> phones = new ArrayList<>();
 
@@ -103,9 +106,23 @@ public class MenuController {
             phones.add(new PhoneNumber(prefix, number));
         } while (authenticationMenu.askAnotherPhone());
 
-        if(!clientsManager.registerClient(name, phones)) return false;
-
-        return true;
+        switch (clientType) {
+            case 1: // regular
+                return clientsManager.registerClient(name, phones);
+            case 2: // online
+                String address = authenticationMenu.askAddress();
+                String email = authenticationMenu.askEmail();
+                return clientsManager.registerOnlineClient(name, phones, address, email);
+            case 3: // corporate
+                String cif = authenticationMenu.askCif();
+                String contactName = authenticationMenu.askContactName();
+                String billingAddress = authenticationMenu.askBillingAddress();
+                String mailingAddress = authenticationMenu.askMailingAddress();
+                return clientsManager.registerCorporateClient(name, phones, cif,
+                        contactName, billingAddress, mailingAddress);
+            default:
+                return false;
+        }
     }
 
     /**
