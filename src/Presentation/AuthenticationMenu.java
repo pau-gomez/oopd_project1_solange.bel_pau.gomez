@@ -136,12 +136,12 @@ public class AuthenticationMenu {
     }
 
     /**
-     * Prompts user for NIF tax identification number.
+     * Prompts user for CIF tax identification number.
      *
-     * @return NIF
+     * @return CIF
      */
     public String askCif() {
-        System.out.print("NIF: ");
+        System.out.print("CIF: ");
         return scanner.nextLine();
     }
 
