@@ -2,6 +2,7 @@ package Presentation;
 
 import Buisness.*;
 import Buisness.Entities.*;
+
 import Persistance.Impl.ClientsJsonDao;
 
 import java.util.ArrayList;
@@ -180,7 +181,18 @@ public class MenuController {
             purchases.add(formatted);
         }
 
-        mainMenu.printUserProfile(c.getClientId(), c.getFullName(), phones, purchases);
+        if (c instanceof OnlineClient) {
+            OnlineClient oc = (OnlineClient) c;
+            mainMenu.printOnlineClientProfile(c.getClientId(), c.getFullName(), phones,
+                    oc.getAddress(), oc.getContactEmail(), purchases);
+        } else if (c instanceof CorporateClient) {
+            CorporateClient cc = (CorporateClient) c;
+            mainMenu.printCorporateClientProfile(c.getClientId(), c.getFullName(), phones,
+                    cc.getCif(), cc.getContactName(), cc.getBillingAddress(),
+                    cc.getMailingAddress(), purchases);
+        } else {
+            mainMenu.printUserProfile(c.getClientId(), c.getFullName(), phones, purchases);
+        }
     }
 
     /**
