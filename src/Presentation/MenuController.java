@@ -351,7 +351,8 @@ public class MenuController {
 
             salesManager.addSale(sale);
         }
-        mainMenu.printLine("-------------------\nTOTAL: " + String.format("%.2f", shoppingCartManager.checkout()) + "€");
+        double total = shoppingCartManager.checkout(clientsManager.getCurrentClient());
+        mainMenu.printLine("-------------------\nTOTAL: " + String.format("%.2f", total) + "€");
     }
 
     /**

@@ -13,6 +13,7 @@ public class ShoppingCartManager {
     private List<Provider> providers;
     private ProvidersManager providersManager = new ProvidersManager();
     private ShoppingCart shoppingCart = new ShoppingCart(products, 0.21);
+    private ShippingCalculator shippingCalculator = new ShippingCalculator();
 
     /**
      * Adds a product to the shopping cart.
@@ -48,14 +49,19 @@ public class ShoppingCartManager {
     /**
      * Calculates total price and clears the cart.
      *
-     * @return total price including VAT
+     * @return total price including VAT and shipping fees
      */
-    public double checkout() {
+    public double checkout(Client client) {
         double total = 0.0;
 
         for (ProductForSale product : shoppingCart.products) {
             total += calculateSellingPrice(product);
         }
+
+        if (client instanceof OnlineClient) {
+            total += shippingCalculator.calculateShippingCost((OnlineClient) client);
+        }
+
         clear();
         return total;
     }
