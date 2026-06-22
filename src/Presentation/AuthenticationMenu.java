@@ -151,7 +151,7 @@ public class AuthenticationMenu {
      * @return contact person name
      */
     public String askContactName() {
-        System.out.print("Contact person name: ");
+        System.out.print("Name of contact person: ");
         return scanner.nextLine();
     }
 
@@ -191,6 +191,7 @@ public class AuthenticationMenu {
         while (!valid_input) {
             try{
                 input = scanner.nextInt();
+                scanner.nextLine();
                 valid_input = true;
             }
             catch (InputMismatchException e) {
