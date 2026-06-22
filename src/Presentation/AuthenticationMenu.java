@@ -151,7 +151,7 @@ public class AuthenticationMenu {
      * @return contact person name
      */
     public String askContactName() {
-        System.out.print("Contact person name: ");
+        System.out.print("Name of contact person: ");
         return scanner.nextLine();
     }
 
