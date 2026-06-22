@@ -191,6 +191,7 @@ public class AuthenticationMenu {
         while (!valid_input) {
             try{
                 input = scanner.nextInt();
+                scanner.nextLine();
                 valid_input = true;
             }
             catch (InputMismatchException e) {
