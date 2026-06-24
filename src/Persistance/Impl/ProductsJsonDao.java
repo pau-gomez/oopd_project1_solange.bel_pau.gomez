@@ -1,13 +1,13 @@
 package Persistance.Impl;
 
-import Buisness.Entities.Product;
-import Buisness.Entities.Provider;
+import Buisness.Entities.*;
 import Persistance.ProductsDao;
-import com.google.gson.Gson;
+import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
 
 import java.io.File;
 import java.io.FileReader;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,6 +18,15 @@ public class ProductsJsonDao implements ProductsDao {
     private final String filepath = "src/Resources/products.json";
 
     /**
+     * Builds a Gson instance with the custom product deserializer registered.
+     */
+    private Gson buildGson() {
+        return new GsonBuilder()
+                .registerTypeAdapter(Product.class, new ProductDeserializer())
+                .create();
+    }
+
+    /**
      * Loads all products from the JSON file.
      *
      * @return list of products
@@ -25,7 +34,7 @@ public class ProductsJsonDao implements ProductsDao {
     @Override
     public List<Product> loadAllProducts() {
         try (FileReader reader = new FileReader(this.filepath)) {
-            Gson gson = new Gson();
+            Gson gson = buildGson();
             return gson.fromJson(reader, (new TypeToken<List<Product>>() {}).getType());
         } catch (Exception e) {
             throw new RuntimeException("Could not load products.", e);
