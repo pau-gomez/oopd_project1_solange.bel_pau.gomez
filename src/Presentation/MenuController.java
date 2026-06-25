@@ -3,6 +3,8 @@ package Presentation;
 import Buisness.*;
 import Buisness.Entities.*;
 
+import Persistance.Impl.ClientsJsonDao;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,7 +29,7 @@ public class MenuController {
         authenticationMenu = new AuthenticationMenu();
         mainMenu = new Presentation.UIMainMenu();
 
-        clientsManager = new ClientsManager();
+        clientsManager = new ClientsManager(new ClientsJsonDao()); // TODO: need to change the dao parameter
         productsManager = new ProductsManager();
         providersManager = new ProvidersManager();
         salesManager = new SalesManager();
@@ -89,11 +91,13 @@ public class MenuController {
     }
 
     /**
-     * Handles client registration process.
+     * Handles client registration process. Asks for client type before asking for fields.
      *
      * @return true if registration successful
      */
     private boolean handleRegister() {
+        int clientType = authenticationMenu.askClientType();
+
         String name = authenticationMenu.askFullName();
         List<PhoneNumber> phones = new ArrayList<>();
 
@@ -103,9 +107,23 @@ public class MenuController {
             phones.add(new PhoneNumber(prefix, number));
         } while (authenticationMenu.askAnotherPhone());
 
-        if(!clientsManager.registerClient(name, phones)) return false;
-
-        return true;
+        switch (clientType) {
+            case 1: // regular
+                return clientsManager.registerClient(name, phones);
+            case 2: // online
+                String address = authenticationMenu.askAddress();
+                String email = authenticationMenu.askEmail();
+                return clientsManager.registerOnlineClient(name, phones, address, email);
+            case 3: // corporate
+                String cif = authenticationMenu.askCif();
+                String contactName = authenticationMenu.askContactName();
+                String billingAddress = authenticationMenu.askBillingAddress();
+                String mailingAddress = authenticationMenu.askAddress();
+                return clientsManager.registerCorporateClient(name, phones, cif,
+                        contactName, billingAddress, mailingAddress);
+            default:
+                return false;
+        }
     }
 
     /**
@@ -163,7 +181,18 @@ public class MenuController {
             purchases.add(formatted);
         }
 
-        mainMenu.printUserProfile(c.getClientId(), c.getFullName(), phones, purchases);
+        if (c instanceof OnlineClient) {
+            OnlineClient oc = (OnlineClient) c;
+            mainMenu.printOnlineClientProfile(c.getClientId(), c.getFullName(), phones,
+                    oc.getAddress(), oc.getContactEmail(), purchases);
+        } else if (c instanceof CorporateClient) {
+            CorporateClient cc = (CorporateClient) c;
+            mainMenu.printCorporateClientProfile(c.getClientId(), c.getFullName(), phones,
+                    cc.getCif(), cc.getContactName(), cc.getBillingAddress(),
+                    cc.getMailingAddress(), purchases);
+        } else {
+            mainMenu.printUserProfile(c.getClientId(), c.getFullName(), phones, purchases);
+        }
     }
 
     /**
@@ -195,18 +224,30 @@ public class MenuController {
      * @param product selected product
      */
     private void showProductInformation(Product product) {
-        mainMenu.printProductInformation(product.getProductId(), product.getProductName(), product.getBrand(), product.getModel());
+        if (product instanceof Glasses) {
+            Glasses g = (Glasses) product;
+            mainMenu.printProductInformation(product.getProductId(), product.getProductName(),
+                    g.getBrand(), g.getModel());
+        } else if (product instanceof ContactLenses) {
+            ContactLenses cl = (ContactLenses) product;
+            mainMenu.printProductInformation(product.getProductId(), product.getProductName(),
+                    cl.getBrand(), cl.getModel());
+        } else if (product instanceof Consumable) {
+            Consumable c = (Consumable) product;
+            mainMenu.printProductInformation(product.getProductId(), product.getProductName(),
+                    c.getBrand(), c.getModel());
+        } else if (product instanceof Service) {
+            mainMenu.printProductInformation(product.getProductId(), product.getProductName(),
+                    "-", "-");
+        }
 
         List<Provider> productSuppliers = providersManager.getProviderByProduct(product);
-
         List<String> display = new ArrayList<>();
         List<Provider> selectableProviders = new ArrayList<>();
         List<ProductForSale> selectableProductsForSale = new ArrayList<>();
 
         for (Provider provider : productSuppliers) {
-
             for (ProductForSale pfs : provider.getProductsForSale()) {
-
                 if (pfs.getProductId().equals(product.getProductId())
                         && pfs.getUnitsInStock() > 0) {
 
@@ -216,7 +257,6 @@ public class MenuController {
                     display.add(line);
                     selectableProviders.add(provider);
                     selectableProductsForSale.add(pfs);
-
                     break;
                 }
             }
@@ -322,7 +362,8 @@ public class MenuController {
 
             salesManager.addSale(sale);
         }
-        mainMenu.printLine("-------------------\nTOTAL: " + String.format("%.2f", shoppingCartManager.checkout()) + "€");
+        double total = shoppingCartManager.checkout(clientsManager.getCurrentClient());
+        mainMenu.printLine("-------------------\nTOTAL: " + String.format("%.2f", total) + "€");
     }
 
     /**

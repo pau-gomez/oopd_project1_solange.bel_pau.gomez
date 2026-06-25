@@ -3,30 +3,24 @@ package Buisness.Entities;
 import java.util.List;
 
 /**
- * Represents a product with its details and associated suppliers.
+ * Represents a product with its associated details.
  */
 public class Product {
     private String product_id;
     private String product_name;
-    private String brand;
-    private String model;
-    private List<Provider> productSuppliers;
+    private String product_type;
 
     /**
      * Constructs a Product object.
      *
      * @param product_id unique product identifier
      * @param product_name name of the product
-     * @param brand product brand
-     * @param model product model
-     * @param productSuppliers list of suppliers for the product
+     * @param product_type type of the product (glasses, contact_lenses, consumable, or service)
      */
-    public Product(String product_id, String product_name, String brand, String model, List<Provider> productSuppliers) {
+    public Product(String product_id, String product_name, String product_type) {
         this.product_id = product_id;
         this.product_name = product_name;
-        this.brand = brand;
-        this.model = model;
-        this.productSuppliers = productSuppliers;
+        this.product_type = product_type;
     }
 
         // Getters: //
@@ -46,17 +40,9 @@ public class Product {
     }
 
     /**
-     * @return product brand
+     * @return product type
      */
-    public String getBrand() {
-        return brand;
+    public String getProductType() {
+        return product_type;
     }
-
-    /**
-     * @return product model
-     */
-    public String getModel() {
-        return model;
-    }
-
 }

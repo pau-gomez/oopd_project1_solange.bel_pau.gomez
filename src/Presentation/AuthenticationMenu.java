@@ -103,6 +103,69 @@ public class AuthenticationMenu {
     }
 
     /**
+     * Prompts user to select client type.
+     *
+     * @return 1 for standard, 2 for online, 3 for corporate
+     */
+    public int askClientType() {
+        System.out.println("\n    1) Standard client");
+        System.out.println("    2) Online client");
+        System.out.println("    3) Corporate client");
+        System.out.print("\nChoose client type: ");
+        return validatedInput();
+    }
+
+    /**
+     * Prompts user for shipping address.
+     *
+     * @return shipping address
+     */
+    public String askAddress() {
+        System.out.print("Shipping address: ");
+        return scanner.nextLine();
+    }
+
+    /**
+     * Prompts user for contact email.
+     *
+     * @return contact email
+     */
+    public String askEmail() {
+        System.out.print("Contact email: ");
+        return scanner.nextLine();
+    }
+
+    /**
+     * Prompts user for CIF tax identification number.
+     *
+     * @return CIF
+     */
+    public String askCif() {
+        System.out.print("CIF: ");
+        return scanner.nextLine();
+    }
+
+    /**
+     * Prompts user for contact person name.
+     *
+     * @return contact person name
+     */
+    public String askContactName() {
+        System.out.print("Name of contact person: ");
+        return scanner.nextLine();
+    }
+
+    /**
+     * Prompts user for billing address.
+     *
+     * @return billing address
+     */
+    public String askBillingAddress() {
+        System.out.print("Billing address: ");
+        return scanner.nextLine();
+    }
+
+    /**
      * Prints goodbye message.
      */
     public void printGoodByeMessage() {
@@ -128,6 +191,7 @@ public class AuthenticationMenu {
         while (!valid_input) {
             try{
                 input = scanner.nextInt();
+                scanner.nextLine();
                 valid_input = true;
             }
             catch (InputMismatchException e) {

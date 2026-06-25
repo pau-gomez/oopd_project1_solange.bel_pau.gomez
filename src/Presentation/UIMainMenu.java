@@ -59,6 +59,67 @@ public class UIMainMenu {
     }
 
     /**
+     * Displays online client profile information.
+     *
+     * @param clientId user ID
+     * @param fullName user full name
+     * @param phoneNumbers list of formatted phone numbers
+     * @param address shipping address
+     * @param contactEmail contact email
+     * @param purchaseHistory list of past purchases
+     */
+    public void printOnlineClientProfile(int clientId, String fullName, List<String> phoneNumbers,
+                                         String address, String contactEmail,
+                                         List<String> purchaseHistory) {
+        System.out.println("\n--| User Profile |--\n");
+        System.out.println("Client ID: " + clientId);
+        System.out.println("Full name: " + fullName);
+        System.out.println("Phone numbers:");
+        phoneNumbers.forEach(p -> System.out.println("  " + p));
+        System.out.println("Shipping address: " + address);
+        System.out.println("Contact email: " + contactEmail);
+
+        System.out.println("\nShopping history:");
+        if (purchaseHistory.isEmpty()) System.out.println("  No purchases yet.");
+        else purchaseHistory.forEach(s -> System.out.println("  " + s));
+
+        waitEnter();
+    }
+
+    /**
+     * Displays corporate client profile information.
+     *
+     * @param clientId user ID
+     * @param fullName company name
+     * @param phoneNumbers list of formatted phone numbers
+     * @param cif tax identification number
+     * @param contactName contact person name
+     * @param billingAddress billing address
+     * @param mailingAddress shipping address
+     * @param purchaseHistory list of past purchases
+     */
+    public void printCorporateClientProfile(int clientId, String fullName, List<String> phoneNumbers,
+                                            String cif, String contactName,
+                                            String billingAddress, String mailingAddress,
+                                            List<String> purchaseHistory) {
+        System.out.println("\n--| User Profile |--\n");
+        System.out.println("Client ID: " + clientId);
+        System.out.println("Full name: " + fullName);
+        System.out.println("Phone numbers:");
+        phoneNumbers.forEach(p -> System.out.println("  " + p));
+        System.out.println("CIF/NIF: " + cif);
+        System.out.println("Contact person: " + contactName);
+        System.out.println("Billing address: " + billingAddress);
+        System.out.println("Shipping address: " + mailingAddress);
+
+        System.out.println("\nShopping history:");
+        if (purchaseHistory.isEmpty()) System.out.println("  No purchases yet.");
+        else purchaseHistory.forEach(s -> System.out.println("  " + s));
+
+        waitEnter();
+    }
+
+    /**
      * Displays basic product information.
      *
      * @param product_id product identifier

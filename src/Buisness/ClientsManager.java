@@ -1,9 +1,10 @@
 package Buisness;
 
 import Buisness.Entities.Client;
+import Buisness.Entities.OnlineClient;
+import Buisness.Entities.CorporateClient;
 import Buisness.Entities.PhoneNumber;
 import Persistance.ClientsDao;
-import Persistance.Impl.ClientsJsonDao;
 
 import java.util.List;
 
@@ -15,10 +16,10 @@ public class ClientsManager {
     private ClientsDao clientsDao;
 
     /**
-     * Initializes the manager with a JSON-based DAO.
+     * Initializes the manager with whichever DAO is given, either API or JSON.
      */
-    public ClientsManager() {
-        this.clientsDao = new ClientsJsonDao();
+    public ClientsManager(ClientsDao clientsDao) {
+        this.clientsDao = clientsDao;
         this.currentClient = null;
     }
 
@@ -55,7 +56,7 @@ public class ClientsManager {
         List<Client> clients = clientsDao.loadAllClients();
 
         int newClientId = generateNewClientId(clients);
-        Client newClient = new Client(newClientId, fullName, phoneNumbers);
+        Client newClient = new Client(newClientId, "standard", fullName, phoneNumbers);
 
         clients.add(newClient);
         clientsDao.updateFile(clients);
@@ -63,6 +64,55 @@ public class ClientsManager {
         currentClient = newClient;
 
         if (newClient.getPhoneNumbers() == null) return false;
+
+        return true;
+    }
+
+    /**
+     * Registers a new online client.
+     *
+     * @param fullName      client's full name
+     * @param phoneNumbers  list of phone numbers
+     * @param address       shipping address
+     * @param contactEmail  contact email
+     * @return true if registration is successful
+     */
+    public boolean registerOnlineClient(String fullName, List<PhoneNumber> phoneNumbers,
+                                        String address, String contactEmail) {
+        List<Client> clients = clientsDao.loadAllClients();
+        int newClientId = generateNewClientId(clients);
+
+        OnlineClient newClient = new OnlineClient(newClientId, fullName, phoneNumbers,
+                address, contactEmail);
+        clients.add(newClient);
+        clientsDao.updateFile(clients);
+        currentClient = newClient;
+
+        return true;
+    }
+
+    /**
+     * Registers a new corporate client.
+     *
+     * @param fullName        company name
+     * @param phoneNumbers    list of phone numbers
+     * @param cif             tax identification number
+     * @param contactName     contact person name
+     * @param billingAddress  billing address
+     * @param mailingAddress  shipping address
+     * @return true if registration is successful
+     */
+    public boolean registerCorporateClient(String fullName, List<PhoneNumber> phoneNumbers,
+                                           String cif, String contactName,
+                                           String billingAddress, String mailingAddress) {
+        List<Client> clients = clientsDao.loadAllClients();
+        int newClientId = generateNewClientId(clients);
+
+        CorporateClient newClient = new CorporateClient(newClientId, fullName, phoneNumbers,
+                cif, contactName, billingAddress, mailingAddress);
+        clients.add(newClient);
+        clientsDao.updateFile(clients);
+        currentClient = newClient;
 
         return true;
     }
