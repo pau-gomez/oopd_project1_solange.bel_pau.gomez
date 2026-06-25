@@ -1,7 +1,7 @@
 package Buisness;
 
 import Buisness.Entities.Product;
-import Persistance.Impl.ProductsJsonDao;
+
 import Persistance.ProductsDao;
 
 import java.util.List;
@@ -16,8 +16,8 @@ public class ProductsManager {
     /**
      * Initializes the manager with a JSON-based products DAO.
      */
-    public ProductsManager() {
-        this.productsDao = new ProductsJsonDao();
+    public ProductsManager(ProductsDao productsDao) {
+        this.productsDao = productsDao;
     }
 
     /**

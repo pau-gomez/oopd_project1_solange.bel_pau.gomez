@@ -2,8 +2,10 @@ package Presentation;
 
 import Buisness.*;
 import Buisness.Entities.*;
-
-import Persistance.Impl.ClientsJsonDao;
+import Persistance.Impl.*;
+import Persistance.*;
+import edu.salle.url.api.ApiHelper;
+import edu.salle.url.api.exception.ApiException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,16 +26,53 @@ public class MenuController {
 
     /**
      * Initializes all menus and business managers.
+     * Tries to connect to the API first; falls back to local files if unavailable.
      */
     public MenuController() {
         authenticationMenu = new AuthenticationMenu();
         mainMenu = new Presentation.UIMainMenu();
 
-        clientsManager = new ClientsManager(new ClientsJsonDao()); // TODO: need to change the dao parameter
-        productsManager = new ProductsManager();
-        providersManager = new ProvidersManager();
-        salesManager = new SalesManager();
-        shoppingCartManager = new ShoppingCartManager();
+        System.out.println("Checking API status...");
+        ApiHelper apiHelper = tryConnectApi();
+
+        ClientsDao clientsDao;
+        ProductsDao productsDao;
+        ProvidersDao providersDao;
+        SalesDao salesDao;
+
+        if (apiHelper != null) {
+            System.out.println("API OK");
+            clientsDao   = new ClientsApiDao(apiHelper);
+            productsDao  = new ProductsApiDao(apiHelper);
+            providersDao = new ProvidersApiDao(apiHelper);
+            salesDao     = new SalesApiDao(apiHelper);
+        } else {
+            System.out.println("Error: The API isn't available.");
+            System.out.println("Verifying local files...");
+            clientsDao   = new ClientsJsonDao();
+            productsDao  = new ProductsJsonDao();
+            providersDao = new ProvidersJsonDao();
+            salesDao     = new SalesCsvDao();
+        }
+
+        clientsManager      = new ClientsManager(clientsDao);
+        productsManager     = new ProductsManager(productsDao);
+        providersManager    = new ProvidersManager(providersDao);
+        salesManager        = new SalesManager(salesDao);
+        shoppingCartManager = new ShoppingCartManager(providersManager);
+    }
+
+    /**
+     * Tries to create an ApiHelper, which checks connectivity internally.
+     *
+     * @return a working ApiHelper, or null if the API is unavailable
+     */
+    private ApiHelper tryConnectApi() {
+        try {
+            return new ApiHelper();
+        } catch (ApiException e) {
+            return null;
+        }
     }
 
     /**
@@ -43,7 +82,9 @@ public class MenuController {
      */
     public boolean start() {
 
-        if(!checkFiles()) return false;
+        if (!checkFiles()) return false;
+
+        System.out.println("Starting program...");
 
         boolean running = true;
 
@@ -54,17 +95,13 @@ public class MenuController {
                 case 1:
                     if (handleLogin()) {
                         userMenu();
-                    }
-                    else {
+                    } else {
                         mainMenu.UserNotFound();
                     }
                     break;
                 case 2:
                     if (handleRegister()) {
                         userMenu();
-                    }
-                    else {
-                        //error
                     }
                     break;
                 case 0:
@@ -75,7 +112,6 @@ public class MenuController {
                     authenticationMenu.printInvalidOption();
                     break;
             }
-
         }
         return true;
     }
@@ -119,8 +155,7 @@ public class MenuController {
                 String contactName = authenticationMenu.askContactName();
                 String billingAddress = authenticationMenu.askBillingAddress();
                 String mailingAddress = authenticationMenu.askAddress();
-                return clientsManager.registerCorporateClient(name, phones, cif,
-                        contactName, billingAddress, mailingAddress);
+                return clientsManager.registerCorporateClient(contactName, phones, cif, billingAddress, mailingAddress);
             default:
                 return false;
         }
@@ -156,7 +191,6 @@ public class MenuController {
                     authenticationMenu.printInvalidOption();
                     break;
             }
-
         }
     }
 
@@ -167,7 +201,6 @@ public class MenuController {
         Client c = clientsManager.getCurrentClient();
 
         List<String> phones = new ArrayList<>();
-
         for (PhoneNumber p : c.getPhoneNumbers()) {
             String formatted = "(" + p.getInternationalPrefix() + ") " + p.getPhoneNumber();
             phones.add(formatted);
@@ -175,7 +208,6 @@ public class MenuController {
 
         List<Sale> clientSales = salesManager.filterSalesByClient(c.getClientId());
         List<String> purchases = new ArrayList<>();
-
         for (Sale s : clientSales) {
             String formatted = s.getProductId() + " - €" + s.getPaidPrice();
             purchases.add(formatted);
@@ -203,7 +235,6 @@ public class MenuController {
 
         List<Product> products = productsManager.findProductsByName(name);
         List<String> display = new ArrayList<>();
-
         for (Product p : products) {
             String formatted = p.getProductId() + " - " + p.getProductName();
             display.add(formatted);
@@ -292,7 +323,7 @@ public class MenuController {
 
         int option = mainMenu.askOption(providers.size());
 
-        shoppingCartManager.addProduct(provider.getProductsForSale().get(option-1));
+        shoppingCartManager.addProduct(provider.getProductsForSale().get(option - 1));
     }
 
     /**
@@ -326,17 +357,16 @@ public class MenuController {
                 default:
                     mainMenu.printLine("\n\tError: Invalid value.\n");
             }
-        } while(!exit);
+        } while (!exit);
     }
 
     /**
      * Removes a product from the shopping cart.
      */
     private void deleteProductFromCart() {
-        if(!shoppingCartManager.deleteProduct(mainMenu.deleteProductInterface())) {
+        if (!shoppingCartManager.deleteProduct(mainMenu.deleteProductInterface())) {
             mainMenu.printLine("No such product");
-        }
-        else{
+        } else {
             mainMenu.printLine("\tProduct deleted\n");
         }
     }
@@ -349,19 +379,17 @@ public class MenuController {
 
         mainMenu.printLine("----- PURCHASE INFORMATION -----");
 
-        for(ProductForSale product : shoppingCartManager.getProducts()){
+        for (ProductForSale product : shoppingCartManager.getProducts()) {
             i++;
-            mainMenu.printLine("(" + i + ") Product: " + product.getProductId() +
-                    " | Supplier: " + shoppingCartManager.getProvider(product) +
-                    " | Price: " + String.format("%.2f", product.getSalePrice()) + "€");
+            mainMenu.printLine("(" + i + ") Product: " + product.getProductId() + " | Supplier: " + shoppingCartManager.getProvider(product) + " | Price: " + String.format("%.2f", product.getSalePrice()) + "€");
 
             providersManager.updateProviderStock(product);
 
-            Sale sale = new Sale(clientsManager.getCurrentClient().getClientId(), product.getProductId(),
-                    product.getSalePrice()*1.21, 9999);
+            Sale sale = new Sale(clientsManager.getCurrentClient().getClientId(), product.getProductId(), product.getSalePrice() * 1.21, System.currentTimeMillis());
 
             salesManager.addSale(sale);
         }
+
         double total = shoppingCartManager.checkout(clientsManager.getCurrentClient());
         mainMenu.printLine("-------------------\nTOTAL: " + String.format("%.2f", total) + "€");
     }
@@ -376,16 +404,21 @@ public class MenuController {
     }
 
     /**
-     * Validates required data files.
+     * Validates required data sources.
      *
-     * @return true if all files are valid
+     * @return true if all data sources are valid and accessible
      */
     private boolean checkFiles() {
-
-        if(!productsManager.checkProductsFile()) return false;
-
-        if(!providersManager.checkProvidersFile()) return false;
-
+        if (!productsManager.checkProductsFile()) {
+            System.out.println("Error: The products.json file can't be accessed.");
+            System.out.println("Shutting down...");
+            return false;
+        }
+        if (!providersManager.checkProvidersFile()) {
+            System.out.println("Error: The providers.json file can't be accessed.");
+            System.out.println("Shutting down...");
+            return false;
+        }
         return true;
     }
 }

@@ -11,9 +11,14 @@ import java.util.List;
 public class ShoppingCartManager {
     private List<ProductForSale> products =  new ArrayList<>();
     private List<Provider> providers;
-    private ProvidersManager providersManager = new ProvidersManager();
+    private final ProvidersManager providersManager;
     private ShoppingCart shoppingCart = new ShoppingCart(products, 0.21);
     private ShippingCalculator shippingCalculator = new ShippingCalculator();
+
+    public ShoppingCartManager(ProvidersManager providersManager) {
+        this.providersManager = providersManager;
+        this.shoppingCart = new ShoppingCart(products, 0.21);
+    }
 
     /**
      * Adds a product to the shopping cart.

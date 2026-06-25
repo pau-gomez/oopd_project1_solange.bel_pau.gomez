@@ -7,10 +7,20 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="google.code.gson" level="project" />
-    <orderEntry type="library" name="lib" level="project" />
-    <orderEntry type="library" name="opencsv" level="project" />
-    <orderEntry type="library" name="ApiHelper" level="project" />
-    <orderEntry type="library" name="CoordinatesAPI" level="project" />
+    <orderEntry type="library" exported="" name="google.code.gson" level="project" />
+    <orderEntry type="library" exported="" name="lib" level="project" />
+    <orderEntry type="library" exported="" name="opencsv" level="project" />
+    <orderEntry type="library" exported="" name="ApiHelper" level="project" />
+    <orderEntry type="library" exported="" name="CoordinatesAPI" level="project" />
+    <orderEntry type="module-library" exported="">
+      <library>
+        <CLASSES>
+          <root url="file://$MODULE_DIR$/lib" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+        <jarDirectory url="file://$MODULE_DIR$/lib" recursive="false" />
+      </library>
+    </orderEntry>
   </component>
 </module>

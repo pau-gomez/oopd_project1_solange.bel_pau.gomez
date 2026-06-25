@@ -10,12 +10,19 @@ import java.io.IOException;
 import java.util.List;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.google.gson.GsonBuilder;
 
 /**
  * JSON implementation of ClientsDao using Gson for persistence.
  */
 public class ClientsJsonDao implements ClientsDao {
     private static final String filepath = "src/Resources/clients.json";
+
+    private Gson buildGson() {
+        return new GsonBuilder()
+                .registerTypeAdapter(Client.class, new ClientDeserializer())
+                .create();
+    }
 
     /**
      * Loads all clients from the JSON file.
@@ -36,7 +43,7 @@ public class ClientsJsonDao implements ClientsDao {
         }
 
         try (FileReader reader = new FileReader(this.filepath)) {
-            Gson gson = new Gson();
+            Gson gson = buildGson();
             return gson.fromJson(reader, (new TypeToken<List<Client>>() {
             }).getType());
         } catch (Exception e) {
@@ -54,7 +61,7 @@ public class ClientsJsonDao implements ClientsDao {
         File file = new File(this.filepath);
 
         try (FileWriter writer = new FileWriter(file)) {
-            Gson gson = new Gson();
+            Gson gson = buildGson();
             gson.toJson(clients, writer);
         } catch (IOException e) {
             throw new RuntimeException("Could not update client file.", e);
