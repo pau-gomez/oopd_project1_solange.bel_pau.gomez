@@ -224,18 +224,30 @@ public class MenuController {
      * @param product selected product
      */
     private void showProductInformation(Product product) {
-        mainMenu.printProductInformation(product.getProductId(), product.getProductName(), product.getBrand(), product.getModel());
+        if (product instanceof Glasses) {
+            Glasses g = (Glasses) product;
+            mainMenu.printProductInformation(product.getProductId(), product.getProductName(),
+                    g.getBrand(), g.getModel());
+        } else if (product instanceof ContactLenses) {
+            ContactLenses cl = (ContactLenses) product;
+            mainMenu.printProductInformation(product.getProductId(), product.getProductName(),
+                    cl.getBrand(), cl.getModel());
+        } else if (product instanceof Consumable) {
+            Consumable c = (Consumable) product;
+            mainMenu.printProductInformation(product.getProductId(), product.getProductName(),
+                    c.getBrand(), c.getModel());
+        } else if (product instanceof Service) {
+            mainMenu.printProductInformation(product.getProductId(), product.getProductName(),
+                    "-", "-");
+        }
 
         List<Provider> productSuppliers = providersManager.getProviderByProduct(product);
-
         List<String> display = new ArrayList<>();
         List<Provider> selectableProviders = new ArrayList<>();
         List<ProductForSale> selectableProductsForSale = new ArrayList<>();
 
         for (Provider provider : productSuppliers) {
-
             for (ProductForSale pfs : provider.getProductsForSale()) {
-
                 if (pfs.getProductId().equals(product.getProductId())
                         && pfs.getUnitsInStock() > 0) {
 
@@ -245,7 +257,6 @@ public class MenuController {
                     display.add(line);
                     selectableProviders.add(provider);
                     selectableProductsForSale.add(pfs);
-
                     break;
                 }
             }
