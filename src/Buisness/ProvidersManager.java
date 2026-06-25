@@ -13,7 +13,7 @@ import java.util.List;
  * Handles provider-related business operations.
  */
 public class ProvidersManager {
-    private ProvidersDao providersDao;
+    private final ProvidersDao providersDao;
 
     /**
      * Initializes the manager with a JSON-based providers DAO.

@@ -10,7 +10,7 @@ import java.util.List;
  * Handles sales-related business operations.
  */
 public class SalesManager {
-    private SalesDao salesDao;
+    private final SalesDao salesDao;
 
     /**
      * Initializes the manager with a CSV-based sales DAO.

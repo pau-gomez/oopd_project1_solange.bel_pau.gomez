@@ -46,6 +46,19 @@ public class ProductsApiDao implements ProductsDao {
     }
 
     @Override
+    public Product findById(String id) {
+        try {
+            String url = BASE_URL + "/shared/products?product_id=" + id;
+            String response = apiHelper.getFromUrl(url);
+            if (response == null || response.isBlank() || response.equals("[]")) return null;
+            List<Product> results = buildGson().fromJson(response, new TypeToken<List<Product>>() {}.getType());
+            return results.isEmpty() ? null : results.get(0);
+        } catch (ApiException e) {
+            return null;
+        }
+    }
+
+    @Override
     public List<Product> findProductsByName(String name) {
         try {
             String url;

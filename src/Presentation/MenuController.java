@@ -59,7 +59,7 @@ public class MenuController {
         productsManager     = new ProductsManager(productsDao);
         providersManager    = new ProvidersManager(providersDao);
         salesManager        = new SalesManager(salesDao);
-        shoppingCartManager = new ShoppingCartManager(providersManager);
+        shoppingCartManager = new ShoppingCartManager(providersManager, productsManager);
     }
 
     /**
@@ -295,6 +295,11 @@ public class MenuController {
 
         mainMenu.printProductProviderList(display);
 
+        if (product instanceof Service && !isAllowedToBuy(product)) {
+            mainMenu.printLine("\nERROR: Services can only be purchased in person by regular clients.");
+            return;
+        }
+
         if (mainMenu.confirm("Do you want to add this product to the shopping cart?")) {
             int chosenProvider = (mainMenu.askForProvider(display.size()) - 1);
             shoppingCartManager.addProduct(selectableProductsForSale.get(chosenProvider));
@@ -372,6 +377,21 @@ public class MenuController {
     }
 
     /**
+     * Checks if the current client is allowed to purchase the given product.
+     * Services can only be sold to regular (in-person) clients.
+     *
+     * @param product the product the client wants to buy
+     * @return true if the purchase is allowed
+     */
+    private boolean isAllowedToBuy(Product product) {
+        Client client = clientsManager.getCurrentClient();
+        if (product instanceof Service) {
+            return !(client instanceof OnlineClient) && !(client instanceof CorporateClient);
+        }
+        return true;
+    }
+
+    /**
      * Finalizes purchase and records the sale.
      */
     private void checkout() {
@@ -385,7 +405,7 @@ public class MenuController {
 
             providersManager.updateProviderStock(product);
 
-            Sale sale = new Sale(clientsManager.getCurrentClient().getClientId(), product.getProductId(), product.getSalePrice() * 1.21, System.currentTimeMillis());
+            Sale sale = new Sale(clientsManager.getCurrentClient().getClientId(), product.getProductId(), shoppingCartManager.calculateSellingPrice(product, clientsManager.getCurrentClient()), System.currentTimeMillis());
 
             salesManager.addSale(sale);
         }

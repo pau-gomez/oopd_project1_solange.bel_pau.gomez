@@ -13,7 +13,7 @@ import java.util.List;
  */
 public class ClientsManager {
     private Client currentClient;
-    private ClientsDao clientsDao;
+    private final ClientsDao clientsDao;
 
     /**
      * Initializes the manager with whichever DAO is given, either API or JSON.

@@ -41,6 +41,15 @@ public class ProductsJsonDao implements ProductsDao {
         }
     }
 
+    @Override
+    public Product findById(String id) {
+        List<Product> all = loadAllProducts();
+        for (Product p : all) {
+            if (p.getProductId().equals(id)) return p;
+        }
+        return null;
+    }
+
     /**
      * Validates the products file existence and format.
      *

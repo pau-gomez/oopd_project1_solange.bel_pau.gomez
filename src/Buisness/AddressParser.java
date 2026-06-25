@@ -18,6 +18,7 @@ public class AddressParser {
             String[] parts = addressString.split(",");
             String streetPart = parts[0].trim();
             String cityPart = parts[1].trim();
+            String country     = parts[2].trim();
 
             int lastSpace = streetPart.lastIndexOf(" ");
             String street = streetPart.substring(0, lastSpace).trim();
@@ -26,8 +27,6 @@ public class AddressParser {
             int firstSpace = cityPart.indexOf(" ");
             String postalCode = cityPart.substring(0, firstSpace).trim();
             String city = cityPart.substring(firstSpace + 1).trim();
-
-            String country = "Spain";
 
             return new Address(street, number, city, country, postalCode);
         } catch (Exception e) {

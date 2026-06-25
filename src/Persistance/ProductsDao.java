@@ -24,6 +24,15 @@ public interface ProductsDao {
      */
     boolean validateProductsFile();
 
+    // ADD this method to the interface:
+    /**
+     * Finds a product by its ID.
+     *
+     * @param id product ID
+     * @return the product, or null if not found
+     */
+    Product findById(String id);
+
     /**
      * Finds products by name (case-insensitive partial match).
      *

@@ -11,7 +11,7 @@ import java.util.List;
  */
 public class ProductsManager {
 
-    private ProductsDao productsDao;
+    private final ProductsDao productsDao;
 
     /**
      * Initializes the manager with a JSON-based products DAO.
@@ -28,6 +28,18 @@ public class ProductsManager {
      */
     public List<Product> findProductsByName(String name) {
         return productsDao.findProductsByName(name);
+    }
+
+
+    // ADD this method:
+    /**
+     * Finds a product by its ID.
+     *
+     * @param id product ID
+     * @return the product, or null if not found
+     */
+    public Product findById(String id) {
+        return productsDao.findById(id);
     }
 
     /**
