@@ -268,7 +268,6 @@ public class UIMainMenu {
      * Waits for user to press ENTER.
      */
     private void waitEnter() {
-        scanner.nextLine();
         System.out.print("\nPress ENTER to continue...");
         scanner.nextLine();
     }

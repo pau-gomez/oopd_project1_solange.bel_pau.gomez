@@ -3,7 +3,6 @@ package Buisness;
 import Buisness.Entities.Product;
 import Buisness.Entities.ProductForSale;
 import Buisness.Entities.Provider;
-import Persistance.Impl.ProvidersJsonDao;
 import Persistance.PersistenceException;
 import Persistance.ProvidersDao;
 

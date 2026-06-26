@@ -37,17 +37,6 @@ public class ProvidersApiDao implements ProvidersDao {
     }
 
     @Override
-    public Provider getOneProvider(int id) throws PersistenceException {
-        try {
-            String response = apiHelper.getFromUrl(BASE_URL + "/shared/providers/" + id);
-            if (response == null || response.isBlank()) return null;
-            return new Gson().fromJson(response, Provider.class);
-        } catch (ApiException e) {
-            throw new PersistenceException("Could not load provider from API.", e);
-        }
-    }
-
-    @Override
     public void updateFile(List<Provider> providers) {
         // Providers are shared and immutable on the API — stock updates are not persisted remotely
     }

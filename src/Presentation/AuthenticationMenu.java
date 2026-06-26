@@ -72,8 +72,16 @@ public class AuthenticationMenu {
      * @return country prefix
      */
     public String askCountryPrefix() {
-        System.out.print("Country prefix (e.g. +34): ");
-        return scanner.nextLine();
+        String prefix;
+        while (true) {
+            System.out.print("Country prefix (e.g. +34): ");
+            prefix = scanner.nextLine();
+            if (isValidPrefix(prefix)) {
+                return prefix;
+            }
+            InvalidInputException ex = new InvalidInputException("Invalid prefix format. Must be '+' followed by 1-3 digits (e.g. +34).");
+            System.out.println("ERROR: " + ex.getMessage());
+        }
     }
 
     /**
@@ -82,8 +90,17 @@ public class AuthenticationMenu {
      * @return phone number
      */
     public String askPhoneNumber() {
-        System.out.print("Phone number: ");
-        return scanner.nextLine();
+        String number;
+        while (true) {
+            System.out.print("Phone number: ");
+            number = scanner.nextLine();
+            if (isValidPhoneNumber(number)) {
+                return number;
+            }
+            InvalidInputException ex = new InvalidInputException(
+                    "Invalid phone number. Must contain 7-15 digits (spaces allowed).");
+            System.out.println("ERROR: " + ex.getMessage());
+        }
     }
 
     /**
@@ -181,6 +198,49 @@ public class AuthenticationMenu {
      */
     public void printInvalidOption() {
         System.out.print("\nERROR: Invalid option.");
+    }
+
+    /**
+     * Validates a country prefix format (e.g. +34, +1, +33).
+     *
+     * @param prefix the prefix to validate
+     * @return true if valid
+     */
+    private boolean isValidPrefix(String prefix) {
+        if (prefix == null || prefix.isEmpty()) return false;
+        if (prefix.charAt(0) != '+') return false;
+
+        String digits = prefix.substring(1);
+        if (digits.isEmpty() || digits.length() > 3) return false;
+
+        for (int i = 0; i < digits.length(); i++) {
+            if (!Character.isDigit(digits.charAt(i))) return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * Validates a phone number (digits and spaces only, 7-15 digits total).
+     *
+     * @param number the number to validate
+     * @return true if valid
+     */
+    private boolean isValidPhoneNumber(String number) {
+        if (number == null || number.isEmpty()) return false;
+
+        int digitCount = 0;
+
+        for (int i = 0; i < number.length(); i++) {
+            char c = number.charAt(i);
+            if (Character.isDigit(c)) {
+                digitCount++;
+            } else if (c != ' ' && c != '-') {
+                return false; // invalid character
+            }
+        }
+
+        return digitCount >= 7 && digitCount <= 15;
     }
 
     /**

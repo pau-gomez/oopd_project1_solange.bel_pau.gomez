@@ -48,7 +48,7 @@ public class ClientsJsonDao implements ClientsDao {
             return gson.fromJson(reader, (new TypeToken<List<Client>>() {
             }).getType());
         } catch (Exception e) {
-            throw new RuntimeException("Could not load clients.", e);
+            throw new PersistenceException("Could not load clients.", e);
         }
     }
 

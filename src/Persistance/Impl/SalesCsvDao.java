@@ -31,7 +31,7 @@ public class SalesCsvDao implements SalesDao {
             try {
                 file.createNewFile();
             } catch (IOException e) {
-                throw new RuntimeException("Could not create clients file.", e);
+                throw new PersistenceException("Could not create clients file.", e);
             }
         }
 
