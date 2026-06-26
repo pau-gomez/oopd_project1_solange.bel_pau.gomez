@@ -34,17 +34,6 @@ public class ProvidersJsonDao implements ProvidersDao {
     }
 
     /**
-     * Not implemented.
-     *
-     * @param id provider ID
-     * @return null
-     */
-    @Override
-    public Provider getOneProvider(int id) {
-        return null;
-    }
-
-    /**
      * Writes providers list to JSON file.
      *
      * @param providers list of providers to save

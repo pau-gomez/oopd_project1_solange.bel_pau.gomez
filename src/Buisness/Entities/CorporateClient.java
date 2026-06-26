@@ -3,23 +3,23 @@ package Buisness.Entities;
 import java.util.List;
 
 public class CorporateClient extends Client {
-    private String cif;               // NIF/tax identification
-    private String contact_name;      // contact person name
-    private String billing_address;
-    private String mailing_address;   // shipping address
+    private String cif;
+    private String contactName;
+    private String billingAddress;
+    private String mailingAddress;
 
-    public CorporateClient(int client_id, String full_name, List<PhoneNumber> phone_numbers,
-                           String cif, String contact_name,
-                           String billing_address, String mailing_address) {
-        super(client_id, "corporate", full_name, phone_numbers);
+    public CorporateClient(int clientId, String fullName, List<PhoneNumber> phoneNumbers,
+                           String cif, String contactName,
+                           String billingAddress, String mailingAddress) {
+        super(clientId, "corporate", fullName, phoneNumbers);
         this.cif = cif;
-        this.contact_name = contact_name;
-        this.billing_address = billing_address;
-        this.mailing_address = mailing_address;
+        this.contactName = contactName;
+        this.billingAddress = billingAddress;
+        this.mailingAddress = mailingAddress;
     }
 
     public String getCif() { return cif; }
-    public String getContactName() { return contact_name; }
-    public String getBillingAddress() { return billing_address; }
-    public String getMailingAddress() { return mailing_address; }
+    public String getContactName() { return contactName; }
+    public String getBillingAddress() { return billingAddress; }
+    public String getMailingAddress() { return mailingAddress; }
 }

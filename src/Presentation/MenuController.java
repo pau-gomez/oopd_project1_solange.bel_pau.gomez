@@ -150,13 +150,13 @@ public class MenuController {
         } while (authenticationMenu.askAnotherPhone());
 
         switch (clientType) {
-            case 1: // regular
+            case 1:
                 return clientsManager.registerClient(name, phones);
-            case 2: // online
+            case 2:
                 String address = authenticationMenu.askAddress();
                 String email = authenticationMenu.askEmail();
                 return clientsManager.registerOnlineClient(name, phones, address, email);
-            case 3: // corporate
+            case 3:
                 String cif = authenticationMenu.askCif();
                 String contactName = authenticationMenu.askContactName();
                 String billingAddress = authenticationMenu.askBillingAddress();

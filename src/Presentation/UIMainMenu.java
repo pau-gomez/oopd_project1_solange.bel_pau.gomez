@@ -3,7 +3,6 @@ package Presentation;
 import Buisness.Entities.ProductForSale;
 import Buisness.Entities.Provider;
 
-import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -13,7 +12,7 @@ import java.util.Scanner;
 public class UIMainMenu {
 
     private final Scanner scanner;
-    private boolean valid_input = false;
+    private boolean validInput = false;
 
     public UIMainMenu (Scanner scanner) {
         this.scanner = scanner;
@@ -125,14 +124,14 @@ public class UIMainMenu {
     /**
      * Displays basic product information.
      *
-     * @param product_id product identifier
-     * @param product_name name of the product
+     * @param productId product identifier
+     * @param productName name of the product
      * @param brand product brand
      * @param model product model
      */
-    public void printProductInformation(String product_id, String product_name, String brand, String model) {
-        System.out.println("\nProduct ID: " + product_id + ",");
-        System.out.println("Name: " + product_name + ",");
+    public void printProductInformation(String productId, String productName, String brand, String model) {
+        System.out.println("\nProduct ID: " + productId + ",");
+        System.out.println("Name: " + productName + ",");
         System.out.println("Brand: " + brand + ",");
         System.out.println("Model: " + model + ",");
         System.out.println("Providers:");
@@ -153,17 +152,17 @@ public class UIMainMenu {
      *
      * @return selected provider index
      */
-    public int askForProvider(int num_providers) {
+    public int askForProvider(int numProviders) {
         boolean valid = false;
-        int selected_option = 0;
+        int selectedOption;
         do{
             System.out.print("\nChoose an provider: ");
-            selected_option = validatedInput();
-            if(selected_option > num_providers) System.out.println("\n\tError: Invalid value.");
+            selectedOption = validatedInput();
+            if(selectedOption > numProviders) System.out.println("\n\tError: Invalid value.");
             else valid = true;
         } while(!valid);
 
-        return selected_option;
+        return selectedOption;
     }
 
     /**
@@ -325,13 +324,13 @@ public class UIMainMenu {
      */
     private int validatedInput() {
         int input = 0;
-        valid_input = false;
+        validInput = false;
 
-        while (!valid_input) {
+        while (!validInput) {
             try{
                 String line = scanner.nextLine();
                 input = Integer.parseInt(line.trim());
-                valid_input = true;
+                validInput = true;
             }
             catch (NumberFormatException e) {
                 InvalidInputException ex = new InvalidInputException("Input must be a number.");

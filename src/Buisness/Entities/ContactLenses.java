@@ -7,17 +7,17 @@ public class ContactLenses extends Product {
     private String brand;
     private String model;
     private double graduation;
-    private int number_of_lenses;
-    private boolean uv_filter;
+    private int numberOfLenses;
+    private boolean uvFilter;
 
-    public ContactLenses(String product_id, String product_name, String brand, String model,
-                         double graduation, int number_of_lenses, boolean uv_filter) {
-        super(product_id, product_name, "contact_lenses");
+    public ContactLenses(String productId, String productName, String brand, String model,
+                         double graduation, int numberOfLenses, boolean uvFilter) {
+        super(productId, productName, "contact_lenses");
         this.brand = brand;
         this.model = model;
         this.graduation = graduation;
-        this.number_of_lenses = number_of_lenses;
-        this.uv_filter = uv_filter;
+        this.numberOfLenses = numberOfLenses;
+        this.uvFilter = uvFilter;
     }
 
     public String getBrand() { return brand; }
@@ -26,7 +26,7 @@ public class ContactLenses extends Product {
 
     public double getGraduation() { return graduation; }
 
-    public int getNumberOfLenses() { return number_of_lenses; }
+    public int getNumberOfLenses() { return numberOfLenses; }
 
-    public boolean hasUvFilter() { return uv_filter; }
+    public boolean hasUvFilter() { return uvFilter; }
 }

@@ -3,16 +3,16 @@ package Buisness.Entities;
 import java.util.List;
 
 public class OnlineClient extends Client {
-    private String address;        // shipping address
-    private String contact_email;
+    private String address;
+    private String contactEmail;
 
-    public OnlineClient(int client_id, String full_name, List<PhoneNumber> phone_numbers,
-                        String address, String contact_email) {
-        super(client_id, "online", full_name, phone_numbers);
+    public OnlineClient(int clientId, String fullName, List<PhoneNumber> phoneNumbers,
+                        String address, String contactEmail) {
+        super(clientId, "online", fullName, phoneNumbers);
         this.address = address;
-        this.contact_email = contact_email;
+        this.contactEmail = contactEmail;
     }
 
     public String getAddress() { return address; }
-    public String getContactEmail() { return contact_email; }
+    public String getContactEmail() { return contactEmail; }
 }

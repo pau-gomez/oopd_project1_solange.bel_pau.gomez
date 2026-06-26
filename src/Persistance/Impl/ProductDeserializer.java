@@ -52,7 +52,7 @@ public class ProductDeserializer implements JsonDeserializer<Product> {
                         obj.get("duration_hours").getAsDouble()
                 );
             default:
-                throw new JsonParseException("Unknown product type: " + type); // TODO: throw ok?
+                throw new JsonParseException("Unknown product type: " + type);
         }
     }
 }

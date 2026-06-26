@@ -13,7 +13,7 @@ public class main {
      * @param args command line arguments
      */
     public static void main(String[] args) throws PersistenceException {
-        java.util.logging.LogManager.getLogManager().reset(); // Logging command to silence API response in terminal.
+        java.util.logging.LogManager.getLogManager().reset();
 
         MenuController controller = new MenuController();
         if(!controller.start()) System.out.println("\nERROR: Some files don't exist or contain errors in their structure.");

@@ -17,14 +17,6 @@ public interface ProvidersDao {
     List<Provider> loadAllProviders() throws PersistenceException;
 
     /**
-     * Retrieves a provider by ID.
-     *
-     * @param id provider identifier
-     * @return provider object or null if not found
-     */
-    Provider getOneProvider(int id) throws PersistenceException;
-
-    /**
      * Updates provider storage with the given list.
      *
      * @param providers list of providers to persist

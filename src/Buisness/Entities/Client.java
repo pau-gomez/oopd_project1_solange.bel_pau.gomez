@@ -6,51 +6,50 @@ import java.util.List;
  * Represents a client with an ID, full name, and associated phone numbers.
  */
 public class Client {
-    private int client_id;
-    private String client_type;
-    private String full_name;
-    private List<PhoneNumber> phone_numbers;
+    private int clientId;
+    private String clientType;
+    private String fullName;
+    private List<PhoneNumber> phoneNumbers;
 
     /**
      * Constructs a Client.
      *
-     * @param client_id the unique client ID
-     * @param client_type the type of client
-     * @param full_name the client's full name
-     * @param phone_numbers list of the client's phone numbers
+     * @param clientId the unique client ID
+     * @param clientType the type of client
+     * @param fullName the client's full name
+     * @param phoneNumbers list of the client's phone numbers
      */
-    public Client(int client_id, String client_type, String full_name, List<PhoneNumber> phone_numbers) {
-        this.client_id = client_id;
-        this.client_type = client_type;
-        this.full_name = full_name;
-        this.phone_numbers = phone_numbers;
+    public Client(int clientId, String clientType, String fullName, List<PhoneNumber> phoneNumbers) {
+        this.clientId = clientId;
+        this.clientType = clientType;
+        this.fullName = fullName;
+        this.phoneNumbers = phoneNumbers;
     }
 
-        // Getters: //
 
     /**
      * @return the client ID
      */
     public int getClientId() {
-        return this.client_id;
+        return this.clientId;
     }
 
     /**
      * @return the type of client the client is
      */
-    public String getClientType() { return client_type; }
+    public String getClientType() { return clientType; }
 
     /**
      * @return the client's full name
      */
     public String getFullName() {
-        return this.full_name;
+        return this.fullName;
     }
 
     /**
      * @return list of the client's phone numbers
      */
     public List<PhoneNumber> getPhoneNumbers() {
-        return this.phone_numbers;
+        return this.phoneNumbers;
     }
 }

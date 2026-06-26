@@ -58,7 +58,7 @@ public class ShoppingCartManager {
         double total = 0.0;
 
         for (ProductForSale product : shoppingCart.products) {
-            total += calculateSellingPrice(product, client); // pass client here
+            total += calculateSellingPrice(product, client);
         }
 
         if (client instanceof OnlineClient) {
@@ -110,7 +110,6 @@ public class ShoppingCartManager {
             }
         }
 
-        // There always should be one found
         return null;
     }
 
@@ -126,11 +125,10 @@ public class ShoppingCartManager {
         Product product = productsManager.findById(pfs.getProductId());
         double basePrice = pfs.getSalePrice();
 
-        // Corporate clients with non-Spanish billing address are VAT exempt
         if (client instanceof CorporateClient) {
             CorporateClient cc = (CorporateClient) client;
             if (!cc.getBillingAddress().toLowerCase().contains("spain") && !cc.getBillingAddress().toLowerCase().contains("españa") && !cc.getBillingAddress().toLowerCase().contains("espanya")) {
-                return basePrice; // no VAT
+                return basePrice;
             }
         }
 
@@ -143,11 +141,10 @@ public class ShoppingCartManager {
             Consumable c = (Consumable) product;
             double price = basePrice * 1.21;
             if (isExpiringSoon(c)) {
-                price = price * 0.60; // 40% discount
+                price = price * 0.60;
             }
             return price;
         } else {
-            // Glasses and anything else: 21% VAT
             return basePrice * 1.21;
         }
     }
@@ -160,7 +157,6 @@ public class ShoppingCartManager {
      */
     private boolean isExpiringSoon(Consumable c) {
         try {
-            // expiration_date format expected: "YYYY-MM-DD"
             java.time.LocalDate expiry = java.time.LocalDate.parse(c.getExpirationDate());
             java.time.LocalDate threeMonthsFromNow = java.time.LocalDate.now().plusMonths(3);
             return expiry.isBefore(threeMonthsFromNow);

@@ -39,7 +39,6 @@ public class ShippingCalculator {
             return BASE_FEE + (FEE_PER_KM * distanceKm);
 
         } catch (IOException | InvalidAddressException e) {
-            // TODO: try catch ok?
             throw new RuntimeException("Could not calculate shipping cost.", e);
         }
     }

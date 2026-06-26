@@ -190,13 +190,13 @@ public class AuthenticationMenu {
      */
     private int validatedInput() {
         int input = 0;
-        boolean valid_input = false;
+        boolean validInput = false;
 
-        while (!valid_input) {
+        while (!validInput) {
             try{
                 String line = scanner.nextLine();
                 input = Integer.parseInt(line.trim());
-                valid_input = true;
+                validInput = true;
             }
             catch (NumberFormatException e) {
                 InvalidInputException ex = new InvalidInputException("Input must be a number.");

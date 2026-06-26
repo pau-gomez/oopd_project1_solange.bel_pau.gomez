@@ -43,7 +43,7 @@ public class SalesManager {
         allSales = salesDao.loadAllSales();
 
         for(Sale s: allSales) {
-            if (s.client_id == id) {
+            if (s.clientId == id) {
                 sales.add(s);
             }
         }

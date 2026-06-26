@@ -6,48 +6,47 @@ import java.util.List;
  * Represents a provider company and its associated products.
  */
 public class Provider {
-    private int provider_id;
-    private String company_name;
+    private int providerId;
+    private String companyName;
     private String cif;
-    private String contact_name;
+    private String contactName;
     private String phone;
     private String email;
-    private List<ProductForSale> products_for_sale;
+    private List<ProductForSale> productForSales;
 
     /**
      * Constructs a Provider object.
      *
-     * @param provider_id unique provider ID
-     * @param company_name name of the company
+     * @param providerId unique provider ID
+     * @param companyName name of the company
      * @param cif company tax identifier
-     * @param contact_name contact person name
+     * @param contactName contact person name
      * @param phone contact phone number
      * @param email contact email address
-     * @param products_for_sale list of products offered by the provider
+     * @param productForSales list of products offered by the provider
      */
-    public Provider(int provider_id, String company_name, String cif, String contact_name, String phone, String email, List<ProductForSale> products_for_sale) {
-        this.provider_id = provider_id;
-        this.company_name = company_name;
+    public Provider(int providerId, String companyName, String cif, String contactName, String phone, String email, List<ProductForSale> productForSales) {
+        this.providerId = providerId;
+        this.companyName = companyName;
         this.cif = cif;
-        this.contact_name = contact_name;
+        this.contactName = contactName;
         this.phone = phone;
         this.email = email;
-        this.products_for_sale = products_for_sale;
+        this.productForSales = productForSales;
     }
 
-        // Getters: //
 
     /**
      * @return company name
      */
     public String getCompanyName() {
-        return this.company_name;
+        return this.companyName;
     }
 
     /**
      * @return list of products for sale
      */
     public List<ProductForSale> getProductsForSale() {
-        return this.products_for_sale;
+        return this.productForSales;
     }
 }

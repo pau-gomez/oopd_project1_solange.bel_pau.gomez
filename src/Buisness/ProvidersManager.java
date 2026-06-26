@@ -66,16 +66,6 @@ public class ProvidersManager {
     }
 
     /**
-     * Gets a provider by ID.
-     *
-     * @param id provider ID
-     * @return provider or null if not found
-     */
-    public Provider getProvider(int id) throws PersistenceException {
-        return providersDao.getOneProvider(id);
-    }
-
-    /**
      * Finds providers that sell a given product.
      *
      * @param product the product to search for

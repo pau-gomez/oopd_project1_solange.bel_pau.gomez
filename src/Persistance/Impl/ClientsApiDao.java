@@ -40,7 +40,6 @@ public class ClientsApiDao implements ClientsDao {
     public void updateFile(List<Client> clients) throws PersistenceException {
         if (clients == null || clients.isEmpty()) return;
         try {
-            // The API doesn't support bulk updates — we POST only the newest client
             Client newest = clients.get(clients.size() - 1);
             apiHelper.postToUrl(BASE_URL + "/" + GROUP_ID + "/clients", buildGson().toJson(newest));
         } catch (Exception e) {
