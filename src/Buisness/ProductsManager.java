@@ -32,7 +32,6 @@ public class ProductsManager {
     }
 
 
-    // ADD this method:
     /**
      * Finds a product by its ID.
      *

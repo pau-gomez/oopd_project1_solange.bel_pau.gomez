@@ -199,7 +199,8 @@ public class AuthenticationMenu {
                 valid_input = true;
             }
             catch (NumberFormatException e) {
-                System.out.print("\nERROR: Invalid input, try again: ");
+                InvalidInputException ex = new InvalidInputException("Input must be a number.");
+                System.out.print("\nERROR: " + ex.getMessage() + " Try again: ");
             }
         }
 
