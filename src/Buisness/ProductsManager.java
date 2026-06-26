@@ -2,6 +2,7 @@ package Buisness;
 
 import Buisness.Entities.Product;
 
+import Persistance.PersistenceException;
 import Persistance.ProductsDao;
 
 import java.util.List;
@@ -26,7 +27,7 @@ public class ProductsManager {
      * @param name product name to search for
      * @return list of matching products
      */
-    public List<Product> findProductsByName(String name) {
+    public List<Product> findProductsByName(String name) throws PersistenceException{
         return productsDao.findProductsByName(name);
     }
 
@@ -38,7 +39,7 @@ public class ProductsManager {
      * @param id product ID
      * @return the product, or null if not found
      */
-    public Product findById(String id) {
+    public Product findById(String id) throws PersistenceException {
         return productsDao.findById(id);
     }
 

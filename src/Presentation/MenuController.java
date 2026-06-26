@@ -82,7 +82,7 @@ public class MenuController {
      *
      * @return true if system starts correctly, false otherwise
      */
-    public boolean start() {
+    public boolean start() throws PersistenceException {
 
         if (!checkFiles()) return false;
 
@@ -123,7 +123,7 @@ public class MenuController {
      *
      * @return true if login successful
      */
-    private boolean handleLogin() {
+    private boolean handleLogin() throws PersistenceException {
         int id = authenticationMenu.askClientId();
         return clientsManager.login(id);
     }
@@ -133,7 +133,7 @@ public class MenuController {
      *
      * @return true if registration successful
      */
-    private boolean handleRegister() {
+    private boolean handleRegister() throws PersistenceException {
         int clientType = authenticationMenu.askClientType();
 
         String name = authenticationMenu.askFullName();
@@ -166,7 +166,7 @@ public class MenuController {
     /**
      * Displays the main user menu loop.
      */
-    private void userMenu() {
+    private void userMenu() throws PersistenceException {
         boolean logged = true;
 
         while (logged) {
@@ -199,7 +199,7 @@ public class MenuController {
     /**
      * Displays current client profile information.
      */
-    private void showProfile() {
+    private void showProfile() throws PersistenceException {
         Client c = clientsManager.getCurrentClient();
 
         List<String> phones = new ArrayList<>();
@@ -232,7 +232,7 @@ public class MenuController {
     /**
      * Searches products by name and allows selection.
      */
-    private void findProductsByName() {
+    private void findProductsByName() throws PersistenceException{
         String name = mainMenu.askSearchText();
 
         List<Product> products = productsManager.findProductsByName(name);
@@ -256,7 +256,7 @@ public class MenuController {
      *
      * @param product selected product
      */
-    private void showProductInformation(Product product) {
+    private void showProductInformation(Product product) throws PersistenceException {
         if (product instanceof Glasses) {
             Glasses g = (Glasses) product;
             mainMenu.printProductInformation(product.getProductId(), product.getProductName(),
@@ -311,7 +311,7 @@ public class MenuController {
     /**
      * Displays products filtered by provider.
      */
-    private void findProductsByProvider() {
+    private void findProductsByProvider() throws PersistenceException{
         List<Provider> providers = providersManager.getAllProviders();
         List<String> display = new ArrayList<>();
 
@@ -336,7 +336,7 @@ public class MenuController {
     /**
      * Handles shopping cart menu operations.
      */
-    private void showShoppingCart() {
+    private void showShoppingCart() throws PersistenceException {
         int option;
         boolean exit = false;
 
@@ -396,7 +396,7 @@ public class MenuController {
     /**
      * Finalizes purchase and records the sale.
      */
-    private void checkout() {
+    private void checkout() throws PersistenceException {
         int i = 0;
 
         mainMenu.printLine("----- PURCHASE INFORMATION -----");

@@ -5,6 +5,7 @@ import Buisness.Entities.OnlineClient;
 import Buisness.Entities.CorporateClient;
 import Buisness.Entities.PhoneNumber;
 import Persistance.ClientsDao;
+import Persistance.PersistenceException;
 
 import java.util.List;
 
@@ -29,7 +30,7 @@ public class ClientsManager {
      * @param clientId the client ID
      * @return true if login is successful, false otherwise
      */
-    public boolean login(int clientId) {
+    public boolean login(int clientId) throws PersistenceException {
         List<Client> clients = clientsDao.loadAllClients();
         boolean found = false;
         int i = 0;
@@ -52,7 +53,7 @@ public class ClientsManager {
      * @param phoneNumbers list of phone numbers
      * @return true if registration is successful
      */
-    public boolean registerClient(String fullName, List<PhoneNumber> phoneNumbers) {
+    public boolean registerClient(String fullName, List<PhoneNumber> phoneNumbers) throws PersistenceException {
         List<Client> clients = clientsDao.loadAllClients();
 
         int newClientId = generateNewClientId(clients);
@@ -78,7 +79,7 @@ public class ClientsManager {
      * @return true if registration is successful
      */
     public boolean registerOnlineClient(String fullName, List<PhoneNumber> phoneNumbers,
-                                        String address, String contactEmail) {
+                                        String address, String contactEmail) throws PersistenceException {
         List<Client> clients = clientsDao.loadAllClients();
         int newClientId = generateNewClientId(clients);
 
@@ -102,7 +103,7 @@ public class ClientsManager {
      * @return true if registration is successful
      */
     public boolean registerCorporateClient(String contactName, List<PhoneNumber> phoneNumbers,
-                                           String cif, String billingAddress, String mailingAddress) {
+                                           String cif, String billingAddress, String mailingAddress) throws PersistenceException {
         List<Client> clients = clientsDao.loadAllClients();
         int newClientId = generateNewClientId(clients);
 

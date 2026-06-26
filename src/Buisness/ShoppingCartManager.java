@@ -1,6 +1,7 @@
 package Buisness;
 
 import Buisness.Entities.*;
+import Persistance.PersistenceException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,7 +54,7 @@ public class ShoppingCartManager {
         return lines;
     }
 
-    public double checkout(Client client) {
+    public double checkout(Client client) throws PersistenceException {
         double total = 0.0;
 
         for (ProductForSale product : shoppingCart.products) {
@@ -98,7 +99,7 @@ public class ShoppingCartManager {
      * @param product the product to search for
      * @return provider company name, or null if not found
      */
-    public String getProvider(ProductForSale product) {
+    public String getProvider(ProductForSale product) throws PersistenceException {
         providers = providersManager.getAllProviders();
 
         for(Provider provider : providers) {
@@ -121,7 +122,7 @@ public class ShoppingCartManager {
      * @param client the purchasing client (affects VAT exemption)
      * @return final price
      */
-    public double calculateSellingPrice(ProductForSale pfs, Client client) {
+    public double calculateSellingPrice(ProductForSale pfs, Client client) throws PersistenceException {
         Product product = productsManager.findById(pfs.getProductId());
         double basePrice = pfs.getSalePrice();
 

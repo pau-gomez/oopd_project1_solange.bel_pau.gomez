@@ -1,5 +1,7 @@
 package Presentation;
 
+import Persistance.PersistenceException;
+
 /**
  * Entry point of the application.
  */
@@ -10,7 +12,7 @@ public class main {
      *
      * @param args command line arguments
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws PersistenceException {
         java.util.logging.LogManager.getLogManager().reset(); // Logging command to silence API response in terminal.
 
         MenuController controller = new MenuController();

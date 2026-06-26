@@ -14,12 +14,12 @@ public interface SalesDao {
      *
      * @return list of sales
      */
-    List<Sale> loadAllSales();
+    List<Sale> loadAllSales() throws PersistenceException;
 
     /**
      * Updates sales storage with the given list.
      *
      * @param sales list of sales to persist
      */
-    void updateFile(List<Sale> sales);
+    void updateFile(List<Sale> sales) throws PersistenceException;
 }

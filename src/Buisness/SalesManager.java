@@ -1,6 +1,7 @@
 package Buisness;
 
 import Buisness.Entities.Sale;
+import Persistance.PersistenceException;
 import Persistance.SalesDao;
 
 import java.util.ArrayList;
@@ -24,7 +25,7 @@ public class SalesManager {
      *
      * @param sale the sale to add
      */
-    public void addSale(Sale sale) {
+    public void addSale(Sale sale) throws PersistenceException {
         List<Sale> sales = salesDao.loadAllSales();
         sales.add(sale);
         salesDao.updateFile(sales);
@@ -36,7 +37,7 @@ public class SalesManager {
      * @param id client ID
      * @return list of sales belonging to the client
      */
-    public List<Sale> filterSalesByClient(int id) {
+    public List<Sale> filterSalesByClient(int id) throws PersistenceException {
         List<Sale> allSales;
         List<Sale> sales = new ArrayList<>();
         allSales = salesDao.loadAllSales();
