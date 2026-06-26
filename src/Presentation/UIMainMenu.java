@@ -12,9 +12,12 @@ import java.util.Scanner;
  */
 public class UIMainMenu {
 
-    private final Scanner scanner = new Scanner(System.in);
-    private static boolean valid_input = false;
+    private final Scanner scanner;
+    private boolean valid_input = false;
 
+    public UIMainMenu (Scanner scanner) {
+        this.scanner = scanner;
+    }
     /**
      * Displays the main menu for the logged-in user.
      *
@@ -141,7 +144,6 @@ public class UIMainMenu {
      * @return search query
      */
     public String askSearchText() {
-        scanner.nextLine();
         System.out.print("Search criteria: ");
         return scanner.nextLine();
     }
@@ -214,7 +216,6 @@ public class UIMainMenu {
      * @return true if user confirms
      */
     public boolean confirm(String message) {
-        scanner.nextLine();
         System.out.print(message + " (yes/no): ");
         return scanner.nextLine().equalsIgnoreCase("yes");
     }
@@ -328,10 +329,11 @@ public class UIMainMenu {
 
         while (!valid_input) {
             try{
-                input = scanner.nextInt();
+                String line = scanner.nextLine();
+                input = Integer.parseInt(line.trim());
                 valid_input = true;
             }
-            catch (InputMismatchException e) {
+            catch (NumberFormatException e) {
                 System.out.print("\nERROR: Invalid input, try again: ");
             }
         }

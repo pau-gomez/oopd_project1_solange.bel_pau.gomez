@@ -1,7 +1,6 @@
 package Buisness;
 
 import Buisness.Entities.Sale;
-import Persistance.Impl.SalesCsvDao;
 import Persistance.SalesDao;
 
 import java.util.ArrayList;
@@ -11,13 +10,13 @@ import java.util.List;
  * Handles sales-related business operations.
  */
 public class SalesManager {
-    private SalesDao salesDao;
+    private final SalesDao salesDao;
 
     /**
      * Initializes the manager with a CSV-based sales DAO.
      */
-    public SalesManager() {
-        this.salesDao = new SalesCsvDao();
+    public SalesManager(SalesDao salesDao) {
+        this.salesDao = salesDao;
     }
 
     /**

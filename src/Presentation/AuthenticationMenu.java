@@ -8,7 +8,11 @@ import java.util.Scanner;
  */
 public class AuthenticationMenu {
 
-    private final Scanner scanner = new Scanner(System.in);
+    private final Scanner scanner;
+
+    public AuthenticationMenu(Scanner scanner) {
+        this.scanner = scanner;
+    }
 
     /**
      * Displays the authentication menu and returns the selected option.
@@ -190,11 +194,11 @@ public class AuthenticationMenu {
 
         while (!valid_input) {
             try{
-                input = scanner.nextInt();
-                scanner.nextLine();
+                String line = scanner.nextLine();
+                input = Integer.parseInt(line.trim());
                 valid_input = true;
             }
-            catch (InputMismatchException e) {
+            catch (NumberFormatException e) {
                 System.out.print("\nERROR: Invalid input, try again: ");
             }
         }

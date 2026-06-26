@@ -13,7 +13,7 @@ import java.util.List;
  */
 public class ClientsManager {
     private Client currentClient;
-    private ClientsDao clientsDao;
+    private final ClientsDao clientsDao;
 
     /**
      * Initializes the manager with whichever DAO is given, either API or JSON.
@@ -56,7 +56,7 @@ public class ClientsManager {
         List<Client> clients = clientsDao.loadAllClients();
 
         int newClientId = generateNewClientId(clients);
-        Client newClient = new Client(newClientId, "standard", fullName, phoneNumbers);
+        Client newClient = new Client(newClientId, "regular", fullName, phoneNumbers);
 
         clients.add(newClient);
         clientsDao.updateFile(clients);
@@ -71,10 +71,10 @@ public class ClientsManager {
     /**
      * Registers a new online client.
      *
-     * @param fullName      client's full name
-     * @param phoneNumbers  list of phone numbers
-     * @param address       shipping address
-     * @param contactEmail  contact email
+     * @param fullName     client's full name
+     * @param phoneNumbers list of phone numbers
+     * @param address      shipping address
+     * @param contactEmail contact email
      * @return true if registration is successful
      */
     public boolean registerOnlineClient(String fullName, List<PhoneNumber> phoneNumbers,
@@ -94,21 +94,19 @@ public class ClientsManager {
     /**
      * Registers a new corporate client.
      *
-     * @param fullName        company name
-     * @param phoneNumbers    list of phone numbers
-     * @param cif             tax identification number
-     * @param contactName     contact person name
-     * @param billingAddress  billing address
-     * @param mailingAddress  shipping address
+     * @param contactName    name of the contact person
+     * @param phoneNumbers   list of phone numbers
+     * @param cif            tax identification number
+     * @param billingAddress billing address
+     * @param mailingAddress shipping/mailing address
      * @return true if registration is successful
      */
-    public boolean registerCorporateClient(String fullName, List<PhoneNumber> phoneNumbers,
-                                           String cif, String contactName,
-                                           String billingAddress, String mailingAddress) {
+    public boolean registerCorporateClient(String contactName, List<PhoneNumber> phoneNumbers,
+                                           String cif, String billingAddress, String mailingAddress) {
         List<Client> clients = clientsDao.loadAllClients();
         int newClientId = generateNewClientId(clients);
 
-        CorporateClient newClient = new CorporateClient(newClientId, fullName, phoneNumbers,
+        CorporateClient newClient = new CorporateClient(newClientId, contactName, phoneNumbers,
                 cif, contactName, billingAddress, mailingAddress);
         clients.add(newClient);
         clientsDao.updateFile(clients);
