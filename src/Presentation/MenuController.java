@@ -326,7 +326,7 @@ public class MenuController {
 
         mainMenu.printProductFromProvider(provider);
 
-        int option = mainMenu.askOption(providers.size());
+        int option = mainMenu.askOption(provider.getProductsForSale().size());
 
         shoppingCartManager.addProduct(provider.getProductsForSale().get(option - 1));
     }

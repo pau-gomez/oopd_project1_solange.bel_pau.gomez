@@ -24,7 +24,6 @@ public interface ProductsDao {
      */
     boolean validateProductsFile();
 
-    // ADD this method to the interface:
     /**
      * Finds a product by its ID.
      *
