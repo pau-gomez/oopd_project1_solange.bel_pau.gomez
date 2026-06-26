@@ -13,6 +13,7 @@ public interface ClientsDao {
      * Loads all clients from storage.
      *
      * @return list of clients
+     * @throws PersistenceException if the storage cannot be accessed or parsed
      */
     List<Client> loadAllClients() throws PersistenceException;
 
@@ -20,6 +21,7 @@ public interface ClientsDao {
      * Updates the storage with the given clients list.
      *
      * @param clients list of clients to persist
+     * @throws PersistenceException if the storage cannot be accessed or parsed
      */
     void updateFile(List<Client> clients) throws PersistenceException;
 }

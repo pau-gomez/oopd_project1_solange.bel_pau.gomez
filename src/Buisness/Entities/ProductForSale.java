@@ -1,12 +1,18 @@
 package Buisness.Entities;
 
 
+import com.google.gson.annotations.SerializedName;
+
 /**
  * Represents a product available for sale, including price and stock.
  */
 public class ProductForSale {
-    private String productId;
-    private double sellingPrice;
+    @SerializedName("product_id")
+    private final String productId;
+    @SerializedName("selling_price")
+    private final double sellingPrice;
+
+    @SerializedName("units_in_stock")
     private int unitsInStock;
 
 

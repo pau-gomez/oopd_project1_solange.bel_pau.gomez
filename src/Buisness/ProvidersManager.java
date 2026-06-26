@@ -16,7 +16,9 @@ public class ProvidersManager {
     private final ProvidersDao providersDao;
 
     /**
-     * Initializes the manager with a JSON-based providers DAO.
+     * Initializes the manager with whichever DAO is given, either API or JSON.
+     *
+     * @param providersDao the DAO to use for provider persistence
      */
     public ProvidersManager(ProvidersDao providersDao) {
         this.providersDao = providersDao;
@@ -56,7 +58,7 @@ public class ProvidersManager {
     }
 
     /**
-     * Grants access to the user of all providers.
+     * Returns all providers in the system.
      *
      * @return list of all providers
      */

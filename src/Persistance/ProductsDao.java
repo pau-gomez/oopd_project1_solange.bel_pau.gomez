@@ -1,7 +1,6 @@
 package Persistance;
 
 import Buisness.Entities.Product;
-import Buisness.Entities.Provider;
 
 import java.util.List;
 
@@ -14,6 +13,7 @@ public interface ProductsDao {
      * Loads all products from storage.
      *
      * @return list of products
+     * @throws PersistenceException if the storage cannot be accessed or parsed
      */
     List<Product> loadAllProducts() throws PersistenceException;
 
@@ -29,6 +29,7 @@ public interface ProductsDao {
      *
      * @param id product ID
      * @return the product, or null if not found
+     * @throws PersistenceException if the storage cannot be accessed or parsed
      */
     Product findById(String id) throws PersistenceException;
 
@@ -37,6 +38,7 @@ public interface ProductsDao {
      *
      * @param name search term
      * @return matching products
+     * @throws PersistenceException if the storage cannot be accessed or parsed
      */
     List<Product> findProductsByName(String name) throws PersistenceException;
 }

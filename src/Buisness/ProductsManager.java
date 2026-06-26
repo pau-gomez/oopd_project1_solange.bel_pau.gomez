@@ -15,7 +15,9 @@ public class ProductsManager {
     private final ProductsDao productsDao;
 
     /**
-     * Initializes the manager with a JSON-based products DAO.
+     * Initializes the manager with whichever DAO is given, either API or JSON.
+     *
+     * @param productsDao the DAO to use for product persistence
      */
     public ProductsManager(ProductsDao productsDao) {
         this.productsDao = productsDao;
@@ -27,7 +29,7 @@ public class ProductsManager {
      * @param name product name to search for
      * @return list of matching products
      */
-    public List<Product> findProductsByName(String name) throws PersistenceException{
+    public List<Product> findProductsByName(String name) throws PersistenceException {
         return productsDao.findProductsByName(name);
     }
 

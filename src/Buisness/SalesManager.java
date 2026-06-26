@@ -14,7 +14,9 @@ public class SalesManager {
     private final SalesDao salesDao;
 
     /**
-     * Initializes the manager with a CSV-based sales DAO.
+     * Initializes the manager with whichever DAO is given, either API or CSV.
+     *
+     * @param salesDao the DAO to use for sales persistence
      */
     public SalesManager(SalesDao salesDao) {
         this.salesDao = salesDao;
@@ -43,7 +45,7 @@ public class SalesManager {
         allSales = salesDao.loadAllSales();
 
         for(Sale s: allSales) {
-            if (s.clientId == id) {
+            if (s.getClientId() == id) {
                 sales.add(s);
             }
         }

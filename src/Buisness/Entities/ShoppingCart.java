@@ -6,8 +6,8 @@ import java.util.List;
  * Represents a shopping cart containing products and VAT information.
  */
 public class ShoppingCart {
-    public List<ProductForSale> products;
-    public double vat;
+    public final List<ProductForSale> products;
+    private final double vat;
 
     /**
      * Constructs a ShoppingCart object.
@@ -20,7 +20,6 @@ public class ShoppingCart {
         this.vat = vat;
     }
 
-        // Getters: //
 
     /**
      * @return list of products in the cart

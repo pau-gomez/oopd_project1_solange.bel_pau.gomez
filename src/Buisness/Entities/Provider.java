@@ -1,18 +1,27 @@
 package Buisness.Entities;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.List;
 
 /**
  * Represents a provider company and its associated products.
  */
 public class Provider {
-    private int providerId;
-    private String companyName;
-    private String cif;
-    private String contactName;
-    private String phone;
-    private String email;
-    private List<ProductForSale> productForSales;
+    @SerializedName("provider_id")
+    private final int providerId;
+
+    @SerializedName("company_name")
+    private final String companyName;
+    private final String cif;
+
+    @SerializedName("contact_name")
+    private final String contactName;
+    private final String phone;
+    private final String email;
+
+    @SerializedName("products_for_sale")
+    private final List<ProductForSale> productForSales;
 
     /**
      * Constructs a Provider object.

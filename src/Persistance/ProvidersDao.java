@@ -13,6 +13,7 @@ public interface ProvidersDao {
      * Loads all providers from storage.
      *
      * @return list of providers
+     * @throws PersistenceException if the storage cannot be accessed or parsed
      */
     List<Provider> loadAllProviders() throws PersistenceException;
 
@@ -20,6 +21,7 @@ public interface ProvidersDao {
      * Updates provider storage with the given list.
      *
      * @param providers list of providers to persist
+     * @throws PersistenceException if the storage cannot be accessed or parsed
      */
     void updateFile(List<Provider> providers) throws PersistenceException;
 

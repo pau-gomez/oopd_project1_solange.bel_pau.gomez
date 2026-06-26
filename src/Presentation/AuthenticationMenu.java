@@ -1,6 +1,6 @@
 package Presentation;
 
-import java.util.InputMismatchException;
+
 import java.util.Scanner;
 
 /**
@@ -10,6 +10,11 @@ public class AuthenticationMenu {
 
     private final Scanner scanner;
 
+    /**
+     * Constructs an AuthenticationMenu with the given shared Scanner.
+     *
+     * @param scanner the shared Scanner instance for reading user input
+     */
     public AuthenticationMenu(Scanner scanner) {
         this.scanner = scanner;
     }
@@ -62,8 +67,13 @@ public class AuthenticationMenu {
      * @return string of user's full name
      */
     public String askFullName() {
-        System.out.print("Full name: ");
-        return scanner.nextLine();
+        while (true) {
+            System.out.print("Full name: ");
+            String name = scanner.nextLine();
+            if (isValidName(name)) return name;
+            InvalidInputException ex = new InvalidInputException("Name cannot be empty and must contain only letters and spaces.");
+            System.out.println("ERROR: " + ex.getMessage());
+        }
     }
 
     /**
@@ -142,8 +152,13 @@ public class AuthenticationMenu {
      * @return shipping address
      */
     public String askAddress() {
-        System.out.print("Shipping address: ");
-        return scanner.nextLine();
+        while (true) {
+            System.out.print("Shipping address (e.g. Carrer de Mallorca 221, 08008 Barcelona, Spain): ");
+            String address = scanner.nextLine();
+            if (isValidAddress(address)) return address;
+            InvalidInputException ex = new InvalidInputException("Address must follow the format: Street Number, PostalCode City, Country.");
+            System.out.println("ERROR: " + ex.getMessage());
+        }
     }
 
     /**
@@ -152,8 +167,13 @@ public class AuthenticationMenu {
      * @return contact email
      */
     public String askEmail() {
-        System.out.print("Contact email: ");
-        return scanner.nextLine();
+        while (true) {
+            System.out.print("Contact email: ");
+            String email = scanner.nextLine();
+            if (isValidEmail(email)) return email;
+            InvalidInputException ex = new InvalidInputException("Invalid email format (e.g. user@example.com).");
+            System.out.println("ERROR: " + ex.getMessage());
+        }
     }
 
     /**
@@ -162,8 +182,13 @@ public class AuthenticationMenu {
      * @return CIF
      */
     public String askCif() {
-        System.out.print("CIF: ");
-        return scanner.nextLine();
+        while (true) {
+            System.out.print("CIF: ");
+            String cif = scanner.nextLine().toUpperCase();
+            if (isValidCif(cif)) return cif;
+            InvalidInputException ex = new InvalidInputException("Invalid CIF format. Must be 1 letter followed by 8 digits (e.g. B12345678).");
+            System.out.println("ERROR: " + ex.getMessage());
+        }
     }
 
     /**
@@ -172,8 +197,13 @@ public class AuthenticationMenu {
      * @return contact person name
      */
     public String askContactName() {
-        System.out.print("Name of contact person: ");
-        return scanner.nextLine();
+        while (true) {
+            System.out.print("Name of contact person: ");
+            String name = scanner.nextLine();
+            if (isValidName(name)) return name;
+            InvalidInputException ex = new InvalidInputException("Name cannot be empty and must contain only letters and spaces.");
+            System.out.println("ERROR: " + ex.getMessage());
+        }
     }
 
     /**
@@ -182,8 +212,13 @@ public class AuthenticationMenu {
      * @return billing address
      */
     public String askBillingAddress() {
-        System.out.print("Billing address: ");
-        return scanner.nextLine();
+        while (true) {
+            System.out.print("Billing address (e.g. Carrer de Mallorca 221, 08008 Barcelona, Spain): ");
+            String address = scanner.nextLine();
+            if (isValidAddress(address)) return address;
+            InvalidInputException ex = new InvalidInputException("Address must follow the format: Street Number, PostalCode City, Country.");
+            System.out.println("ERROR: " + ex.getMessage());
+        }
     }
 
     /**
@@ -241,6 +276,80 @@ public class AuthenticationMenu {
         }
 
         return digitCount >= 7 && digitCount <= 15;
+    }
+
+    /**
+     * Validates a full name (not empty, letters and spaces only).
+     *
+     * @param name the name to validate
+     * @return true if valid, false otherwise
+     */
+    private boolean isValidName(String name) {
+        if (name == null || name.isBlank()) return false;
+
+        for (int i = 0; i < name.length(); i++) {
+            char c = name.charAt(i);
+            if (!Character.isLetter(c) && c != ' ') return false;
+        }
+        return true;
+    }
+
+    /**
+     * Validates an email address (contains @, has domain with dot, no spaces).
+     *
+     * @param email the email to validate
+     * @return true if valid, false otherwise
+     */
+    private boolean isValidEmail(String email) {
+        if (email == null || email.isBlank()) return false;
+
+        int atIndex = email.indexOf('@');
+        if (atIndex <= 0) return false;
+
+        String domain = email.substring(atIndex + 1);
+        if (domain.indexOf('.') <= 0) return false;
+
+        for (int i = 0; i < email.length(); i++) {
+            if (email.charAt(i) == ' ') return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * Validates an address string (must have 3 comma-separated parts: street, postal+city, country).
+     *
+     * @param address the address to validate
+     * @return true if valid, false otherwise
+     */
+    private boolean isValidAddress(String address) {
+        if (address == null || address.isBlank()) return false;
+
+        String[] parts = address.split(",");
+        if (parts.length < 3) return false;
+
+        for (String part : parts) {
+            if (part.isBlank()) return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * Validates a Spanish CIF/NIF (1 letter + 8 digits).
+     *
+     * @param cif the CIF to validate
+     * @return true if valid, false otherwise
+     */
+    private boolean isValidCif(String cif) {
+        if (cif == null || cif.length() != 9) return false;
+        if (!Character.isLetter(cif.charAt(0))) return false;
+
+        for (int i = 1; i < cif.length(); i++) {
+            if (!Character.isDigit(cif.charAt(i))) return false;
+        }
+
+        return true;
     }
 
     /**

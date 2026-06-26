@@ -1,11 +1,14 @@
 package Buisness.Entities;
 
+import com.google.gson.annotations.SerializedName;
+
 /**
  * Represents a phone number with a country prefix and number.
  */
 public class PhoneNumber {
-    private String countryPrefix;
-    private String number;
+    @SerializedName("country_prefix")
+    private final String countryPrefix;
+    private final String number;
 
     /**
      * Constructs a PhoneNumber object.

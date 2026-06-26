@@ -12,11 +12,16 @@ import java.util.Scanner;
 public class UIMainMenu {
 
     private final Scanner scanner;
-    private boolean validInput = false;
 
+    /**
+     * Constructs a UIMainMenu with the given shared Scanner.
+     *
+     * @param scanner the shared Scanner instance for reading user input
+     */
     public UIMainMenu (Scanner scanner) {
         this.scanner = scanner;
     }
+
     /**
      * Displays the main menu for the logged-in user.
      *
@@ -148,17 +153,18 @@ public class UIMainMenu {
     }
 
     /**
-     * Asks user to select a provider.
+     * Asks user to select a provider from the list.
      *
-     * @return selected provider index
+     * @param numProviders the number of available providers
+     * @return selected provider index (1-based)
      */
     public int askForProvider(int numProviders) {
         boolean valid = false;
         int selectedOption;
         do{
-            System.out.print("\nChoose an provider: ");
+            System.out.print("\nChoose a provider: ");
             selectedOption = validatedInput();
-            if(selectedOption > numProviders) System.out.println("\n\tError: Invalid value.");
+            if(selectedOption > numProviders || selectedOption <= 0) System.out.println("\n\tError: Invalid value.");
             else valid = true;
         } while(!valid);
 
@@ -201,7 +207,7 @@ public class UIMainMenu {
         do{
             System.out.print("\nChoose an option: ");
             selected_option = validatedInput();
-            if(selected_option > options) System.out.println("\n\tError: Invalid value.");
+            if(selected_option > options || selected_option < 0) System.out.println("\n\tError: Invalid value.");
             else valid = true;
         } while(!valid);
 
@@ -215,8 +221,16 @@ public class UIMainMenu {
      * @return true if user confirms
      */
     public boolean confirm(String message) {
-        System.out.print(message + " (yes/no): ");
-        return scanner.nextLine().equalsIgnoreCase("yes");
+        while (true) {
+            System.out.print(message + " (yes/no): ");
+            String answer = scanner.nextLine().trim().toLowerCase();
+            if (answer.equals("yes")) return true;
+            else if (answer.equals("no")) return false;
+            else {
+                InvalidInputException ex = new InvalidInputException("Please answer 'yes' or 'no'.");
+                System.out.println("ERROR: " + ex.getMessage());
+            }
+        }
     }
 
     /**
@@ -286,6 +300,8 @@ public class UIMainMenu {
             printProductInformation(productReal);
             System.out.print("\n");
         }
+
+        System.out.print("\n(" + 0 + ") Back.\n");
     }
 
     /**
@@ -323,7 +339,7 @@ public class UIMainMenu {
      */
     private int validatedInput() {
         int input = 0;
-        validInput = false;
+        boolean validInput = false;
 
         while (!validInput) {
             try{

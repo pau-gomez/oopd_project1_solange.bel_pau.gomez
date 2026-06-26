@@ -21,6 +21,7 @@ public class SalesCsvDao implements SalesDao {
      * Loads all sales from the CSV file.
      *
      * @return list of sales
+     * @throws PersistenceException if the file cannot be created, read, or parsed
      */
     @Override
     public List<Sale> loadAllSales() throws PersistenceException {
@@ -31,7 +32,7 @@ public class SalesCsvDao implements SalesDao {
             try {
                 file.createNewFile();
             } catch (IOException e) {
-                throw new PersistenceException("Could not create clients file.", e);
+                throw new PersistenceException("Could not create sales file.", e);
             }
         }
 
@@ -46,6 +47,7 @@ public class SalesCsvDao implements SalesDao {
      * Writes sales data to the CSV file.
      *
      * @param sales list of sales to save
+     * @throws PersistenceException if the file cannot be created, read, or parsed
      */
     @Override
     public void updateFile(List<Sale> sales) throws PersistenceException {

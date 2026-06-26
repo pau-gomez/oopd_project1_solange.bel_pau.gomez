@@ -1,12 +1,19 @@
 package Buisness.Entities;
 
+import com.google.gson.annotations.SerializedName;
+
 /**
  * Represents a product with its associated details.
  */
 public class Product {
-    private String productId;
-    private String productName;
-    private String productType;
+    @SerializedName("product_id")
+    private final String productId;
+
+    @SerializedName("product_name")
+    private final String productName;
+
+    @SerializedName("product_type")
+    private final String productType;
 
     /**
      * Constructs a Product object.
@@ -21,7 +28,6 @@ public class Product {
         this.productType = productType;
     }
 
-        // Getters: //
 
     /**
      * @return product ID

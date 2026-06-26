@@ -4,7 +4,6 @@ import Buisness.Entities.Client;
 import Persistance.ClientsDao;
 import Persistance.PersistenceException;
 import edu.salle.url.api.ApiHelper;
-import edu.salle.url.api.exception.ApiException;
 import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
 
@@ -21,10 +20,21 @@ public class ClientsApiDao implements ClientsDao {
 
     private final ApiHelper apiHelper;
 
+    /**
+     * Constructs a ClientsApiDao with the given ApiHelper.
+     *
+     * @param apiHelper a working ApiHelper instance for making HTTP requests
+     */
     public ClientsApiDao(ApiHelper apiHelper) {
         this.apiHelper = apiHelper;
     }
 
+    /**
+     * Loads all clients from the API.
+     *
+     * @return list of clients, or empty list if none exist
+     * @throws PersistenceException if the API request fails or the response cannot be parsed
+     */
     @Override
     public List<Client> loadAllClients() throws PersistenceException {
         try {
@@ -36,6 +46,12 @@ public class ClientsApiDao implements ClientsDao {
         }
     }
 
+    /**
+     * Saves the newest client to the API via a POST request.
+     *
+     * @param clients list of clients — only the last entry is posted
+     * @throws PersistenceException if the API request fails
+     */
     @Override
     public void updateFile(List<Client> clients) throws PersistenceException {
         if (clients == null || clients.isEmpty()) return;
@@ -47,6 +63,12 @@ public class ClientsApiDao implements ClientsDao {
         }
     }
 
+    /**
+     * Builds a Gson instance with the ClientDeserializer registered
+     * to correctly handle Client subclass deserialization.
+     *
+     * @return configured Gson instance
+     */
     private Gson buildGson() {
         return new GsonBuilder().registerTypeAdapter(Client.class, new ClientDeserializer()).create();
     }

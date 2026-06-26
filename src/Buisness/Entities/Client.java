@@ -1,15 +1,24 @@
 package Buisness.Entities;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.List;
 
 /**
  * Represents a client with an ID, full name, and associated phone numbers.
  */
 public class Client {
-    private int clientId;
-    private String clientType;
-    private String fullName;
-    private List<PhoneNumber> phoneNumbers;
+    @SerializedName("client_id")
+    private final int clientId;
+
+    @SerializedName("client_type")
+    private final String clientType;
+
+    @SerializedName("full_name")
+    private final String fullName;
+
+    @SerializedName("phone_numbers")
+    private final List<PhoneNumber> phoneNumbers;
 
     /**
      * Constructs a Client.

@@ -1,5 +1,6 @@
 package Buisness;
 
+import Persistance.PersistenceException;
 import geolocationAPI.Address;
 
 /**
@@ -13,7 +14,7 @@ public class AddressParser {
      * @param addressString the complete address string
      * @return parsed Address object
      */
-    public static Address parse(String addressString) {
+    public static Address parse(String addressString) throws PersistenceException {
         try {
             String[] parts = addressString.split(",");
             String streetPart = parts[0].trim();
@@ -30,7 +31,7 @@ public class AddressParser {
 
             return new Address(street, number, city, country, postalCode);
         } catch (Exception e) {
-            throw new RuntimeException("Could not parse address: " + addressString, e);
-        }   //  TODO: try catch ok?
+            throw new PersistenceException("Could not parse address: " + addressString, e);
+        }
     }
 }

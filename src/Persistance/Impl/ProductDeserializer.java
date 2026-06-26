@@ -10,6 +10,16 @@ import java.lang.reflect.Type;
  */
 public class ProductDeserializer implements JsonDeserializer<Product> {
 
+    /**
+     * Deserializes a JSON element into the correct Product subclass
+     * based on the "product_type" field.
+     *
+     * @param json the JSON element to deserialize
+     * @param typeOfT the type of the object to deserialize to
+     * @param context the deserialization context
+     * @return the deserialized Product object (Glasses, ContactLenses, Consumable, or Service)
+     * @throws JsonParseException if the product type is unknown or a required field is missing
+     */
     @Override
     public Product deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context)
             throws JsonParseException {

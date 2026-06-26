@@ -18,6 +18,8 @@ public class ClientsManager {
 
     /**
      * Initializes the manager with whichever DAO is given, either API or JSON.
+     *
+     * @param clientsDao the DAO to use for client persistence
      */
     public ClientsManager(ClientsDao clientsDao) {
         this.clientsDao = clientsDao;

@@ -1,13 +1,22 @@
 package Buisness.Entities;
 
+import com.google.gson.annotations.SerializedName;
+
 /**
  * Represents a sale transaction between a client and a product.
  */
 public class Sale {
-    public int clientId;
-    public String productId;
-    public double pricePaid;
-    public long purchaseDate;
+    @SerializedName("client_id")
+    private final int clientId;
+
+    @SerializedName("product_id")
+    private final String productId;
+
+    @SerializedName("price_paid")
+    private final double pricePaid;
+
+    @SerializedName("purchase_date")
+    private final long purchaseDate;
 
     /**
      * Constructs a Sale object.

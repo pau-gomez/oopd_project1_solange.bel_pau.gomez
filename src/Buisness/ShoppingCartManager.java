@@ -10,13 +10,18 @@ import java.util.List;
  * Manages shopping cart operations such as adding products, checkout, and provider lookup.
  */
 public class ShoppingCartManager {
-    private List<ProductForSale> products =  new ArrayList<>();
-    private List<Provider> providers;
+    private final List<ProductForSale> products =  new ArrayList<>();
     private final ProvidersManager providersManager;
     private final ShoppingCart shoppingCart;
-    private ShippingCalculator shippingCalculator = new ShippingCalculator();
+    private final ShippingCalculator shippingCalculator = new ShippingCalculator();
     private final ProductsManager productsManager;
 
+    /**
+     * Initializes the shopping cart manager with the required business managers.
+     *
+     * @param providersManager the providers manager for stock and provider lookups
+     * @param productsManager the products manager for product type lookups
+     */
     public ShoppingCartManager(ProvidersManager providersManager, ProductsManager productsManager) {
         this.providersManager = providersManager;
         this.productsManager = productsManager;
@@ -54,6 +59,14 @@ public class ShoppingCartManager {
         return lines;
     }
 
+    /**
+     * Calculates the total price of all products in the cart, adds shipping cost
+     * for online clients, clears the cart, and returns the total.
+     *
+     * @param client the purchasing client
+     * @return the total price including VAT and shipping if applicable
+     * @throws PersistenceException if a persistence error occurs during price calculation
+     */
     public double checkout(Client client) throws PersistenceException {
         double total = 0.0;
 
@@ -100,7 +113,7 @@ public class ShoppingCartManager {
      * @return provider company name, or null if not found
      */
     public String getProvider(ProductForSale product) throws PersistenceException {
-        providers = providersManager.getAllProviders();
+        List<Provider> providers = providersManager.getAllProviders();
 
         for(Provider provider : providers) {
             for (ProductForSale productToFind: provider.getProductsForSale()) {
@@ -119,7 +132,8 @@ public class ShoppingCartManager {
      *
      * @param pfs    the product for sale (has ID and base price)
      * @param client the purchasing client (affects VAT exemption)
-     * @return final price
+     * @return final price including applicable VAT
+     * @throws PersistenceException if the product cannot be retrieved from persistence
      */
     public double calculateSellingPrice(ProductForSale pfs, Client client) throws PersistenceException {
         Product product = productsManager.findById(pfs.getProductId());

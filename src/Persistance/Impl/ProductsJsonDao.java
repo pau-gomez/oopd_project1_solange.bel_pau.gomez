@@ -20,6 +20,8 @@ public class ProductsJsonDao implements ProductsDao {
 
     /**
      * Builds a Gson instance with the custom product deserializer registered.
+     *
+     * @return configured Gson instance
      */
     private Gson buildGson() {
         return new GsonBuilder()
@@ -31,6 +33,7 @@ public class ProductsJsonDao implements ProductsDao {
      * Loads all products from the JSON file.
      *
      * @return list of products
+     * @throws PersistenceException if the file cannot be read or parsed
      */
     @Override
     public List<Product> loadAllProducts() throws PersistenceException {
@@ -42,6 +45,13 @@ public class ProductsJsonDao implements ProductsDao {
         }
     }
 
+    /**
+     * Finds a product by its ID.
+     *
+     * @param id the product ID to search for
+     * @return the matching product, or null if not found
+     * @throws PersistenceException if products cannot be loaded
+     */
     @Override
     public Product findById(String id) throws PersistenceException {
         List<Product> all = loadAllProducts();
@@ -66,7 +76,7 @@ public class ProductsJsonDao implements ProductsDao {
 
         try (FileReader reader = new FileReader(this.filepath)) {
             Gson gson = new Gson();
-            gson.fromJson(reader, new TypeToken<List<Provider>>() {}.getType());
+            gson.fromJson(reader, new TypeToken<List<Product>>() {}.getType());
             return true;
         } catch (Exception e) {
             return false;
@@ -78,6 +88,7 @@ public class ProductsJsonDao implements ProductsDao {
      *
      * @param name product name filter
      * @return filtered list of products
+     * @throws PersistenceException if products cannot be loaded
      */
     @Override
     public List<Product> findProductsByName(String name) throws PersistenceException {

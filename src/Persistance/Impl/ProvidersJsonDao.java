@@ -22,6 +22,7 @@ public class ProvidersJsonDao implements ProvidersDao {
      * Loads all providers from the JSON file.
      *
      * @return list of providers
+     * @throws PersistenceException if the file cannot be written
      */
     @Override
     public List<Provider> loadAllProviders() throws PersistenceException {
@@ -37,16 +38,17 @@ public class ProvidersJsonDao implements ProvidersDao {
      * Writes providers list to JSON file.
      *
      * @param providers list of providers to save
+     * @throws PersistenceException if the file cannot be written
      */
     @Override
-    public void updateFile(List<Provider> providers) {
+    public void updateFile(List<Provider> providers) throws PersistenceException {
         File file = new File(this.filepath);
 
         try (FileWriter writer = new FileWriter(file)) {
             Gson gson = new Gson();
             gson.toJson(providers, writer);
         } catch (IOException e) {
-            throw new RuntimeException("Could not update provider file.", e);
+            throw new PersistenceException("Could not update provider file.", e);
         }
     }
 

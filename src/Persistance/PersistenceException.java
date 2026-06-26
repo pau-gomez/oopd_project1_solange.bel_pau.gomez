@@ -6,10 +6,21 @@ package Persistance;
  */
 public class PersistenceException extends Exception {
 
+    /**
+     * Constructs a PersistenceException with the given message.
+     *
+     * @param message description of the error
+     */
     public PersistenceException(String message) {
         super(message);
     }
 
+    /**
+     * Constructs a PersistenceException with the given message and cause.
+     *
+     * @param message description of the error
+     * @param cause the underlying exception that caused this error
+     */
     public PersistenceException(String message, Throwable cause) {
         super(message, cause);
     }

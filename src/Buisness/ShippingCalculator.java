@@ -1,6 +1,7 @@
 package Buisness;
 
 import Buisness.Entities.OnlineClient;
+import Persistance.PersistenceException;
 import geolocationAPI.Address;
 import geolocationAPI.Geo;
 import geolocationAPI.GeolocationApiManager;
@@ -21,12 +22,14 @@ public class ShippingCalculator {
     private final GeolocationApiManager geolocationApiManager = new GeolocationApiManager();
 
     /**
-     * Calculates the shipping cost for online clients based on the client's distance from La Salle campus.
+     * Calculates the shipping cost for an online client based on their distance from La Salle campus.
+     * The cost is €2 base fee plus €0.01 per km.
      *
-     * @param client the online client
-     * @return shipping cost
+     * @param client the online client whose shipping address is used for the calculation
+     * @return the shipping cost in euros
+     * @throws PersistenceException if the address cannot be parsed or the geolocation API fails
      */
-    public double calculateShippingCost(OnlineClient client) {
+    public double calculateShippingCost(OnlineClient client) throws PersistenceException {
         try {
             Address address = AddressParser.parse(client.getAddress());
 
@@ -39,7 +42,7 @@ public class ShippingCalculator {
             return BASE_FEE + (FEE_PER_KM * distanceKm);
 
         } catch (IOException | InvalidAddressException e) {
-            throw new RuntimeException("Could not calculate shipping cost.", e);
+            throw new PersistenceException("Could not calculate shipping cost.", e);
         }
     }
 }

@@ -126,6 +126,7 @@ public class MenuController {
      * Handles login process.
      *
      * @return true if login successful
+     * @throws PersistenceException if client data cannot be accessed
      */
     private boolean handleLogin() throws PersistenceException {
         int id = authenticationMenu.askClientId();
@@ -136,6 +137,7 @@ public class MenuController {
      * Handles client registration process. Asks for client type before asking for fields.
      *
      * @return true if registration successful
+     * @throws PersistenceException if client data cannot be accessed
      */
     private boolean handleRegister() throws PersistenceException {
         int clientType = authenticationMenu.askClientType();
@@ -170,6 +172,8 @@ public class MenuController {
 
     /**
      * Displays the main user menu loop.
+     *
+     * @throws PersistenceException if client data cannot be accessed
      */
     private void userMenu() throws PersistenceException {
         boolean logged = true;
@@ -202,7 +206,9 @@ public class MenuController {
     }
 
     /**
-     * Displays current client profile information.
+     * Displays current client profile information and displays sales record.
+     *
+     * @throws PersistenceException if client data cannot be accessed
      */
     private void showProfile() throws PersistenceException {
         Client c = clientsManager.getCurrentClient();
@@ -236,6 +242,8 @@ public class MenuController {
 
     /**
      * Searches products by name and allows selection.
+     *
+     * @throws PersistenceException if client data cannot be accessed
      */
     private void findProductsByName() throws PersistenceException {
         String name = mainMenu.askSearchText();
@@ -260,6 +268,7 @@ public class MenuController {
      * Displays product details and available providers.
      *
      * @param product selected product
+     * @throws PersistenceException if client data cannot be accessed
      */
     private void showProductInformation(Product product) throws PersistenceException {
         if (product instanceof Glasses) {
@@ -315,6 +324,8 @@ public class MenuController {
 
     /**
      * Displays products filtered by provider.
+     *
+     * @throws PersistenceException if client data cannot be accessed
      */
     private void findProductsByProvider() throws PersistenceException {
         List<Provider> providers = providersManager.getAllProviders();
@@ -334,12 +345,17 @@ public class MenuController {
         mainMenu.printProductFromProvider(provider);
 
         int option = mainMenu.askOption(provider.getProductsForSale().size());
+        if (option == 0) return;
 
-        shoppingCartManager.addProduct(provider.getProductsForSale().get(option - 1));
+        if (mainMenu.confirm("Do you want to add this product to the shopping cart?")) {
+            shoppingCartManager.addProduct(provider.getProductsForSale().get(option - 1));
+        }
     }
 
     /**
      * Handles shopping cart menu operations.
+     *
+     * @throws PersistenceException if client data cannot be accessed
      */
     private void showShoppingCart() throws PersistenceException {
         int option;
@@ -356,11 +372,16 @@ public class MenuController {
                     deleteProductFromCart();
                     break;
                 case 2:
-                    shoppingCartManager.clear();
-                    exit = true;
+                    if (mainMenu.confirm("Are you sure you want to delete the cart?")) {
+                        shoppingCartManager.clear();
+                        mainMenu.printLine("\tCart deleted.");
+                        exit = true;
+                    }
                     break;
                 case 3:
-                    checkout();
+                    if (mainMenu.confirm("Are you sure you want to purchase the cart?")) {
+                        checkout();
+                    }
                     exit = true;
                     break;
                 case 4:
@@ -400,6 +421,8 @@ public class MenuController {
 
     /**
      * Finalizes purchase and records the sale.
+     *
+     * @throws PersistenceException if client data cannot be accessed
      */
     private void checkout() throws PersistenceException {
         int i = 0;
