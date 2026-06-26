@@ -15,7 +15,7 @@ public interface ProductsDao {
      *
      * @return list of products
      */
-    List<Product> loadAllProducts();
+    List<Product> loadAllProducts() throws PersistenceException;
 
     /**
      * Validates that the products file exists and is readable/parsable.
@@ -30,7 +30,7 @@ public interface ProductsDao {
      * @param id product ID
      * @return the product, or null if not found
      */
-    Product findById(String id);
+    Product findById(String id) throws PersistenceException;
 
     /**
      * Finds products by name (case-insensitive partial match).
@@ -38,5 +38,5 @@ public interface ProductsDao {
      * @param name search term
      * @return matching products
      */
-    List<Product> findProductsByName(String name);
+    List<Product> findProductsByName(String name) throws PersistenceException;
 }

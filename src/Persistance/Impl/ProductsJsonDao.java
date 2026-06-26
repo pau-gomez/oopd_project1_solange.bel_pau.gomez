@@ -1,6 +1,7 @@
 package Persistance.Impl;
 
 import Buisness.Entities.*;
+import Persistance.PersistenceException;
 import Persistance.ProductsDao;
 import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
@@ -32,17 +33,17 @@ public class ProductsJsonDao implements ProductsDao {
      * @return list of products
      */
     @Override
-    public List<Product> loadAllProducts() {
+    public List<Product> loadAllProducts() throws PersistenceException {
         try (FileReader reader = new FileReader(this.filepath)) {
             Gson gson = buildGson();
             return gson.fromJson(reader, (new TypeToken<List<Product>>() {}).getType());
         } catch (Exception e) {
-            throw new RuntimeException("Could not load products.", e);
+            throw new PersistenceException("Could not load products.", e);
         }
     }
 
     @Override
-    public Product findById(String id) {
+    public Product findById(String id) throws PersistenceException {
         List<Product> all = loadAllProducts();
         for (Product p : all) {
             if (p.getProductId().equals(id)) return p;
@@ -79,7 +80,7 @@ public class ProductsJsonDao implements ProductsDao {
      * @return filtered list of products
      */
     @Override
-    public List<Product> findProductsByName(String name) {
+    public List<Product> findProductsByName(String name) throws PersistenceException {
         List<Product> allProducts = loadAllProducts();
         List<Product> filteredProducts = new ArrayList<>();
 

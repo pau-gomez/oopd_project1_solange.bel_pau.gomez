@@ -1,6 +1,7 @@
 package Persistance.Impl;
 
 import Buisness.Entities.Product;
+import Persistance.PersistenceException;
 import Persistance.ProductsDao;
 import edu.salle.url.api.ApiHelper;
 import edu.salle.url.api.exception.ApiException;
@@ -25,13 +26,13 @@ public class ProductsApiDao implements ProductsDao {
     }
 
     @Override
-    public List<Product> loadAllProducts() {
+    public List<Product> loadAllProducts() throws PersistenceException {
         try {
             String response = apiHelper.getFromUrl(BASE_URL + "/shared/products");
             if (response == null || response.isBlank() || response.equals("[]")) return new ArrayList<>();
             return buildGson().fromJson(response, new TypeToken<List<Product>>() {}.getType());
-        } catch (ApiException e) {
-            throw new RuntimeException("Could not load products from API.", e);
+        } catch (Exception e) {
+            throw new PersistenceException("Could not load products from API.", e);
         }
     }
 
@@ -46,20 +47,21 @@ public class ProductsApiDao implements ProductsDao {
     }
 
     @Override
-    public Product findById(String id) {
+    public Product findById(String id) throws PersistenceException {
         try {
             String url = BASE_URL + "/shared/products?product_id=" + id;
             String response = apiHelper.getFromUrl(url);
             if (response == null || response.isBlank() || response.equals("[]")) return null;
             List<Product> results = buildGson().fromJson(response, new TypeToken<List<Product>>() {}.getType());
-            return results.isEmpty() ? null : results.get(0);
+            if(results.isEmpty()) return null;
+            else return results.get(0);
         } catch (ApiException e) {
-            return null;
+            throw new PersistenceException("Couldn't find a product.", e);
         }
     }
 
     @Override
-    public List<Product> findProductsByName(String name) {
+    public List<Product> findProductsByName(String name) throws PersistenceException {
         try {
             String url;
             if (name == null || name.isBlank()) url = BASE_URL + "/shared/products";
@@ -68,8 +70,8 @@ public class ProductsApiDao implements ProductsDao {
             String response = apiHelper.getFromUrl(url);
             if (response == null || response.isBlank() || response.equals("[]")) return new ArrayList<>();
             return buildGson().fromJson(response, new TypeToken<List<Product>>() {}.getType());
-        } catch (ApiException e) {
-            throw new RuntimeException("Could not search products from API.", e);
+        } catch (Exception e) {
+            throw new PersistenceException("Could not search products from API.", e);
         }
     }
 

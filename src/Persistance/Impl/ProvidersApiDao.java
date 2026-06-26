@@ -1,6 +1,7 @@
 package Persistance.Impl;
 
 import Buisness.Entities.Provider;
+import Persistance.PersistenceException;
 import Persistance.ProvidersDao;
 import edu.salle.url.api.ApiHelper;
 import edu.salle.url.api.exception.ApiException;
@@ -25,24 +26,24 @@ public class ProvidersApiDao implements ProvidersDao {
     }
 
     @Override
-    public List<Provider> loadAllProviders() {
+    public List<Provider> loadAllProviders() throws PersistenceException {
         try {
             String response = apiHelper.getFromUrl(BASE_URL + "/shared/providers");
             if (response == null || response.isBlank() || response.equals("[]")) return new ArrayList<>();
             return new Gson().fromJson(response, new TypeToken<List<Provider>>() {}.getType());
         } catch (ApiException e) {
-            throw new RuntimeException("Could not load providers from API.", e);
+            throw new PersistenceException("Could not load providers from API.", e);
         }
     }
 
     @Override
-    public Provider getOneProvider(int id) {
+    public Provider getOneProvider(int id) throws PersistenceException {
         try {
             String response = apiHelper.getFromUrl(BASE_URL + "/shared/providers/" + id);
             if (response == null || response.isBlank()) return null;
             return new Gson().fromJson(response, Provider.class);
         } catch (ApiException e) {
-            return null;
+            throw new PersistenceException("Could not load provider from API.", e);
         }
     }
 

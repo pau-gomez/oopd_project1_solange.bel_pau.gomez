@@ -93,26 +93,30 @@ public class MenuController {
         while (running) {
             int option = authenticationMenu.printAuthenticationMenu();
 
-            switch (option) {
-                case 1:
-                    if (handleLogin()) {
-                        userMenu();
-                    } else {
-                        mainMenu.UserNotFound();
-                    }
-                    break;
-                case 2:
-                    if (handleRegister()) {
-                        userMenu();
-                    }
-                    break;
-                case 0:
-                    authenticationMenu.printGoodByeMessage();
-                    running = false;
-                    break;
-                default:
-                    authenticationMenu.printInvalidOption();
-                    break;
+            try {
+                switch (option) {
+                    case 1:
+                        if (handleLogin()) {
+                            userMenu();
+                        } else {
+                            mainMenu.UserNotFound();
+                        }
+                        break;
+                    case 2:
+                        if (handleRegister()) {
+                            userMenu();
+                        }
+                        break;
+                    case 0:
+                        authenticationMenu.printGoodByeMessage();
+                        running = false;
+                        break;
+                    default:
+                        authenticationMenu.printInvalidOption();
+                        break;
+                }
+            } catch (PersistenceException e) {
+                mainMenu.printLine("\nError: A persistence error occurred: " + e.getMessage());
             }
         }
         return true;
@@ -123,7 +127,7 @@ public class MenuController {
      *
      * @return true if login successful
      */
-    private boolean handleLogin() {
+    private boolean handleLogin() throws PersistenceException {
         int id = authenticationMenu.askClientId();
         return clientsManager.login(id);
     }
@@ -133,7 +137,7 @@ public class MenuController {
      *
      * @return true if registration successful
      */
-    private boolean handleRegister() {
+    private boolean handleRegister() throws PersistenceException {
         int clientType = authenticationMenu.askClientType();
 
         String name = authenticationMenu.askFullName();
@@ -157,7 +161,8 @@ public class MenuController {
                 String contactName = authenticationMenu.askContactName();
                 String billingAddress = authenticationMenu.askBillingAddress();
                 String mailingAddress = authenticationMenu.askAddress();
-                return clientsManager.registerCorporateClient(contactName, phones, cif, billingAddress, mailingAddress);
+                return clientsManager.registerCorporateClient(contactName, phones, cif,
+                        billingAddress, mailingAddress);
             default:
                 return false;
         }
@@ -166,7 +171,7 @@ public class MenuController {
     /**
      * Displays the main user menu loop.
      */
-    private void userMenu() {
+    private void userMenu() throws PersistenceException {
         boolean logged = true;
 
         while (logged) {
@@ -199,7 +204,7 @@ public class MenuController {
     /**
      * Displays current client profile information.
      */
-    private void showProfile() {
+    private void showProfile() throws PersistenceException {
         Client c = clientsManager.getCurrentClient();
 
         List<String> phones = new ArrayList<>();
@@ -232,7 +237,7 @@ public class MenuController {
     /**
      * Searches products by name and allows selection.
      */
-    private void findProductsByName() {
+    private void findProductsByName() throws PersistenceException {
         String name = mainMenu.askSearchText();
 
         List<Product> products = productsManager.findProductsByName(name);
@@ -256,7 +261,7 @@ public class MenuController {
      *
      * @param product selected product
      */
-    private void showProductInformation(Product product) {
+    private void showProductInformation(Product product) throws PersistenceException {
         if (product instanceof Glasses) {
             Glasses g = (Glasses) product;
             mainMenu.printProductInformation(product.getProductId(), product.getProductName(),
@@ -311,7 +316,7 @@ public class MenuController {
     /**
      * Displays products filtered by provider.
      */
-    private void findProductsByProvider() {
+    private void findProductsByProvider() throws PersistenceException {
         List<Provider> providers = providersManager.getAllProviders();
         List<String> display = new ArrayList<>();
 
@@ -336,7 +341,7 @@ public class MenuController {
     /**
      * Handles shopping cart menu operations.
      */
-    private void showShoppingCart() {
+    private void showShoppingCart() throws PersistenceException {
         int option;
         boolean exit = false;
 
@@ -396,18 +401,25 @@ public class MenuController {
     /**
      * Finalizes purchase and records the sale.
      */
-    private void checkout() {
+    private void checkout() throws PersistenceException {
         int i = 0;
 
         mainMenu.printLine("----- PURCHASE INFORMATION -----");
 
         for (ProductForSale product : shoppingCartManager.getProducts()) {
             i++;
-            mainMenu.printLine("(" + i + ") Product: " + product.getProductId() + " | Supplier: " + shoppingCartManager.getProvider(product) + " | Price: " + String.format("%.2f", product.getSalePrice()) + "€");
+            mainMenu.printLine("(" + i + ") Product: " + product.getProductId()
+                    + " | Supplier: " + shoppingCartManager.getProvider(product)
+                    + " | Price: " + String.format("%.2f", product.getSalePrice()) + "€");
 
             providersManager.updateProviderStock(product);
 
-            Sale sale = new Sale(clientsManager.getCurrentClient().getClientId(), product.getProductId(), shoppingCartManager.calculateSellingPrice(product, clientsManager.getCurrentClient()), System.currentTimeMillis());
+            Sale sale = new Sale(
+                    clientsManager.getCurrentClient().getClientId(),
+                    product.getProductId(),
+                    shoppingCartManager.calculateSellingPrice(product, clientsManager.getCurrentClient()),
+                    System.currentTimeMillis()
+            );
 
             salesManager.addSale(sale);
         }

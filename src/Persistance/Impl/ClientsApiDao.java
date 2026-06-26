@@ -2,6 +2,7 @@ package Persistance.Impl;
 
 import Buisness.Entities.Client;
 import Persistance.ClientsDao;
+import Persistance.PersistenceException;
 import edu.salle.url.api.ApiHelper;
 import edu.salle.url.api.exception.ApiException;
 import com.google.gson.*;
@@ -25,25 +26,25 @@ public class ClientsApiDao implements ClientsDao {
     }
 
     @Override
-    public List<Client> loadAllClients() {
+    public List<Client> loadAllClients() throws PersistenceException {
         try {
             String response = apiHelper.getFromUrl(BASE_URL + "/" + GROUP_ID + "/clients");
             if (response == null || response.isBlank() || response.equals("[]")) return new ArrayList<>();
             return buildGson().fromJson(response, new TypeToken<List<Client>>() {}.getType());
-        } catch (ApiException e) {
-            throw new RuntimeException("Could not load clients from API.", e);
+        } catch (Exception e) {
+            throw new PersistenceException("Could not load clients from API.", e);
         }
     }
 
     @Override
-    public void updateFile(List<Client> clients) {
+    public void updateFile(List<Client> clients) throws PersistenceException {
         if (clients == null || clients.isEmpty()) return;
         try {
             // The API doesn't support bulk updates — we POST only the newest client
             Client newest = clients.get(clients.size() - 1);
             apiHelper.postToUrl(BASE_URL + "/" + GROUP_ID + "/clients", buildGson().toJson(newest));
-        } catch (ApiException e) {
-            throw new RuntimeException("Could not save client to API.", e);
+        } catch (Exception e) {
+            throw new PersistenceException("Could not save client to API.", e);
         }
     }
 

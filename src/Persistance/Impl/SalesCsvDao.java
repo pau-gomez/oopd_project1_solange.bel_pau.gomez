@@ -1,6 +1,7 @@
 package Persistance.Impl;
 
 import Buisness.Entities.Sale;
+import Persistance.PersistenceException;
 import Persistance.SalesDao;
 import com.opencsv.bean.CsvToBeanBuilder;
 
@@ -22,7 +23,7 @@ public class SalesCsvDao implements SalesDao {
      * @return list of sales
      */
     @Override
-    public List<Sale> loadAllSales() {
+    public List<Sale> loadAllSales() throws PersistenceException {
 
         File file = new File(this.filepath);
 
@@ -37,7 +38,7 @@ public class SalesCsvDao implements SalesDao {
         try (FileReader reader = new FileReader(this.filepath)) {
             return (List<Sale>) new CsvToBeanBuilder(reader).withType(Sale.class).build().parse();
         } catch (Exception e) {
-            throw new RuntimeException("Could not load sales.", e);
+            throw new PersistenceException("Could not load sales.", e);
         }
     }
 
@@ -47,7 +48,7 @@ public class SalesCsvDao implements SalesDao {
      * @param sales list of sales to save
      */
     @Override
-    public void updateFile(List<Sale> sales) {
+    public void updateFile(List<Sale> sales) throws PersistenceException {
         File file = new File(this.filepath);
 
         try (FileWriter writer = new FileWriter(file)) {
@@ -61,7 +62,7 @@ public class SalesCsvDao implements SalesDao {
                 writer.append(saleLine);
             }
         } catch (IOException e) {
-            throw new RuntimeException("Could not update sales file.", e);
+            throw new PersistenceException("Could not update sales file.", e);
         }
     }
 }

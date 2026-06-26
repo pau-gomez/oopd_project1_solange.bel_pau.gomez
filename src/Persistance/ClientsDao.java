@@ -14,12 +14,12 @@ public interface ClientsDao {
      *
      * @return list of clients
      */
-    List<Client> loadAllClients();
+    List<Client> loadAllClients() throws PersistenceException;
 
     /**
      * Updates the storage with the given clients list.
      *
      * @param clients list of clients to persist
      */
-    void updateFile(List<Client> clients);
+    void updateFile(List<Client> clients) throws PersistenceException;
 }

@@ -4,6 +4,7 @@ import Buisness.Entities.Product;
 import Buisness.Entities.ProductForSale;
 import Buisness.Entities.Provider;
 import Persistance.Impl.ProvidersJsonDao;
+import Persistance.PersistenceException;
 import Persistance.ProvidersDao;
 
 import java.util.ArrayList;
@@ -27,7 +28,7 @@ public class ProvidersManager {
      *
      * @param productBought the product that was purchased
      */
-    public void updateProviderStock(ProductForSale productBought) {
+    public void updateProviderStock(ProductForSale productBought) throws PersistenceException {
         List<Provider> providers = providersDao.loadAllProviders();
         boolean updated = false;
 
@@ -60,7 +61,7 @@ public class ProvidersManager {
      *
      * @return list of all providers
      */
-    public List<Provider> getAllProviders() {
+    public List<Provider> getAllProviders() throws PersistenceException {
         return providersDao.loadAllProviders();
     }
 
@@ -70,7 +71,7 @@ public class ProvidersManager {
      * @param id provider ID
      * @return provider or null if not found
      */
-    public Provider getProvider(int id) {
+    public Provider getProvider(int id) throws PersistenceException {
         return providersDao.getOneProvider(id);
     }
 
@@ -80,7 +81,7 @@ public class ProvidersManager {
      * @param product the product to search for
      * @return list of providers selling the product
      */
-    public List<Provider> getProviderByProduct(Product product) {
+    public List<Provider> getProviderByProduct(Product product) throws PersistenceException {
         List<Provider> providers = providersDao.loadAllProviders();
         List<Provider> result = new ArrayList<>();
 
