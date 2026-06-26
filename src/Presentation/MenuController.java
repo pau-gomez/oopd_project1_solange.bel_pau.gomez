@@ -9,6 +9,7 @@ import edu.salle.url.api.exception.ApiException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 /**
  * Controls the application flow and user interactions between UI and business logic.
@@ -29,8 +30,9 @@ public class MenuController {
      * Tries to connect to the API first; falls back to local files if unavailable.
      */
     public MenuController() {
-        authenticationMenu = new AuthenticationMenu();
-        mainMenu = new Presentation.UIMainMenu();
+        Scanner scanner = new Scanner(System.in);
+        authenticationMenu = new AuthenticationMenu(scanner);
+        mainMenu = new Presentation.UIMainMenu(scanner);
 
         System.out.println("Checking API status...");
         ApiHelper apiHelper = tryConnectApi();
